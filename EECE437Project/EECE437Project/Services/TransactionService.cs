@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EECE437Project.Components
 {
-    class TransactionController
+    class TransactionService
     {
     }
 }
