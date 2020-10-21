@@ -11,22 +11,42 @@ namespace EECE437Project.Services
         {
         }
 
-        public void DeleteContributions(string demandId)
+        public void AnswerDemand(string demandId)
         {
             throw new NotImplementedException();
         }
 
-        public void DeleteDemand(string demandId)
+        public void CancelContribution(string demandId)
         {
             throw new NotImplementedException();
         }
 
-        public List<Contribution> GetContribution()
+        public void CancelDemand(string demandId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void CreateDemand()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditContribution()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditDemand()
         {
             throw new NotImplementedException();
         }
 
         public Contribution GetContribution(string demandId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Contribution> GetContributions()
         {
             throw new NotImplementedException();
         }
@@ -37,6 +57,21 @@ namespace EECE437Project.Services
         }
 
         public List<Demand> GetDemands()
+        {
+            throw new NotImplementedException();
+        }
+
+        public Process GetProcess()
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Process> GetProcesses()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool ValidateDelivery(string deliveryCode)
         {
             throw new NotImplementedException();
         }

@@ -6,7 +6,7 @@ using System.Text;
 
 namespace EECE437Project.Clients
 {
-    public interface IUserClient
+    public interface IClient
     {
         List<Demand> GetDemands();
         Demand GetDemand(string demandId);
