@@ -10,8 +10,8 @@ namespace EECE437Project.Clients
         List<Demand> GetDemands();
         Demand GetDemand(string demandId);
         void DeleteDemand(string demandId);
-        List<Task> GetTasks();
-        Task GetTask(string demandId);
-        void DeleteTask(string demandId);
+        List<Contribution> GetContribution();
+        Contribution GetContribution(string demandId);
+        void DeleteContributions(string demandId);
     }
 }

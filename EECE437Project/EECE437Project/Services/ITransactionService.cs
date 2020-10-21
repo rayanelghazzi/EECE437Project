@@ -6,10 +6,7 @@ namespace EECE437Project.Services
         void CreateDemand();
         void EditDemand();
         void DeleteDemand();
-        void CreateTask();
-        void EditTask();
-        void DeleteTask();
-
-
+        void EditContribution();
+        void CancelContribution();
     }
 }

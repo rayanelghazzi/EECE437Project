@@ -11,12 +11,7 @@ namespace EECE437Project.Services
         {
         }
 
-        public Demand GetDemand(string demandId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<Demand> GetDemands()
+        public void DeleteContributions(string demandId)
         {
             throw new NotImplementedException();
         }
@@ -26,17 +21,22 @@ namespace EECE437Project.Services
             throw new NotImplementedException();
         }
 
-        public void DeleteTask(string demandId)
+        public List<Contribution> GetContribution()
         {
             throw new NotImplementedException();
         }
 
-        public Task GetTask(string demandId)
+        public Contribution GetContribution(string demandId)
         {
             throw new NotImplementedException();
         }
 
-        public List<Task> GetTasks()
+        public Demand GetDemand(string demandId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Demand> GetDemands()
         {
             throw new NotImplementedException();
         }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace EECE437Project.DataContract
 {
-    public class Task
+    public class Contribution
     {
         public string Id { get; set; }
         public string ProcessId { get; set; }
