@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EECE437Project.Components
+namespace EECE437Project.Data_Contract
 {
-    class Task
+    class Location
     {
     }
 }

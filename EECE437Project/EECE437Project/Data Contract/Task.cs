@@ -4,7 +4,12 @@ using System.Text;
 
 namespace EECE437Project.Components
 {
-    class User
+    class Task
     {
+        string id;
+        string type;
+        string contributingUser;
+
+
     }
 }
