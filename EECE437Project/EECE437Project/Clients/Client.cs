@@ -1,38 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
-using EECE437Project.Components;
+using EECE437Project.Clients;
+using EECE437Project.DataContract;
 
 namespace EECE437Project.Services
 {
-    public class UserClient
+    public class Client : IClient
     {
-        public UserClient()
+        public Client()
         {
-            List<Demand> GetDemands()
-            {
-                return new List<Demand>();
-            }
-            Demand GetDemand(string demandId)
-            {
-                return new Demand();
-            }
-            void DeleteDemand(string demandId)
-            {
+        }
 
-            }
+        public Demand GetDemand(string demandId)
+        {
+            throw new NotImplementedException();
+        }
 
-            List<Task> GetTasks()
-            {
-                return new List<Task>();
-            }
-            Task GetTask(string demandId)
-            {
-                return new Task();
-            }
-            void DeleteTask(string demandId)
-            {
+        public List<Demand> GetDemands()
+        {
+            throw new NotImplementedException();
+        }
 
-            }
+        public void DeleteDemand(string demandId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void DeleteTask(string demandId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task GetTask(string demandId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public List<Task> GetTasks()
+        {
+            throw new NotImplementedException();
         }
     }
 }

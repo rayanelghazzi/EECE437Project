@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace EECE437Project.Data_Contract
+namespace EECE437Project.DataContract
 {
-    class Location
+    public class Location
     {
+        public string Description { get; set; }
+        public string Coordinates { get; set; }
     }
 }
