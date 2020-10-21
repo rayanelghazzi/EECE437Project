@@ -5,8 +5,6 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EECE437Project", "EECE437Project\EECE437Project.csproj", "{F556BBFA-B30E-45B6-AD58-CA4DEAFF1F2B}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aub.Eece503e.ChatService.Datacontracts", "..\..\..\..\..\TERM 8\EECE 503E\Labs\Chat Service\ChatService\ChatService\Aub.Eece503e.ChatService.Datacontracts\Aub.Eece503e.ChatService.Datacontracts.csproj", "{1B6AF7A3-060C-4E99-B5F0-FF040BE8912C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,10 +15,6 @@ Global
 		{F556BBFA-B30E-45B6-AD58-CA4DEAFF1F2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F556BBFA-B30E-45B6-AD58-CA4DEAFF1F2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F556BBFA-B30E-45B6-AD58-CA4DEAFF1F2B}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1B6AF7A3-060C-4E99-B5F0-FF040BE8912C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1B6AF7A3-060C-4E99-B5F0-FF040BE8912C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1B6AF7A3-060C-4E99-B5F0-FF040BE8912C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1B6AF7A3-060C-4E99-B5F0-FF040BE8912C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,17 +1,27 @@
-﻿using EECE437Project.DataContract;
+﻿using EECE437Project.Components;
+using EECE437Project.DataContract;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace EECE437Project.Clients
 {
-    public interface IClient
+    public interface IUserClient
     {
         List<Demand> GetDemands();
         Demand GetDemand(string demandId);
-        void DeleteDemand(string demandId);
-        List<Contribution> GetContribution();
+        void CancelDemand(string demandId);
+        void CreateDemand();
+        void EditDemand();
+        List<Contribution> GetContributions();
         Contribution GetContribution(string demandId);
-        void DeleteContributions(string demandId);
+        void CancelContribution(string demandId);
+        void EditContribution();
+        void AnswerDemand(string demandId);
+        Process GetProcess();
+        List<Process> GetProcesses();
+        bool ValidateDelivery(string deliveryCode);
+
+
     }
 }
