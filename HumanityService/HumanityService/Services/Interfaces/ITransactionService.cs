@@ -18,9 +18,11 @@ namespace HumanityService.Services.Interfaces
         Task<Contribution> GetContribution(string contributionId);
         Task<List<Contribution>> GetContributions(GetContributionsRequest request);
         Task EditContribution(string contributionId, List<long> timeWindow, List<Location> locations);
-        Task CancelContribution(string ContributionId); 
+        Task CancelContribution(string ContributionId);
         Task<Process> GetProcess(string processId);
         Task<List<Contribution>> GetProcesses(string demandId);
         Task ValidateDelivery(string contributionId, string deliveryCode); //what abt ngo's side?
+        Task AcceptDelivery();
+        Task ApproveContribution();
     }
 }
