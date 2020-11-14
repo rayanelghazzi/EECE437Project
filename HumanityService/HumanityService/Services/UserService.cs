@@ -32,10 +32,7 @@ namespace HumanityService.Services
             throw new System.NotImplementedException();
         }
 
-        public Task<UserInfo> GetUserInfo(string username)
-        {
-            throw new System.NotImplementedException();
-        }
+21
 
         public Task UpdateNgo(Ngo ngo)
         {
