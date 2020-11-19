@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using HumanityService.DataContracts.Requests;
 using HumanityService.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HumanityService.Controllers
@@ -20,19 +17,19 @@ namespace HumanityService.Controllers
         }
 
         [HttpGet("login")]
-        public async Task<IActionResult> Login() //from body
+        public async Task<IActionResult> Login(LoginRequest request)
         {
 
         }
 
         [HttpPost("logout")]
-        public async Task<IActionResult> Logout() //from body
+        public async Task<IActionResult> Logout(LogoutRequest request)
         {
 
         }
 
         [HttpGet("refresh-access-token")]
-        public async Task<IActionResult> RefreshAccessToken() //from body
+        public async Task<IActionResult> RefreshAccessToken(RefreshTokenRequest request)
         {
 
         }

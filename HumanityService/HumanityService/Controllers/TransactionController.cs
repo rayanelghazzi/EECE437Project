@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HumanityService.DataContracts.ContributionDataContracts;
-using HumanityService.DataContracts.DemandDataContracts;
+using HumanityService.DataContracts;
+using HumanityService.DataContracts.Requests;
 using HumanityService.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -21,38 +21,69 @@ namespace HumanityService.Controllers
             _transactionService = transactionService;
         }
 
-        [HttpGet("demands/{demandId}")]
-        public async Task<IActionResult> GetDemand(string demandId)
+        [HttpGet("campaigns/{campaignId}")]
+        public async Task<IActionResult> GetCampaign(string campaignId)
         {
 
         }
 
-        [HttpGet("demands")]
-        public async Task<IActionResult> GetDemands([FromBody] GetDemandsRequest request)
+        [HttpGet("campaigns")]
+        public async Task<IActionResult> GetCampaigns([FromBody] GetCampaignsRequest request)
         {
 
         }
 
-        [HttpPost("demands")]
-        public async Task<IActionResult> CreateDemand([FromBody] EditDemandRequest request)
+        [HttpPost("campaigns")]
+        public async Task<IActionResult> CreateCampaign([FromBody] CreateCampaignRequest request)
         {
 
         }
 
-        [HttpPost("demands/{demandId}")]
-        public async Task<IActionResult> AnswerDemand(string demandId, [FromBody] AnswerDemandRequest request)
+        [HttpPost("campaigns/{campaignId}")]
+        public async Task<IActionResult> AnswerCampaign(string campaignId, [FromBody] AnswerCampaignRequest request)
         {
 
         }
 
-        [HttpPut("demands/{demandId}")]
-        public async Task<IActionResult> EditDemand(string demandId, [FromBody] EditDemandRequest request)
+        [HttpPut("campaigns/{campaignId}")]
+        public async Task<IActionResult> EditCampaign(string campaignId, [FromBody] EditCampaignRequest request)
         {
 
         }
 
-        [HttpDelete("demands/{demandId}")]
-        public async Task<IActionResult> CancelDemand(string demandId)
+        [HttpDelete("campaigns/{campaignId}")]
+        public async Task<IActionResult> DeleteCampaign(string campaignId)
+        {
+
+        }
+
+        [HttpGet("deliverydemands/{deliveryDemandId}")]
+        public async Task<IActionResult> GetDeliveryDemand(string deliveryDemandId)
+        {
+
+        }
+
+        [HttpGet("deliverydemands")]
+        public async Task<IActionResult> GetDeliveryDemands([FromBody] GetDeliveryDemandsRequest request)
+        {
+
+        }
+
+
+        [HttpPost("deliverydemands/{deliveryDemandId}")]
+        public async Task<IActionResult> AnswerDeliveryDemand(string deliveryDemandId, [FromBody] AnswerDeliveryDemandRequest request)
+        {
+
+        }
+
+        [HttpPut("deliverydemands/{deliveryDemandId}")]
+        public async Task<IActionResult> EditDeliveryDemand(string deliveryDemandId, [FromBody] EditDeliveryDemandRequest request)
+        {
+
+        }
+
+        [HttpDelete("deliverydemands/{deliveryDemandId}")]
+        public async Task<IActionResult> DeleteDeliveryDemand(string deliveryDemandId)
         {
 
         }
@@ -82,7 +113,7 @@ namespace HumanityService.Controllers
         }
 
         [HttpDelete("contributions/{contributionId}")]
-        public async Task<IActionResult> CancelContribution(string contributionId)
+        public async Task<IActionResult> DeleteContribution(string contributionId)
         {
 
         }
@@ -94,7 +125,7 @@ namespace HumanityService.Controllers
         }
 
         [HttpGet("processes/{demandId}")]
-        public async Task<IActionResult> GetProcesses(string demandId)
+        public async Task<IActionResult> GetProcesses(string campaignId)
         {
 
         }

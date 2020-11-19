@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HumanityService.DataContracts.NgoDataContracts;
-using HumanityService.DataContracts.UserDataContracts;
+using HumanityService.DataContracts;
+using HumanityService.DataContracts.Requests;
 using HumanityService.Services.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;

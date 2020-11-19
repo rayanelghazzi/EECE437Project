@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace HumanityService.DataContracts.DemandDataContracts
+namespace HumanityService.DataContracts
 {
-    public class Demand
+    public class Campaign
     {
         public string Name { get; set; }
         public string Id { get; set; }
@@ -15,7 +15,6 @@ namespace HumanityService.DataContracts.DemandDataContracts
         public long TimeCreated { get; set; }
         public long TimeCompleted { get; set; }
         public string Description { get; set; }
-        public List<Location> Locations {get; set;}
-
+        public Location Location { get; set;}
     }
 }

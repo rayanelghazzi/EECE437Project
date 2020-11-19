@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HumanityService.DataContracts.ContributionDataContracts
+namespace HumanityService.DataContracts.Requests
 {
     public class ValidateDeliveryRequest
     {

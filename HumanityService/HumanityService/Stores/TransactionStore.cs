@@ -1,47 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using HumanityService.DataContracts;
+﻿using HumanityService.DataContracts;
 using HumanityService.DataContracts.Requests;
-using HumanityService.Services.Interfaces;
 using HumanityService.Stores.Interfaces;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace HumanityService.Services
+namespace HumanityService.Stores
 {
-    public class TransactionService : ITransactionService
+    public class TransactionStore : ITransactionStore
     {
-
-        private readonly ITransactionStore _transactionStore;
-        private readonly INotificationService _notificationService;
-        private readonly IMatchingService _matchingService;
-
-        public TransactionService(ITransactionStore transactionStore, INotificationService notificationService, IMatchingService matchingService)
-        {
-            _transactionStore = transactionStore;
-            _notificationService = notificationService;
-            _matchingService = matchingService;
-        }
-
-        public Task AcceptDelivery(string contributionId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task AnswerCampaign(string username, AnswerCampaignRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task AnswerDeliveryDemand(string username, AnswerDeliveryDemandRequest request)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task ApproveContribution(string contributionId)
-        {
-            throw new NotImplementedException();
-        }
-
         public Task CreateCampaign(CreateCampaignRequest request)
         {
             throw new NotImplementedException();
@@ -67,6 +35,11 @@ namespace HumanityService.Services
             throw new NotImplementedException();
         }
 
+        public Task DeleteProcess(string processId)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task EditCampaign(string campaignId, EditCampaignRequest request)
         {
             throw new NotImplementedException();
@@ -78,6 +51,11 @@ namespace HumanityService.Services
         }
 
         public Task EditDeliveryDemand(string deliveryDemandId, EditDeliveryDemandRequest request)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task EditProcess(string processId, Process process)
         {
             throw new NotImplementedException();
         }
@@ -118,11 +96,6 @@ namespace HumanityService.Services
         }
 
         public Task<List<Campaign>> GetProcesses(string campaignId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task ValidateDelivery(string processId, ValidateDeliveryRequest request)
         {
             throw new NotImplementedException();
         }

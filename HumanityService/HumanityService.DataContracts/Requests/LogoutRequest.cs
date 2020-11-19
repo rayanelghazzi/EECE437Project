@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HumanityService.DataContracts.UserDataContracts
+namespace HumanityService.DataContracts.Requests
 {
-    public class UserInfo
+    public class LogoutRequest
     {
     }
 }

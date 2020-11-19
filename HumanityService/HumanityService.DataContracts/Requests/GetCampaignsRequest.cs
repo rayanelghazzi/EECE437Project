@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HumanityService.DataContracts.DemandDataContracts
+namespace HumanityService.DataContracts.Requests
 {
-    public class GetDemandsRequest
+    public class GetCampaignsRequest
     {
         public string Ngo { get; set; }
         public string ProcessId { get; set; }

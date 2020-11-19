@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HumanityService.DataContracts.ContributionDataContracts
+namespace HumanityService.DataContracts
 {
     public class Contribution
     {
@@ -12,6 +12,6 @@ namespace HumanityService.DataContracts.ContributionDataContracts
         public List<long> TimeWindow { get; set; }
         public long TimeCreated { get; set; }
         public long TimeCompleted { get; set; }
-        public List<Location> Locations { get; set; }
+        public Location Locations { get; set; }
     }
 }

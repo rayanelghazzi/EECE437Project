@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HumanityService.DataContracts.DemandDataContracts
+namespace HumanityService.DataContracts.Requests
 {
-    public class EditDemandRequest
+    public class EditCampaignRequest
     {
-        public string DemandName { get; set; }
+        public string CampaignName { get; set; }
         public string Description { get; set; }
         public string Type { get; set; }
         public string Category { get; set; }

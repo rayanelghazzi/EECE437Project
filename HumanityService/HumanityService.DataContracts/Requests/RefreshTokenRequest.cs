@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HumanityService.DataContracts.NgoDataContracts
+namespace HumanityService.DataContracts.Requests
 {
-    public class NgoInfo
+    public class RefreshTokenRequest
     {
     }
 }

@@ -1,15 +1,18 @@
 ﻿using HumanityService.DataContracts;
-using HumanityService.DataContracts.Requests;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace HumanityService.Services.Interfaces
+namespace HumanityService.Stores.Interfaces
 {
-    public interface IUserService
+    public interface IUserStore
     {
         Task AddUser(User user);
         Task<User> GetUser(string username);
         Task DeleteUser(string username);
         Task UpdateUser(User user);
+
         Task AddNgo(Ngo ngo);
         Task<Ngo> GetNgo(string ngo);
         Task DeleteNgo(string ngo);

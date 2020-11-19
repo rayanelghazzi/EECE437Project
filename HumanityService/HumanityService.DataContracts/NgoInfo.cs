@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HumanityService.DataContracts.NgoDataContracts
+namespace HumanityService.DataContracts
 {
-    public class Ngo
+    public class NgoInfo
     {
         public string Name { get; set; }
         public string Email { get; set; }

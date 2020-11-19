@@ -1,21 +1,11 @@
-﻿
-using HumanityService.DataContracts;
-using HumanityService.Services.Interfaces;
+﻿using HumanityService.DataContracts;
 using HumanityService.Stores.Interfaces;
 using System.Threading.Tasks;
 
-namespace HumanityService.Services
+namespace HumanityService.Stores
 {
-    public class UserService : IUserService
+    public class UserStore : IUserStore
     {
-
-        private readonly IUserStore _userStore;
-
-        public UserService(IUserStore userStore)
-        {
-            _userStore = userStore;
-        }
-
         public Task AddNgo(Ngo ngo)
         {
             throw new System.NotImplementedException();

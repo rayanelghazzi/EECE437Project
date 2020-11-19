@@ -9,7 +9,7 @@ namespace HumanityService.Services.Interfaces
     public interface IAuthenticationService
     {
         Task Login(string username, string password);
-        Task Logout(string username, string accessToken, string refreshToken);
-        Task RefreshAccessToken(string accessToken, string refreshToken);
+        Task Logout(string username, string accessTokenId, string refreshToken);
+        Task RefreshAccessToken(string username, string oldAccessToken, string refreshToken);
     }
 }
