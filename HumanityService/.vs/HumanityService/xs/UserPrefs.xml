@@ -1,0 +1,38 @@
+﻿<Properties GitUserInfo="UsingGIT" StartupConfiguration="{F556BBFA-B30E-45B6-AD58-CA4DEAFF1F2B}|Default">
+  <MonoDevelop.Ide.ItemProperties.EECE437Project PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="EECE437Project/Clients/IClient.cs">
+    <Files>
+      <File FileName="EECE437Project/Services/EmptyInterface.cs" Line="13" Column="1" />
+      <File FileName="EECE437Project/Services/NgoClient.cs" Line="7" Column="10" />
+      <File FileName="EECE437Project/Services/UserClient.cs" Line="18" Column="14" />
+      <File FileName="EECE437Project/Services/TransactionService.cs" Line="12" Column="1" />
+      <File FileName="EECE437Project/Clients/Client.cs" Line="45" Column="1" />
+      <File FileName="EECE437Project/Clients/IClient.cs" Line="6" Column="1" />
+      <File FileName="EECE437Project/DataContract/Location.cs" Line="13" Column="1" />
+      <File FileName="EECE437Project/DataContract/Demand.cs" Line="24" Column="1" />
+      <File FileName="EECE437Project/DataContract/Ngo.cs" Line="20" Column="1" />
+      <File FileName="EECE437Project/DataContract/Process.cs" Line="17" Column="1" />
+      <File FileName="EECE437Project/DataContract/Contribution.cs" Line="20" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="EECE437Project" expanded="True">
+            <Node name="EECE437Project" expanded="True">
+              <Node name="Clients" expanded="True">
+                <Node name="IClient.cs" selected="True" />
+              </Node>
+              <Node name="DataContract" expanded="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
