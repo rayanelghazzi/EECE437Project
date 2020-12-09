@@ -21,126 +21,126 @@ namespace HumanityService.Controllers
             _transactionService = transactionService;
         }
 
-        [HttpGet("campaigns/{campaignId}")]
-        public async Task<IActionResult> GetCampaign(string campaignId)
-        {
+        //[HttpGet("campaigns/{campaignId}")]
+        //public async Task<IActionResult> GetCampaign(string campaignId)
+        //{
 
-        }
+        //}
 
-        [HttpGet("campaigns")]
-        public async Task<IActionResult> GetCampaigns([FromBody] GetCampaignsRequest request)
-        {
+        //[HttpGet("campaigns")]
+        //public async Task<IActionResult> GetCampaigns([FromBody] GetCampaignsRequest request)
+        //{
 
-        }
+        //}
 
-        [HttpPost("campaigns")]
-        public async Task<IActionResult> CreateCampaign([FromBody] CreateCampaignRequest request)
-        {
+        //[HttpPost("campaigns")]
+        //public async Task<IActionResult> CreateCampaign([FromBody] CreateCampaignRequest request)
+        //{
 
-        }
+        //}
 
-        [HttpPost("campaigns/{campaignId}")]
-        public async Task<IActionResult> AnswerCampaign(string campaignId, [FromBody] AnswerCampaignRequest request)
-        {
+        //[HttpPost("campaigns/{campaignId}")]
+        //public async Task<IActionResult> AnswerCampaign(string campaignId, [FromBody] AnswerCampaignRequest request)
+        //{
 
-        }
+        //}
 
-        [HttpPut("campaigns/{campaignId}")]
-        public async Task<IActionResult> EditCampaign(string campaignId, [FromBody] EditCampaignRequest request)
-        {
+        //[HttpPut("campaigns/{campaignId}")]
+        //public async Task<IActionResult> EditCampaign(string campaignId, [FromBody] EditCampaignRequest request)
+        //{
 
-        }
+        //}
 
-        [HttpDelete("campaigns/{campaignId}")]
-        public async Task<IActionResult> DeleteCampaign(string campaignId)
-        {
+        //[HttpDelete("campaigns/{campaignId}")]
+        //public async Task<IActionResult> DeleteCampaign(string campaignId)
+        //{
 
-        }
+        //}
 
-        [HttpGet("deliverydemands/{deliveryDemandId}")]
-        public async Task<IActionResult> GetDeliveryDemand(string deliveryDemandId)
-        {
+        //[HttpGet("deliverydemands/{deliveryDemandId}")]
+        //public async Task<IActionResult> GetDeliveryDemand(string deliveryDemandId)
+        //{
 
-        }
+        //}
 
-        [HttpGet("deliverydemands")]
-        public async Task<IActionResult> GetDeliveryDemands([FromBody] GetDeliveryDemandsRequest request)
-        {
+        //[HttpGet("deliverydemands")]
+        //public async Task<IActionResult> GetDeliveryDemands([FromBody] GetDeliveryDemandsRequest request)
+        //{
 
-        }
+        //}
 
 
-        [HttpPost("deliverydemands/{deliveryDemandId}")]
-        public async Task<IActionResult> AnswerDeliveryDemand(string deliveryDemandId, [FromBody] AnswerDeliveryDemandRequest request)
-        {
+        //[HttpPost("deliverydemands/{deliveryDemandId}")]
+        //public async Task<IActionResult> AnswerDeliveryDemand(string deliveryDemandId, [FromBody] AnswerDeliveryDemandRequest request)
+        //{
 
-        }
+        //}
 
-        [HttpPut("deliverydemands/{deliveryDemandId}")]
-        public async Task<IActionResult> EditDeliveryDemand(string deliveryDemandId, [FromBody] EditDeliveryDemandRequest request)
-        {
+        //[HttpPut("deliverydemands/{deliveryDemandId}")]
+        //public async Task<IActionResult> EditDeliveryDemand(string deliveryDemandId, [FromBody] EditDeliveryDemandRequest request)
+        //{
 
-        }
+        //}
 
-        [HttpDelete("deliverydemands/{deliveryDemandId}")]
-        public async Task<IActionResult> DeleteDeliveryDemand(string deliveryDemandId)
-        {
+        //[HttpDelete("deliverydemands/{deliveryDemandId}")]
+        //public async Task<IActionResult> DeleteDeliveryDemand(string deliveryDemandId)
+        //{
 
-        }
+        //}
 
-        [HttpGet("contributions/{contributionId}")]
-        public async Task<IActionResult> GetContribution(string contributionId)
-        {
+        //[HttpGet("contributions/{contributionId}")]
+        //public async Task<IActionResult> GetContribution(string contributionId)
+        //{
 
-        }
+        //}
 
-        [HttpGet("contributions")]
-        public async Task<IActionResult> GetContribution([FromBody] GetContributionsRequest request)
-        {
+        //[HttpGet("contributions")]
+        //public async Task<IActionResult> GetContribution([FromBody] GetContributionsRequest request)
+        //{
 
-        }
+        //}
 
-        [HttpPost("contributions/{contributionId}")]
-        public async Task<IActionResult> ApproveContribution(string contributionId)
-        {
+        //[HttpPost("contributions/{contributionId}")]
+        //public async Task<IActionResult> ApproveContribution(string contributionId)
+        //{
 
-        }
+        //}
 
-        [HttpPut("contributions/{contributionId}")]
-        public async Task<IActionResult> EditContribution(string contributionId, [FromBody] EditContributionRequest request)
-        {
+        //[HttpPut("contributions/{contributionId}")]
+        //public async Task<IActionResult> EditContribution(string contributionId, [FromBody] EditContributionRequest request)
+        //{
 
-        }
+        //}
 
-        [HttpDelete("contributions/{contributionId}")]
-        public async Task<IActionResult> DeleteContribution(string contributionId)
-        {
+        //[HttpDelete("contributions/{contributionId}")]
+        //public async Task<IActionResult> DeleteContribution(string contributionId)
+        //{
 
-        }
+        //}
 
-        [HttpGet("processes/{processId}")]
-        public async Task<IActionResult> GetProcess(string processId)
-        {
+        //[HttpGet("processes/{processId}")]
+        //public async Task<IActionResult> GetProcess(string processId)
+        //{
 
-        }
+        //}
 
-        [HttpGet("processes/{demandId}")]
-        public async Task<IActionResult> GetProcesses(string campaignId)
-        {
+        //[HttpGet("processes/{demandId}")]
+        //public async Task<IActionResult> GetProcesses(string campaignId)
+        //{
 
-        }
+        //}
 
-        [HttpPost("delivery")]
-        public async Task<IActionResult> ValidateDelivery([FromBody] ValidateDeliveryRequest request)
-        {
+        //[HttpPost("delivery")]
+        //public async Task<IActionResult> ValidateDelivery([FromBody] ValidateDeliveryRequest request)
+        //{
 
-        }
+        //}
 
-        [HttpPost("delivery/{contributionId}")]
-        public async Task<IActionResult> AcceptDelivery(string contributionId)
-        {
+        //[HttpPost("delivery/{contributionId}")]
+        //public async Task<IActionResult> AcceptDelivery(string contributionId)
+        //{
 
-        }
+        //}
 
     }
 }

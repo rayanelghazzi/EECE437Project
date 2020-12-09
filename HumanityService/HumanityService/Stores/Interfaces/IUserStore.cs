@@ -1,7 +1,4 @@
 ﻿using HumanityService.DataContracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HumanityService.Stores.Interfaces
@@ -12,7 +9,6 @@ namespace HumanityService.Stores.Interfaces
         Task<User> GetUser(string username);
         Task DeleteUser(string username);
         Task UpdateUser(User user);
-
         Task AddNgo(Ngo ngo);
         Task<Ngo> GetNgo(string ngo);
         Task DeleteNgo(string ngo);

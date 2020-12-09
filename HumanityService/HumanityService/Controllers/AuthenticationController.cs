@@ -16,22 +16,22 @@ namespace HumanityService.Controllers
             _authenticationService = authenticationService;
         }
 
-        [HttpGet("login")]
-        public async Task<IActionResult> Login(LoginRequest request)
-        {
+        //[HttpGet("login")]
+        //public async Task<IActionResult> Login(LoginRequest request)
+        //{
 
-        }
+        //}
 
-        [HttpPost("logout")]
-        public async Task<IActionResult> Logout(LogoutRequest request)
-        {
+        //[HttpPost("logout")]
+        //public async Task<IActionResult> Logout(LogoutRequest request)
+        //{
 
-        }
+        //}
 
-        [HttpGet("refresh-access-token")]
-        public async Task<IActionResult> RefreshAccessToken(RefreshTokenRequest request)
-        {
+        //[HttpGet("refresh-access-token")]
+        //public async Task<IActionResult> RefreshAccessToken(RefreshTokenRequest request)
+        //{
 
-        }
+        //}
     }
 }

@@ -11,18 +11,18 @@ namespace HumanityService.Stores.Interfaces
     {
         Task<Campaign> GetCampaign(string campaignId);
         Task<List<Campaign>> GetCampaigns(GetCampaignsRequest request);
-        Task CreateCampaign(CreateCampaignRequest request);
+        Task AddCampaign(Campaign campaign);
         Task EditCampaign(string campaignId, EditCampaignRequest request);
         Task DeleteCampaign(string campaignId);
 
-        Task<Campaign> GetDeliveryDemand(string deliveryDemandId);
-        Task<List<Campaign>> GetDeliveryDemands(GetDeliveryDemandsRequest request);
-        Task CreateDeliveryDemand(CreateDeliveryDemandRequest request);
+        Task<DeliveryDemand> GetDeliveryDemand(string deliveryDemandId);
+        Task<List<DeliveryDemand>> GetDeliveryDemands(GetDeliveryDemandsRequest request);
+        Task AddDeliveryDemand(DeliveryDemand deliveryDemand);
         Task EditDeliveryDemand(string deliveryDemandId, EditDeliveryDemandRequest request);
         Task DeleteDeliveryDemand(string deliveryDemandId);
 
-        Task<Campaign> GetContribution(string contributionId);
-        Task<List<Campaign>> GetContributions(GetContributionsRequest request);
+        Task<Contribution> GetContribution(string contributionId);
+        Task<List<Contribution>> GetContributions(GetContributionsRequest request);
         Task EditContribution(string contributionId, EditContributionRequest request);
         Task DeleteContribution(string contributionId);
 

@@ -2,6 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HumanityService.Services;
+using HumanityService.Services.Interfaces;
+using HumanityService.Stores;
+using HumanityService.Stores.Interfaces;
+using HumanityService.Stores.Sql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +31,26 @@ namespace HumanityService
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddSingleton<ITransactionService, TransactionService>();
+            services.AddSingleton<IUserService, UserService>();
+            services.AddSingleton<IAuthenticationService, AuthenticationService>();
+            services.AddSingleton<IRoutingService, RoutingService>();
+            services.AddSingleton<IMatchingService, MatchingService>();
+            services.AddSingleton<INotificationService, NotificationService>();
+
+            services.AddSingleton<ITransactionStore, SqlTransactionStore>();
+            services.AddSingleton<IRefreshTokenStore, SqlRefreshTokenStore>();
+            services.AddSingleton<IUserStore, SqlUserStore>();
+
+            services.AddSingleton<ISqlConnectionFactory, SqlConnectionFactory>();
+            services.AddSingleton<SqlUserStore>();
+            services.AddSingleton<SqlRefreshTokenStore>();
+            services.AddSingleton<SqlTransactionStore>();
+
+
+            services.Configure<SqlDatabaseSettings>(Configuration.GetSection("SqlDatabaseSettings"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
