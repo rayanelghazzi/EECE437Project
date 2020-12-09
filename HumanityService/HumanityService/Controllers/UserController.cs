@@ -21,52 +21,52 @@ namespace HumanityService.Controllers
             _userService = userService;
         }
 
-        [HttpPost("users")]
-        public async Task<IActionResult> AddUser([FromBody] User user)
-        {
+        //[HttpPost("users")]
+        //public async Task<IActionResult> AddUser([FromBody] User user)
+        //{
 
-        }
+        //}
 
-        [HttpGet("users/{username}")]
-        public async Task<IActionResult> GetUserInfo(string username)
-        {
+        //[HttpGet("users/{username}")]
+        //public async Task<IActionResult> GetUserInfo(string username)
+        //{
             
-        }
+        //}
 
-        [HttpDelete("users/{username}")]
-        public async Task<IActionResult> DeleteUser(string username)
-        {
+        //[HttpDelete("users/{username}")]
+        //public async Task<IActionResult> DeleteUser(string username)
+        //{
 
-        }
+        //}
 
-        [HttpPut("users/{username}")]
-        public async Task<IActionResult> UpdateUser([FromBody] User user)
-        {
+        //[HttpPut("users/{username}")]
+        //public async Task<IActionResult> UpdateUser([FromBody] User user)
+        //{
 
-        }
+        //}
 
-        [HttpPost("ngo")]
-        public async Task<IActionResult> AddNgo([FromBody] Ngo ngo)
-        {
+        //[HttpPost("ngo")]
+        //public async Task<IActionResult> AddNgo([FromBody] Ngo ngo)
+        //{
 
-        }
+        //}
 
-        [HttpGet("ngo/{username}")]
-        public async Task<IActionResult> GetNgoInfo(string username)
-        {
+        //[HttpGet("ngo/{username}")]
+        //public async Task<IActionResult> GetNgoInfo(string username)
+        //{
 
-        }
+        //}
 
-        [HttpDelete("ngo/{username}")]
-        public async Task<IActionResult> DeleteNgo(string username)
-        {
+        //[HttpDelete("ngo/{username}")]
+        //public async Task<IActionResult> DeleteNgo(string username)
+        //{
 
-        }
+        //}
 
-        [HttpPut("ngo/{username}")]
-        public async Task<IActionResult> UpdateNgo([FromBody] Ngo ngo)
-        {
+        //[HttpPut("ngo/{username}")]
+        //public async Task<IActionResult> UpdateNgo([FromBody] Ngo ngo)
+        //{
 
-        }
+        //}
     }
 }

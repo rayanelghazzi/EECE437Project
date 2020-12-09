@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanityService", "HumanityService\HumanityService.csproj", "{0F0D12FE-1D0C-40F7-BFCA-818539B4B769}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanityService.Migrations", "HumanityService.Migrations\HumanityService.Migrations.csproj", "{4D05842B-0A0F-422B-A9FA-E3A799665169}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanityService.DataContracts", "HumanityService.DataContracts\HumanityService.DataContracts.csproj", "{C723AA54-A2CD-4F33-AC2E-CED3FDD85F9F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanityService", "HumanityService\HumanityService.csproj", "{3C8842CE-D2B4-486E-AA78-D42639633A44}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanityService.DataContracts", "HumanityService.DataContracts\HumanityService.DataContracts.csproj", "{03BE9F9C-5B33-4707-8BA0-FA4D4D1B7055}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{261FE039-6472-4DB6-AD07-EA4491DF9492}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +17,22 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0F0D12FE-1D0C-40F7-BFCA-818539B4B769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F0D12FE-1D0C-40F7-BFCA-818539B4B769}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F0D12FE-1D0C-40F7-BFCA-818539B4B769}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F0D12FE-1D0C-40F7-BFCA-818539B4B769}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C723AA54-A2CD-4F33-AC2E-CED3FDD85F9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C723AA54-A2CD-4F33-AC2E-CED3FDD85F9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C723AA54-A2CD-4F33-AC2E-CED3FDD85F9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C723AA54-A2CD-4F33-AC2E-CED3FDD85F9F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D05842B-0A0F-422B-A9FA-E3A799665169}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D05842B-0A0F-422B-A9FA-E3A799665169}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D05842B-0A0F-422B-A9FA-E3A799665169}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D05842B-0A0F-422B-A9FA-E3A799665169}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3C8842CE-D2B4-486E-AA78-D42639633A44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3C8842CE-D2B4-486E-AA78-D42639633A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3C8842CE-D2B4-486E-AA78-D42639633A44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3C8842CE-D2B4-486E-AA78-D42639633A44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03BE9F9C-5B33-4707-8BA0-FA4D4D1B7055}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03BE9F9C-5B33-4707-8BA0-FA4D4D1B7055}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03BE9F9C-5B33-4707-8BA0-FA4D4D1B7055}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03BE9F9C-5B33-4707-8BA0-FA4D4D1B7055}.Release|Any CPU.Build.0 = Release|Any CPU
+		{261FE039-6472-4DB6-AD07-EA4491DF9492}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{261FE039-6472-4DB6-AD07-EA4491DF9492}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{261FE039-6472-4DB6-AD07-EA4491DF9492}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{261FE039-6472-4DB6-AD07-EA4491DF9492}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

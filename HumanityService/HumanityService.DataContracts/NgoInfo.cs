@@ -12,7 +12,7 @@ namespace HumanityService.DataContracts
         public string RegistrationNumber { get; set; }
         public string WebsiteAddress { get; set; }
         public long PhoneNumber { get; set; }
-        public List<Location> Locations { get; set; }
+        public Location Location { get; set; }
         public string Description { get; set; }
     }
 }

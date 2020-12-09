@@ -9,7 +9,7 @@ namespace HumanityService.DataContracts
         public string Name { get; set; }
         public string Id { get; set; }
         public string ProcessId { get; set; }
-        public string User { get; set; }
+        public string Username { get; set; }
         public Location Location { get; set; }
         public List<long> TimeWindow { get; set; }
         public string Status { get; set; }
