@@ -1,5 +1,5 @@
 ﻿using System;
-using HumanityService.Stores.Sql;
+using HumanityService.Stores;
 using Microsoft.EntityFrameworkCore;
 
 namespace HumanityService.Migrations
