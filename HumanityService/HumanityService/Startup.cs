@@ -39,14 +39,14 @@ namespace HumanityService
             services.AddSingleton<IMatchingService, MatchingService>();
             services.AddSingleton<INotificationService, NotificationService>();
 
-            services.AddSingleton<ITransactionStore, SqlTransactionStore>();
-            services.AddSingleton<IRefreshTokenStore, SqlRefreshTokenStore>();
-            services.AddSingleton<IUserStore, SqlUserStore>();
+            services.AddSingleton<ITransactionStore, TransactionStore>();
+            services.AddSingleton<IRefreshTokenStore, RefreshTokenStore>();
+            services.AddSingleton<IUserStore, UserStore>();
 
             services.AddSingleton<ISqlConnectionFactory, SqlConnectionFactory>();
-            services.AddSingleton<SqlUserStore>();
-            services.AddSingleton<SqlRefreshTokenStore>();
-            services.AddSingleton<SqlTransactionStore>();
+            services.AddSingleton<UserStore>();
+            services.AddSingleton<RefreshTokenStore>();
+            services.AddSingleton<TransactionStore>();
 
 
             services.Configure<SqlDatabaseSettings>(Configuration.GetSection("SqlDatabaseSettings"));

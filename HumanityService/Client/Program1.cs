@@ -1,5 +1,5 @@
 ﻿using HumanityService.DataContracts;
-using HumanityService.Stores.Sql;
+using HumanityService.Stores;
 using Microsoft.Extensions.Options;
 using System;
 
@@ -16,7 +16,7 @@ namespace Client
 
             IOptions<SqlDatabaseSettings> options = Options.Create(databaseSettings);
             SqlConnectionFactory connectionFactory = new SqlConnectionFactory(options);
-            SqlUserStore store = new SqlUserStore(connectionFactory);
+            UserStore store = new UserStore(connectionFactory);
 
             var user = new User
             {
