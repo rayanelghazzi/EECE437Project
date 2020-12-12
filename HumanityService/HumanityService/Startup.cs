@@ -6,7 +6,6 @@ using HumanityService.Services;
 using HumanityService.Services.Interfaces;
 using HumanityService.Stores;
 using HumanityService.Stores.Interfaces;
-using HumanityService.Stores.Sql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -42,11 +41,13 @@ namespace HumanityService
             services.AddSingleton<ITransactionStore, TransactionStore>();
             services.AddSingleton<IRefreshTokenStore, RefreshTokenStore>();
             services.AddSingleton<IUserStore, UserStore>();
+            services.AddSingleton<ILocationStore, LocationStore>();
 
             services.AddSingleton<ISqlConnectionFactory, SqlConnectionFactory>();
             services.AddSingleton<UserStore>();
             services.AddSingleton<RefreshTokenStore>();
             services.AddSingleton<TransactionStore>();
+            services.AddSingleton<LocationStore>(); 
 
 
             services.Configure<SqlDatabaseSettings>(Configuration.GetSection("SqlDatabaseSettings"));

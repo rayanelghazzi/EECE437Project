@@ -9,27 +9,28 @@ namespace HumanityService.Stores.Interfaces
 {
     public interface ITransactionStore
     {
-        Task<Campaign> GetCampaign(string campaignId);
+        Task<Campaign> GetCampaign(int campaignId);
         Task<List<Campaign>> GetCampaigns(GetCampaignsRequest request);
         Task AddCampaign(Campaign campaign);
-        Task EditCampaign(string campaignId, EditCampaignRequest request);
-        Task DeleteCampaign(string campaignId);
+        Task UpdateCampaign(Campaign campaign);
+        Task DeleteCampaign(int campaignId);
 
-        Task<DeliveryDemand> GetDeliveryDemand(string deliveryDemandId);
+        Task<DeliveryDemand> GetDeliveryDemand(int deliveryDemandId);
         Task<List<DeliveryDemand>> GetDeliveryDemands(GetDeliveryDemandsRequest request);
         Task AddDeliveryDemand(DeliveryDemand deliveryDemand);
-        Task EditDeliveryDemand(string deliveryDemandId, EditDeliveryDemandRequest request);
-        Task DeleteDeliveryDemand(string deliveryDemandId);
+        Task UpdateDeliveryDemand(DeliveryDemand deliveryDemand);
+        Task DeleteDeliveryDemand(int deliveryDemandId);
 
-        Task<Contribution> GetContribution(string contributionId);
+        Task<Contribution> GetContribution(int contributionId);
         Task<List<Contribution>> GetContributions(GetContributionsRequest request);
-        Task EditContribution(string contributionId, EditContributionRequest request);
-        Task DeleteContribution(string contributionId);
+        Task AddContribution(Contribution contribution);
+        Task UpdateContribution(Contribution request);
+        Task DeleteContribution(int contributionId);
 
-        Task<Process> GetProcess(string processId);
-        Task<List<Campaign>> GetProcesses(string campaignId);
-        Task EditProcess(string processId, Process process);
-        Task DeleteProcess(string processId);
-
+        Task<Process> GetProcess(int processId);
+        Task<List<Campaign>> GetProcesses(int campaignId);
+        Task AddProcess(Process process);
+        Task UpdateProcess(Process process);
+        Task DeleteProcess(int processId);
     }
 }

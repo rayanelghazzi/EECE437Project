@@ -29,7 +29,7 @@ namespace HumanityService.Migrations
 
 
             //string connectionString = Environment.GetEnvironmentVariable("HumanityService_SqlDatabaseSettings__ConnectionString");
-            string connectionString = "Server=tcp:humanityservice.database.windows.net,1433;Initial Catalog=HumanityServiceDB;Persist Security Info=False;User ID=rayanelghazzi;Password=Abcdefg1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;";
+            string connectionString = "Server=DESKTOP-LSFHGPT;Database=HumanityServiceDb;Trusted_Connection=true";
 
             if (string.IsNullOrWhiteSpace(connectionString))
             {
@@ -59,6 +59,24 @@ namespace HumanityService.Migrations
             modelBuilder.Entity<NgoEntity>().Property(e => e.PhoneNumber).HasMaxLength(16).IsRequired();
             modelBuilder.Entity<NgoEntity>().Property(e => e.Password).HasMaxLength(128).IsRequired();
 
+            modelBuilder.Entity<LocationEntity>().HasKey(e => e.Username);
+
+            modelBuilder.Entity<CampaignEntity>().HasKey(e => e.Id);
+            modelBuilder.Entity<CampaignEntity>().Property(e => e.Id).ValueGeneratedOnAdd();
+
+
+            modelBuilder.Entity<ProcessEntity>().HasKey(e => e.Id);
+            modelBuilder.Entity<ProcessEntity>().Property(e => e.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<ProcessEntity>().HasIndex(e => e.CampaignId);
+
+            modelBuilder.Entity<ContributionEntity>().HasKey(e => e.Id);
+            modelBuilder.Entity<ContributionEntity>().Property(e => e.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<ContributionEntity>().HasIndex(e => e.ProcessId);
+            modelBuilder.Entity<ContributionEntity>().HasIndex(e => e.DeliveryDemandId);
+
+            modelBuilder.Entity<DeliveryDemandEntity>().HasKey(e => e.Id);
+            modelBuilder.Entity<DeliveryDemandEntity>().Property(e => e.Id).ValueGeneratedOnAdd();
+            modelBuilder.Entity<DeliveryDemandEntity>().HasIndex(e => e.ProcessId);
         }
     }
 }

@@ -11,44 +11,42 @@ namespace HumanityService.Stores
     public class UserStore : IUserStore
     {
         private readonly ISqlConnectionFactory _sqlConnectionFactory;
-
         private readonly IMapper _mapper;
+        private readonly ILocationStore _locationStore;
+
 
         private static readonly string[] UsersTableColumns =
         {
-            nameof(User.Username),
-            nameof(User.Email),
-            nameof(User.FirstName),
-            nameof(User.LastName),
-            nameof(User.PhoneNumber),
-            nameof(User.Password)
+            nameof(UserEntity.Username),
+            nameof(UserEntity.Email),
+            nameof(UserEntity.FirstName),
+            nameof(UserEntity.LastName),
+            nameof(UserEntity.PhoneNumber),
+            nameof(UserEntity.Password)
         };
 
         private static readonly string[] NgosTableColumns =
-{
-            nameof(Ngo.Name),
-            nameof(Ngo.Username),
-            nameof(Ngo.Email),
-            nameof(Ngo.Password),
-            nameof(Ngo.PhoneNumber),
-            nameof(Ngo.RegistrationNumber),
-            nameof(Ngo.WebsiteAddress)
-        };
-
-        private static readonly string[] LocationsTableColumns =
         {
-            nameof(Location.Coordinates),
-            nameof(Location.Description)
+            nameof(NgoEntity.Name),
+            nameof(NgoEntity.Username),
+            nameof(NgoEntity.Email),
+            nameof(NgoEntity.Password),
+            nameof(NgoEntity.PhoneNumber),
+            nameof(NgoEntity.RegistrationNumber),
+            nameof(NgoEntity.WebsiteAddress)
         };
 
-        public UserStore(ISqlConnectionFactory sqlConnectionFactory)
+        public UserStore(ISqlConnectionFactory sqlConnectionFactory, ILocationStore locationStore)
         {
             _sqlConnectionFactory = sqlConnectionFactory;
+            _locationStore = locationStore; 
 
             var configuration = new MapperConfiguration(cfg =>
             {
-                cfg.CreateMap<User, UserInfo>();
-                cfg.CreateMap<Ngo, NgoInfo>();
+                cfg.CreateMap<User, UserEntity>();
+                cfg.CreateMap<UserEntity, User>();
+                cfg.CreateMap<Ngo, NgoEntity>();
+                cfg.CreateMap<NgoEntity, Ngo>();
             });
             _mapper = configuration.CreateMapper();
         }
@@ -58,7 +56,9 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
             var sql = new QueryBuilder().InsertInto("ngos", NgosTableColumns).Build();
-            await connection.ExecuteAsync(sql, ngo);
+            var ngoEntity = ToNgoEntity(ngo);
+            await connection.ExecuteAsync(sql, ngoEntity);
+            await _locationStore.AddLocation(ngo.Username, ngo.Location);
         }
 
         public async Task AddUser(User user)
@@ -66,7 +66,9 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
             var sql = new QueryBuilder().InsertInto("users", UsersTableColumns).Build();
-            await connection.ExecuteAsync(sql, user);
+            var userEntity = ToUserEntity(user);
+            await connection.ExecuteAsync(sql, userEntity);
+            await _locationStore.AddLocation(user.Username, user.Location);
         }
 
         public async Task DeleteNgo(string ngoUsername)
@@ -81,6 +83,7 @@ namespace HumanityService.Stores
             {
                 Username = ngoUsername
             });
+            await _locationStore.DeleteLocation(ngoUsername);
         }
 
         public async Task DeleteUser(string username)
@@ -95,6 +98,7 @@ namespace HumanityService.Stores
             {
                 Username = username
             });
+            await _locationStore.DeleteLocation(username);
         }
 
         public async Task<Ngo> GetNgo(string ngoUsername)
@@ -107,7 +111,10 @@ namespace HumanityService.Stores
                 .Where("Username = @Username")
                 .Build();
 
-            var ngo = await connection.QueryFirstOrDefaultAsync<Ngo>(sql, new { Username = ngoUsername });
+            var ngoEntity = await connection.QueryFirstOrDefaultAsync<NgoEntity>(sql, new { Username = ngoUsername });
+            var location = await _locationStore.GetLocation(ngoUsername);
+            var ngo = ToNgo(ngoEntity, location);
+
             if (ngo == null)
             {
                 throw new StorageErrorException($"Ngo entity with username {ngoUsername} was not found", 404);
@@ -126,7 +133,10 @@ namespace HumanityService.Stores
                 .Where("Username = @Username")
                 .Build();
 
-            var user = await connection.QueryFirstOrDefaultAsync<User>(sql, new { Username = username });
+            var userEntity = await connection.QueryFirstOrDefaultAsync<UserEntity>(sql, new { Username = username });
+            var location = await _locationStore.GetLocation(username);
+            var user = ToUser(userEntity, location);
+
             if (user == null)
             {
                 throw new StorageErrorException($"User entity with username {username} was not found", 404);
@@ -143,11 +153,14 @@ namespace HumanityService.Stores
             var sql = new QueryBuilder().Update("ngos", UsersTableColumns)
                 .Where($"Username = @Username").Build();
 
+            var ngoEntity = ToNgoEntity(ngo);
+ 
+            int rowsAffected = await connection.ExecuteAsync(sql, ngoEntity);
+            await _locationStore.UpdateLocation(ngo.Username, ngo.Location);
 
-            int rowsAffected = await connection.ExecuteAsync(sql, ngo);
             if (rowsAffected == 0)
             {
-                if (!await NgoExists(ngo.Username))
+                if (!await UserOrNgoExists("ngos", ngo.Username))
                 {
                     throw new StorageErrorException($"Ngo entity with username {ngo.Username} was not found", 404);
                 }
@@ -163,11 +176,12 @@ namespace HumanityService.Stores
             var sql = new QueryBuilder().Update("users", UsersTableColumns)
                 .Where($"Username = @Username").Build();
 
-           
+            var userEntity = ToUserEntity(user);
+            await _locationStore.UpdateLocation(user.Username, user.Location);
             int rowsAffected = await connection.ExecuteAsync(sql, user);
             if (rowsAffected == 0)
             {
-                if (!await UserExists(user.Username))
+                if (!await UserOrNgoExists("users", user.Username))
                 {
                     throw new StorageErrorException($"User entity with username {user.Username} was not found", 404);
                 }
@@ -176,13 +190,13 @@ namespace HumanityService.Stores
         }
 
 
-        public async Task<bool> UserExists(string username)
+        public async Task<bool> UserOrNgoExists(string table, string username)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
 
             var sql = new QueryBuilder()
-                .Count("users")
+                .Count(table)
                 .Where("Username = @Username")
                 .Build();
 
@@ -190,29 +204,41 @@ namespace HumanityService.Stores
             return count > 0;
         }
 
-        public async Task<bool> NgoExists(string ngoUsername)
+
+        private UserEntity ToUserEntity(User user)
         {
-            using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
-            connection.Open();
-
-            var sql = new QueryBuilder()
-                .Count("ngos")
-                .Where("Username = @Username")
-                .Build();
-
-            int count = await connection.QuerySingleAsync<int>(sql, new { Username = ngoUsername });
-            return count > 0;
+            var entity = _mapper.Map<UserEntity>(user);
+            return entity;
         }
 
-        private UserInfo ToUserInfo(UserEntity entity)
+        private User ToUser(UserEntity entity, Location location)
         {
             if (entity == null)
             {
                 return null;
             }
 
-            var user = _mapper.Map<UserInfo>(entity);
+            var user = _mapper.Map<User>(entity);
+            user.Location = location;
             return user;
+        }
+
+        private NgoEntity ToNgoEntity(Ngo ngo)
+        {
+            var entity = _mapper.Map<NgoEntity>(ngo);
+            return entity;
+        }
+
+        private Ngo ToNgo(NgoEntity entity, Location location)
+        {
+            if (entity == null)
+            {
+                return null;
+            }
+
+            var ngo = _mapper.Map<Ngo>(entity);
+            ngo.Location = location;
+            return ngo;
         }
     }
 }

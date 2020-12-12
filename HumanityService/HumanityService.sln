@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanityService", "Humanity
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanityService.DataContracts", "HumanityService.DataContracts\HumanityService.DataContracts.csproj", "{03BE9F9C-5B33-4707-8BA0-FA4D4D1B7055}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{261FE039-6472-4DB6-AD07-EA4491DF9492}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{261FE039-6472-4DB6-AD07-EA4491DF9492}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -11,14 +11,13 @@ namespace HumanityService.Migrations.Migrations
                 name: "locations",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 100, nullable: false),
                     Username = table.Column<string>(maxLength: 36, nullable: false),
                     Coordinates = table.Column<string>(nullable: false),
-                    Description = table.Column<int>(nullable: false, defaultValue: 0)
+                    Description = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_locations", x => x.Id);
+                    table.PrimaryKey("PK_locations", x => x.Username);
                 });
 
             migrationBuilder.CreateTable(
@@ -60,7 +59,7 @@ namespace HumanityService.Migrations.Migrations
                 name: "campaigns",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 100, nullable: false),
+                    Id = table.Column<int>(nullable: false),
                     Username = table.Column<string>(maxLength: 36, nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Type = table.Column<string>(maxLength: 100, nullable: false),
@@ -81,10 +80,11 @@ namespace HumanityService.Migrations.Migrations
                 name: "processes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 100, nullable: false),
-                    CampaignId = table.Column<string>(maxLength: 100, nullable: false),
+                    Id = table.Column<int>(nullable: false),
+                    CampaignId = table.Column<int>(nullable: false),
                     Status = table.Column<string>(maxLength: 128, nullable: false),
-                    TimeWindow = table.Column<string>(nullable: false),
+                    TimeWindowStart = table.Column<string>(nullable: false),
+                    TimeWindowEnd = table.Column<string>(nullable:false),
                     TimeCreated = table.Column<long>(nullable: false, defaultValue: 0L),
                     TimeCompleted = table.Column<long>(nullable: false, defaultValue: 0L),
                     DeliveryCode = table.Column<string>()
@@ -98,13 +98,14 @@ namespace HumanityService.Migrations.Migrations
                 name: "contributions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 100, nullable: false),
-                    ProcessId = table.Column<string>(maxLength: 100, nullable: false),
-                    DeliveryDemandId = table.Column<string>(maxLength: 100, nullable: true),
+                    Id = table.Column<int>(nullable: false),
+                    ProcessId = table.Column<int>(nullable: false),
+                    DeliveryDemandId = table.Column<int>(nullable: true),
                     Username = table.Column<string>(maxLength: 36, nullable: false),
                     Type = table.Column<string>(maxLength: 100, nullable: false),
                     Status = table.Column<string>(maxLength: 128, nullable: false),
-                    TimeWindow = table.Column<string>(nullable: false),
+                    TimeWindowStart = table.Column<string>(nullable: false),
+                    TimeWindowEnd = table.Column<string>(nullable: false),
                     TimeCreated = table.Column<long>(nullable: false, defaultValue: 0L),
                     TimeCompleted = table.Column<long>(nullable: false, defaultValue: 0L),
                 },
@@ -114,22 +115,23 @@ namespace HumanityService.Migrations.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "DeliveryDemands",
+                name: "delivery-demands",
                 columns: table => new
                 {
-                    Id = table.Column<string>(maxLength: 100, nullable: false),
-                    ProcessId = table.Column<string>(maxLength: 100, nullable: false),
+                    Id = table.Column<int>(nullable: false),
+                    ProcessId = table.Column<int>(nullable: false),
                     Username = table.Column<string>(maxLength: 36, nullable: false),
                     Type = table.Column<string>(maxLength: 100, nullable: false),
                     Status = table.Column<string>(maxLength: 128, nullable: false),
-                    TimeWindow = table.Column<string>(nullable: false),
+                    TimeWindowStart = table.Column<string>(nullable: false),
+                    TimeWindowEnd = table.Column<string>(nullable: false),
                     TimeCreated = table.Column<long>(nullable: false, defaultValue: 0L),
                     TimeCompleted = table.Column<long>(nullable: false, defaultValue: 0L),
                     Description = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DeliveryDemands", x => x.Id);
+                    table.PrimaryKey("PK_delivery-demands", x => x.Id);
                 });
 
 
@@ -150,7 +152,7 @@ namespace HumanityService.Migrations.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_DeliveryDemands_ProcessId",
-                table: "DeliveryDemands",
+                table: "delivery-demands",
                 column: "ProcessId");
 
         }
@@ -176,7 +178,7 @@ namespace HumanityService.Migrations.Migrations
                 name: "contributions");
 
             migrationBuilder.DropTable(
-                name: "delilverydemand");
+                name: "delivery-demands");
         }
     }
 }

@@ -11,12 +11,19 @@ namespace Client
         {
             SqlDatabaseSettings databaseSettings = new SqlDatabaseSettings
             {
-                ConnectionString = "Server=tcp:humanityservice.database.windows.net,1433;Initial Catalog=HumanityServiceDB;Persist Security Info=False;User ID=rayanelghazzi;Password=Abcdefg1234;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"
+                ConnectionString = "Server=DESKTOP-LSFHGPT;Database=HumanityServiceDb;Trusted_Connection=true"
             };
 
             IOptions<SqlDatabaseSettings> options = Options.Create(databaseSettings);
             SqlConnectionFactory connectionFactory = new SqlConnectionFactory(options);
-            UserStore store = new UserStore(connectionFactory);
+            LocationStore locationStore = new LocationStore(connectionFactory);
+            UserStore store = new UserStore(connectionFactory, locationStore);
+
+            var location = new Location
+            {
+                Coordinates = "9w83r09q397-e097r-90-9er909re",
+                Description = "Bsalim, facing MEIH, 2nd building to the left, 2nd floor"
+            };
 
             var user = new User
             {
@@ -25,12 +32,15 @@ namespace Client
                 Email = "leomessi@hotmail.com",
                 Username = "leomessi",
                 Password = "Abcdefg1234",
-                PhoneNumber = "70467876"
-
+                PhoneNumber = "70467876",
+                Location = location
             };
 
-            await store.AddUser(user);
-
+            //await store.AddUser(user);
+            //var getuser = await store.GetUser("leomessi");
+            await store.DeleteUser("leomessi");
+            //Console.WriteLine(getuser.Location.Description);
+            
         }
     }
 }
