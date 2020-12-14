@@ -62,20 +62,16 @@ namespace HumanityService.Migrations
             modelBuilder.Entity<LocationEntity>().HasKey(e => e.Username);
 
             modelBuilder.Entity<CampaignEntity>().HasKey(e => e.Id);
-            modelBuilder.Entity<CampaignEntity>().Property(e => e.Id).ValueGeneratedOnAdd();
 
 
             modelBuilder.Entity<ProcessEntity>().HasKey(e => e.Id);
-            modelBuilder.Entity<ProcessEntity>().Property(e => e.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<ProcessEntity>().HasIndex(e => e.CampaignId);
 
             modelBuilder.Entity<ContributionEntity>().HasKey(e => e.Id);
-            modelBuilder.Entity<ContributionEntity>().Property(e => e.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<ContributionEntity>().HasIndex(e => e.ProcessId);
             modelBuilder.Entity<ContributionEntity>().HasIndex(e => e.DeliveryDemandId);
 
             modelBuilder.Entity<DeliveryDemandEntity>().HasKey(e => e.Id);
-            modelBuilder.Entity<DeliveryDemandEntity>().Property(e => e.Id).ValueGeneratedOnAdd();
             modelBuilder.Entity<DeliveryDemandEntity>().HasIndex(e => e.ProcessId);
         }
     }

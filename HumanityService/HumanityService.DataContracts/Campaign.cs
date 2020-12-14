@@ -4,8 +4,9 @@ namespace HumanityService.DataContracts
 {
     public class Campaign
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
+        public string NgoName { get; set; }
         public string Username { get; set; }
         public string Status { get; set; }
         public string Type { get; set; }
@@ -17,4 +18,20 @@ namespace HumanityService.DataContracts
         public string Description { get; set; }
         public Location Location { get; set;}
     }
+
+    /// <summary>
+    /// Might use them later
+    /// </summary>
+    public enum CampaignStatus
+    {
+        Active,
+        Expired
+    };
+
+    public enum ContributionType
+    {
+        Delivery,
+        Donation,
+        Volunteering
+    };
 }

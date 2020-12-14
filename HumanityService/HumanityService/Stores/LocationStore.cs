@@ -13,9 +13,9 @@ namespace HumanityService.Stores
 {
     public class LocationStore : ILocationStore
     {
-        private readonly ISqlConnectionFactory _sqlConnectionFactory;
+        private readonly IConnectionFactory _sqlConnectionFactory;
 
-        public LocationStore(ISqlConnectionFactory sqlConnectionFactory)
+        public LocationStore(IConnectionFactory sqlConnectionFactory)
         {
             _sqlConnectionFactory = sqlConnectionFactory;
         }

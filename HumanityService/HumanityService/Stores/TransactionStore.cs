@@ -2,22 +2,24 @@
 using Dapper;
 using HumanityService.DataContracts;
 using HumanityService.DataContracts.Requests;
+using HumanityService.DataContracts.Results;
 using HumanityService.Exceptions;
 using HumanityService.Stores.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace HumanityService.Stores
 {
     public class TransactionStore : ITransactionStore
     {
-        private readonly ISqlConnectionFactory _sqlConnectionFactory;
+        private readonly IConnectionFactory _sqlConnectionFactory;
         private readonly ILocationStore _locationStore;
         private readonly IMapper _mapper;
 
-        public TransactionStore(ISqlConnectionFactory sqlConnectionFactory, ILocationStore locationStore)
+        public TransactionStore(IConnectionFactory sqlConnectionFactory, ILocationStore locationStore)
         {
             _sqlConnectionFactory = sqlConnectionFactory;
             _locationStore = locationStore; 
@@ -40,6 +42,7 @@ namespace HumanityService.Stores
         {
             nameof(CampaignEntity.Id),
             nameof(CampaignEntity.Name),
+            nameof(CampaignEntity.NgoName),
             nameof(CampaignEntity.Username),
             nameof(CampaignEntity.Status),
             nameof(CampaignEntity.Type),
@@ -77,7 +80,7 @@ namespace HumanityService.Stores
         private static readonly string[] DeliveryDemandsTableColumns =
         {
             nameof(DeliveryDemandEntity.Id),
-            nameof(DeliveryDemandEntity.Name),
+            nameof(DeliveryDemandEntity.CampaignName),
             nameof(DeliveryDemandEntity.ProcessId),
             nameof(DeliveryDemandEntity.PickupUsername),
             nameof(DeliveryDemandEntity.DestinationUsername),
@@ -87,46 +90,54 @@ namespace HumanityService.Stores
             nameof(DeliveryDemandEntity.ProcessId),
             nameof(DeliveryDemandEntity.TimeCreated),
             nameof(DeliveryDemandEntity.TimeCompleted),
-            nameof(DeliveryDemandEntity.Description)
+            nameof(DeliveryDemandEntity.OtherInfo)
         };
 
-        public async Task AddCampaign(Campaign campaign)
+        public async Task<string> AddCampaign(Campaign campaign)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
             var sql = new QueryBuilder().InsertInto("campaigns", CampaignsTableColumns).Build();
+            campaign.Id = CreateId();
             var campaignEntity = ToCampaignEntity(campaign);
             await connection.ExecuteAsync(sql, campaignEntity);
+            return campaign.Id;
         }
 
-        public async Task AddDeliveryDemand(DeliveryDemand deliveryDemand)
+        public async Task<string> AddDeliveryDemand(DeliveryDemand deliveryDemand)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
             var sql = new QueryBuilder().InsertInto("delivery-demands", CampaignsTableColumns).Build();
+            deliveryDemand.Id = CreateId();
             var deliveryDemandEntity = ToDeliveryDemandEntity(deliveryDemand);
             await connection.ExecuteAsync(sql, deliveryDemandEntity);
+            return deliveryDemand.Id;
         }
 
-        public async Task AddProcess(Process process)
+        public async Task<string> AddProcess(Process process)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
             var sql = new QueryBuilder().InsertInto("processes", CampaignsTableColumns).Build();
+            process.Id = CreateId();
             var processEntity = ToProcessEntity(process);
-            await connection.ExecuteAsync(sql, processEntity);
+            await connection.QuerySingle(sql, processEntity);
+            return process.Id;
         }
 
-        public async Task AddContribution(Contribution contribution)
+        public async Task<string> AddContribution(Contribution contribution)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
             var sql = new QueryBuilder().InsertInto("contributions", CampaignsTableColumns).Build();
+            contribution.Id = CreateId();
             var contributionEntity = ToContributionEntity(contribution);
             await connection.ExecuteAsync(sql, contribution);
+            return contribution.Id;
         }
 
-        public async Task DeleteCampaign(int campaignId)
+        public async Task DeleteCampaign(string campaignId)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
@@ -140,7 +151,7 @@ namespace HumanityService.Stores
             });
         }
 
-        public async Task DeleteContribution(int contributionId)
+        public async Task DeleteContribution(string contributionId)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
@@ -154,7 +165,7 @@ namespace HumanityService.Stores
             });
         }
 
-        public async Task DeleteDeliveryDemand(int deliveryDemandId)
+        public async Task DeleteDeliveryDemand(string deliveryDemandId)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
@@ -168,7 +179,7 @@ namespace HumanityService.Stores
             });
         }
 
-        public async Task DeleteProcess(int processId)
+        public async Task DeleteProcess(string processId)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
@@ -262,7 +273,7 @@ namespace HumanityService.Stores
             }
         }
 
-        public async Task<Campaign> GetCampaign(int campaignId)
+        public async Task<Campaign> GetCampaign(string campaignId)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
@@ -284,12 +295,38 @@ namespace HumanityService.Stores
             return campaign;
         }
 
-        public async Task<List<Campaign>> GetCampaigns(GetCampaignsRequest request)
+        public async Task<GetCampaignsResult> GetCampaigns(GetCampaignsRequest request)
         {
-            throw new NotImplementedException();
+            using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
+            connection.Open();
+
+            var sql = new QueryBuilder()
+                .SelectColumns(CampaignEntity.TableName, CampaignsTableColumns)
+                .Where("(@NgoName IS NULL OR NgoName =  @NgoName)")
+                .And("(@Username IS NULL OR Username =  @Username)")
+                .And("(@Type IS NULL OR Type =  @Type)")
+                .And("(@Category IS NULL OR Category =  @Category)")
+                .And("(@Status IS NULL OR Status =  @Status)")
+                .OrderBy("Name", "ASC")
+                .Build();
+
+            var campaignEntities = (await connection.QueryAsync<CampaignEntity>(sql, request)).ToList();
+
+            List<Campaign> campaigns = new List<Campaign>();
+            foreach(var entity in campaignEntities)
+            {
+                var location = await _locationStore.GetLocation(entity.Username);
+                var campaign = ToCampaign(entity, location);
+                campaigns.Add(campaign);
+            }
+            
+            return new GetCampaignsResult
+            {
+                Campaigns = campaigns
+            };
         }
 
-        public async Task<Contribution> GetContribution(int contributionId)
+        public async Task<Contribution> GetContribution(string contributionId)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
@@ -311,12 +348,38 @@ namespace HumanityService.Stores
             return contribution;
         }
 
-        public async Task<List<Contribution>> GetContributions(GetContributionsRequest request)
+        public async Task<GetContributionsResult> GetContributions(GetContributionsRequest request)
         {
-            throw new NotImplementedException();
+            using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
+            connection.Open();
+
+            var sql = new QueryBuilder()
+                .SelectColumns(ContributionEntity.TableName, ContributionsTableColumns)
+                .Where("(@Username IS NULL OR Username =  @Username)")
+                .And("(@ProcessId IS NULL OR ProcessId =  @ProcessId)")
+                .And("(@DeliveryDemandId IS NULL OR DeliveryDemandId =  @DeliveryDemandId)")
+                .And("(@Type IS NULL OR Type =  @Type)")
+                .And("(@Status IS NULL OR Status =  @Status)")
+                .OrderBy("TimeCreated", "DESC")
+                .Build();
+
+            var campaignEntities = (await connection.QueryAsync<ContributionEntity>(sql, request)).ToList();
+
+            List<Contribution> contributions = new List<Contribution>();
+            foreach (var entity in campaignEntities)
+            {
+                var location = await _locationStore.GetLocation(entity.Username);
+                var contribution = ToContribution(entity, location);
+                contributions.Add(contribution);
+            }
+
+            return new GetContributionsResult
+            {
+                Contributions = contributions
+            };
         }
 
-        public async Task<DeliveryDemand> GetDeliveryDemand(int deliveryDemandId)
+        public async Task<DeliveryDemand> GetDeliveryDemand(string deliveryDemandId)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
@@ -339,12 +402,39 @@ namespace HumanityService.Stores
             return deliveryDemand;
         }
 
-        public async Task<List<DeliveryDemand>> GetDeliveryDemands(GetDeliveryDemandsRequest request)
+        public async Task<GetDeliveryDemandsResult> GetDeliveryDemands(GetDeliveryDemandsRequest request)
         {
-            throw new NotImplementedException();
+            using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
+            connection.Open();
+
+            var sql = new QueryBuilder()
+                .SelectColumns(DeliveryDemandEntity.TableName, DeliveryDemandsTableColumns)
+                .Where("(@CampaignName IS NULL OR CampaignName =  @CampaignName)")
+                .And("(@ProcessId IS NULL OR ProcessId =  @ProcessId)")
+                .And("(@PickupUsername IS NULL OR PickupUsername =  @PickupUsername)")
+                .And("(@DestinationUsername IS NULL OR DestinationUsername =  @DestinationUsername)")
+                .And("(@Status IS NULL OR Status =  @Status)")
+                .OrderBy("TimeCreated", "DESC")
+                .Build();
+
+            var deliveryDemandEntities = (await connection.QueryAsync<DeliveryDemandEntity>(sql, request)).ToList();
+
+            List<DeliveryDemand> deliveryDemands = new List<DeliveryDemand>();
+            foreach (var entity in deliveryDemandEntities)
+            {
+                var pickupLocation = await _locationStore.GetLocation(entity.PickupUsername);
+                var destinationLocation = await _locationStore.GetLocation(entity.DestinationUsername);
+                var deliveryDemand = ToDeliveryDemand(entity, pickupLocation, destinationLocation);
+                deliveryDemands.Add(deliveryDemand);
+            }
+
+            return new GetDeliveryDemandsResult
+            {
+                DeliveryDemands = deliveryDemands
+            };
         }
 
-        public async Task<Process> GetProcess(int processId)
+        public async Task<Process> GetProcess(string processId)
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
@@ -365,9 +455,44 @@ namespace HumanityService.Stores
             return process;
         }
 
-        public async Task<List<Campaign>> GetProcesses(int campaignId)
+        public async Task<GetProcessesResult> GetProcesses(string campaignId)
         {
-            throw new NotImplementedException();
+            using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
+            connection.Open();
+
+            var sql = new QueryBuilder()
+                .SelectColumns(ProcessEntity.TableName, ProcessesTableColumns)
+                .Where("(@CampaignId IS NULL OR CampaignId =  @CampaignId)")
+                .OrderBy("TimeCreated", "DESC")
+                .Build();
+
+            var processEntities = (await connection.QueryAsync<ProcessEntity>(sql, new { CampaignId = campaignId})).ToList();
+
+            List<Process> processes = new List<Process>();
+            foreach (var entity in processEntities)
+            {
+                var process = ToProcess(entity);
+                processes.Add(process);
+            }
+
+            return new GetProcessesResult
+            {
+                Processes = processes
+            };
+        }
+
+        public async Task<bool> EntityExists(string tableName, string Id)
+        {
+            using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
+            connection.Open();
+
+            var sql = new QueryBuilder()
+                .Count(tableName)
+                .Where("Id = @Id")
+                .Build();
+
+            int count = await connection.QuerySingleAsync<int>(sql, new { Id = Id });
+            return count > 0;
         }
 
         private CampaignEntity ToCampaignEntity(Campaign campaign)
@@ -438,20 +563,11 @@ namespace HumanityService.Stores
             deliveryDemand.PickupLocation = pickupLocation;
             deliveryDemand.DestinationLocation = destinationLocation;
             return deliveryDemand;
-        }
+        }     
 
-        public async Task<bool> EntityExists(string tableName, int Id)
+        private string CreateId()
         {
-            using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
-            connection.Open();
-
-            var sql = new QueryBuilder()
-                .Count(tableName)
-                .Where("Id = @Id")
-                .Build();
-
-            int count = await connection.QuerySingleAsync<int>(sql, new { Id = Id });
-            return count > 0;
+            return Guid.NewGuid().ToString();
         }
     }
 }

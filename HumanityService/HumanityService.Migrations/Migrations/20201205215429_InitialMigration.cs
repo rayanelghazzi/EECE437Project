@@ -59,8 +59,9 @@ namespace HumanityService.Migrations.Migrations
                 name: "campaigns",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
                     Username = table.Column<string>(maxLength: 36, nullable: false),
+                    NgoName = table.Column<string>(maxLength: 100, nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
                     Type = table.Column<string>(maxLength: 100, nullable: false),
                     Category = table.Column<string>(maxLength: 100, nullable: false),
@@ -80,11 +81,11 @@ namespace HumanityService.Migrations.Migrations
                 name: "processes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
-                    CampaignId = table.Column<int>(nullable: false),
+                    Id = table.Column<string>(nullable: false),
+                    CampaignId = table.Column<string>(nullable: false),
                     Status = table.Column<string>(maxLength: 128, nullable: false),
-                    TimeWindowStart = table.Column<string>(nullable: false),
-                    TimeWindowEnd = table.Column<string>(nullable:false),
+                    TimeWindowStart = table.Column<long>(nullable: false),
+                    TimeWindowEnd = table.Column<long>(nullable:false),
                     TimeCreated = table.Column<long>(nullable: false, defaultValue: 0L),
                     TimeCompleted = table.Column<long>(nullable: false, defaultValue: 0L),
                     DeliveryCode = table.Column<string>()
@@ -98,14 +99,15 @@ namespace HumanityService.Migrations.Migrations
                 name: "contributions",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
-                    ProcessId = table.Column<int>(nullable: false),
-                    DeliveryDemandId = table.Column<int>(nullable: true),
+                    Id = table.Column<string>(nullable: false),
+                    ProcessId = table.Column<string>(nullable: false),
+                    DeliveryDemandId = table.Column<string>(nullable: true),
                     Username = table.Column<string>(maxLength: 36, nullable: false),
                     Type = table.Column<string>(maxLength: 100, nullable: false),
                     Status = table.Column<string>(maxLength: 128, nullable: false),
-                    TimeWindowStart = table.Column<string>(nullable: false),
-                    TimeWindowEnd = table.Column<string>(nullable: false),
+                    OtherInfo = table.Column<string>(),
+                    TimeWindowStart = table.Column<long>(nullable: false),
+                    TimeWindowEnd = table.Column<long>(nullable: false),
                     TimeCreated = table.Column<long>(nullable: false, defaultValue: 0L),
                     TimeCompleted = table.Column<long>(nullable: false, defaultValue: 0L),
                 },
@@ -118,16 +120,18 @@ namespace HumanityService.Migrations.Migrations
                 name: "delivery-demands",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false),
-                    ProcessId = table.Column<int>(nullable: false),
-                    Username = table.Column<string>(maxLength: 36, nullable: false),
+                    Id = table.Column<string>(nullable: false),
+                    ProcessId = table.Column<string>(nullable: false),
+                    CampaignName = table.Column<string>(maxLength: 100, nullable: false),
+                    PickupUsername = table.Column<string>(maxLength: 36, nullable: false),
+                    DestinationUsername = table.Column<string>(maxLength: 36, nullable: false),
                     Type = table.Column<string>(maxLength: 100, nullable: false),
                     Status = table.Column<string>(maxLength: 128, nullable: false),
-                    TimeWindowStart = table.Column<string>(nullable: false),
-                    TimeWindowEnd = table.Column<string>(nullable: false),
+                    OtherInfo = table.Column<string>(maxLength: 128, nullable: false),
+                    TimeWindowStart = table.Column<long>(nullable: false),
+                    TimeWindowEnd = table.Column<long>(nullable: false),
                     TimeCreated = table.Column<long>(nullable: false, defaultValue: 0L),
-                    TimeCompleted = table.Column<long>(nullable: false, defaultValue: 0L),
-                    Description = table.Column<string>(nullable: false)
+                    TimeCompleted = table.Column<long>(nullable: false, defaultValue: 0L)
                 },
                 constraints: table =>
                 {

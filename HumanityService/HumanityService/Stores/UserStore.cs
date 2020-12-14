@@ -10,7 +10,7 @@ namespace HumanityService.Stores
 {
     public class UserStore : IUserStore
     {
-        private readonly ISqlConnectionFactory _sqlConnectionFactory;
+        private readonly IConnectionFactory _sqlConnectionFactory;
         private readonly IMapper _mapper;
         private readonly ILocationStore _locationStore;
 
@@ -36,7 +36,7 @@ namespace HumanityService.Stores
             nameof(NgoEntity.WebsiteAddress)
         };
 
-        public UserStore(ISqlConnectionFactory sqlConnectionFactory, ILocationStore locationStore)
+        public UserStore(IConnectionFactory sqlConnectionFactory, ILocationStore locationStore)
         {
             _sqlConnectionFactory = sqlConnectionFactory;
             _locationStore = locationStore; 

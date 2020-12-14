@@ -4,7 +4,7 @@ using Microsoft.Extensions.Options;
 
 namespace HumanityService.Stores
 {
-    public class SqlConnectionFactory : ISqlConnectionFactory
+    public class SqlConnectionFactory : IConnectionFactory
     {
         private readonly IOptions<SqlDatabaseSettings> _options;
 

@@ -2,7 +2,7 @@
 
 namespace HumanityService.Stores
 {
-    public interface ISqlConnectionFactory
+    public interface IConnectionFactory
     {
         IDbConnection CreateConnection();
     }

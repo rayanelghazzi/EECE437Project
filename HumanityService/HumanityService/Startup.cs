@@ -43,7 +43,7 @@ namespace HumanityService
             services.AddSingleton<IUserStore, UserStore>();
             services.AddSingleton<ILocationStore, LocationStore>();
 
-            services.AddSingleton<ISqlConnectionFactory, SqlConnectionFactory>();
+            services.AddSingleton<IConnectionFactory, SqlConnectionFactory>();
             services.AddSingleton<UserStore>();
             services.AddSingleton<RefreshTokenStore>();
             services.AddSingleton<TransactionStore>();

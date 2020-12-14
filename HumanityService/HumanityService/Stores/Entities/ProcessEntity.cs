@@ -6,8 +6,8 @@ namespace HumanityService.Stores
     public class ProcessEntity
     {
         public const string TableName = "processes";
-        public int Id { get; set; }
-        public int CampaignId { get; set; }
+        public string Id { get; set; }
+        public string CampaignId { get; set; }
         public string Status { get; set; }
         public long TimeCreated { get; set; }
         public long TimeCompleted { get; set; }
