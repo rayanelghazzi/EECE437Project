@@ -2,11 +2,17 @@
 
 namespace HumanityService.DataContracts
 {
+    /// <summary>
+    /// DeliveryDemandId is only used if it is a delivery contribution
+    /// DeliveryCode is only used if it is a delivery contribution
+    /// </summary>
+
     public class Contribution
     {
         public string Id { get; set; }
         public string ProcessId { get; set; }
         public string DeliveryDemandId { get; set; }
+        public string DeliveryCode { get; set; }
         public string Type { get; set; }
         public string Username { get; set; }
         public string Status { get; set; }
@@ -24,7 +30,8 @@ namespace HumanityService.DataContracts
     public enum ContributionStatus
     {
         Pending, 
-        Accepted, 
+        Accepted,
+        PickedUp,
         Completed, 
         Canceled
     };

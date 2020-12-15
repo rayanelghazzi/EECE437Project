@@ -9,6 +9,7 @@ namespace HumanityService.Stores
         public string Id { get; set; }
         public string ProcessId { get; set; }
         public string DeliveryDemandId { get; set; }
+        public string DeliveryCode { get; set; }
         public string Type { get; set; }
         public string Username { get; set; }
         public string Status { get; set; }

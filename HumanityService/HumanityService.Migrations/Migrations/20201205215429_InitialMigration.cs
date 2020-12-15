@@ -59,7 +59,7 @@ namespace HumanityService.Migrations.Migrations
                 name: "campaigns",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(maxLength: 100, nullable: false),
                     Username = table.Column<string>(maxLength: 36, nullable: false),
                     NgoName = table.Column<string>(maxLength: 100, nullable: false),
                     Name = table.Column<string>(maxLength: 100, nullable: false),
@@ -81,12 +81,13 @@ namespace HumanityService.Migrations.Migrations
                 name: "processes",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    CampaignId = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(maxLength: 100, nullable: false),
+                    CampaignId = table.Column<string>(maxLength: 100, nullable: false),
                     Status = table.Column<string>(maxLength: 128, nullable: false),
                     TimeWindowStart = table.Column<long>(nullable: false),
                     TimeWindowEnd = table.Column<long>(nullable:false),
                     TimeCreated = table.Column<long>(nullable: false, defaultValue: 0L),
+                    TimePickedUp = table.Column<long>(nullable: false, defaultValue: 0L),
                     TimeCompleted = table.Column<long>(nullable: false, defaultValue: 0L),
                     DeliveryCode = table.Column<string>()
                 },
@@ -99,9 +100,10 @@ namespace HumanityService.Migrations.Migrations
                 name: "contributions",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    ProcessId = table.Column<string>(nullable: false),
-                    DeliveryDemandId = table.Column<string>(nullable: true),
+                    Id = table.Column<string>(maxLength: 100, nullable: false),
+                    ProcessId = table.Column<string>(maxLength: 100, nullable: false),
+                    DeliveryDemandId = table.Column<string>(maxLength: 100, nullable: true),
+                    DeliveryCode = table.Column<string>(nullable: true),
                     Username = table.Column<string>(maxLength: 36, nullable: false),
                     Type = table.Column<string>(maxLength: 100, nullable: false),
                     Status = table.Column<string>(maxLength: 128, nullable: false),
@@ -120,8 +122,8 @@ namespace HumanityService.Migrations.Migrations
                 name: "delivery-demands",
                 columns: table => new
                 {
-                    Id = table.Column<string>(nullable: false),
-                    ProcessId = table.Column<string>(nullable: false),
+                    Id = table.Column<string>(maxLength: 100, nullable: false),
+                    ProcessId = table.Column<string>(maxLength: 100, nullable: false),
                     CampaignName = table.Column<string>(maxLength: 100, nullable: false),
                     PickupUsername = table.Column<string>(maxLength: 36, nullable: false),
                     DestinationUsername = table.Column<string>(maxLength: 36, nullable: false),

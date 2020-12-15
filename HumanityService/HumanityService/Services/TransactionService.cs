@@ -39,7 +39,8 @@ namespace HumanityService.Services
                 CampaignId = request.CampaignId,
                 Status = "InProgress",
                 TimeCreated = UnixTimeSeconds(),
-                TimeCompleted = 0,
+                TimePickedUp = 0L,
+                TimeCompleted = 0L,
                 DeliveryCode = Guid.NewGuid().ToString()
             };
             var processId = await _transactionStore.AddProcess(process);
@@ -83,12 +84,20 @@ namespace HumanityService.Services
             deliveryDemand.Status = "InProgress";
             await _transactionStore.UpdateDeliveryDemand(deliveryDemand);
 
+            //Create delivery code
+            var deliveryCode = CreateDeliveryCode();
+
+            //Update Process with delivery code
+            var process = await _transactionStore.GetProcess(deliveryDemand.ProcessId);
+            process.DeliveryCode = deliveryCode;
+            await _transactionStore.UpdateProcess(process);
 
             //add contribution to the delivery demand for the deliverer
             Contribution deliveryContribution = new Contribution
             {
                 ProcessId = deliveryDemand.ProcessId,
                 DeliveryDemandId = deliveryDemand.Id,
+                DeliveryCode = deliveryCode,
                 Type = "Delivery",
                 Username = request.Username,
                 Status = "Accepted",
@@ -102,16 +111,113 @@ namespace HumanityService.Services
             var deliveryContributionId = await _transactionStore.AddContribution(deliveryContribution);
 
             //Update donor's contribution
-            var donorContribution = await _transactionStore.GetContribution("TODO BY PROCESS ID");
+            var getContributionsRequest = new GetContributionsRequest
+            {
+                ProcessId = deliveryDemand.ProcessId,
+                Type = "Donation"
+            };
+
+            var getContributionsResult = await _transactionStore.GetContributions(getContributionsRequest);
+            var donorContribution = getContributionsResult.Contributions[0];
             donorContribution.Status = "Accepted";
+            await _transactionStore.UpdateContribution(donorContribution);
 
             return deliveryContributionId;
         }
 
-        public Task ValidateDelivery(string processId, ValidateDeliveryRequest request)
+        public async Task<bool> ValidateDelivery(ValidateDeliveryRequest request) //CONSIDER REFACTORING
         {
-            throw new NotImplementedException();
-            //tODOOOOOOOOOOf
+            if (request.ValidationType == "Pickup") //Pickup validation
+            {
+                var donorContribution = await _transactionStore.GetContribution(request.ContributionId);
+                var process = await _transactionStore.GetProcess(donorContribution.ProcessId);
+
+                if(process.DeliveryCode == request.DeliveryCode)
+                {
+                    //update donor's contribution
+                    donorContribution.Status = "Completed";
+                    donorContribution.TimeCompleted = UnixTimeSeconds();
+                    await _transactionStore.UpdateContribution(donorContribution);
+
+                    //update process
+                    process.Status = "PickedUp";
+                    process.TimePickedUp = UnixTimeSeconds();
+                    await _transactionStore.UpdateProcess(process);
+
+                    //update deliveryDemand
+                    var getDeliveryDemandRequest = new GetDeliveryDemandsRequest
+                    {
+                        ProcessId = process.Id
+                    };
+                    var getDeliveryDemandsResult = await _transactionStore.GetDeliveryDemands(getDeliveryDemandRequest);
+                    var deliveryDemand = getDeliveryDemandsResult.DeliveryDemands[0];
+                    deliveryDemand.Status = "PickedUp";
+                    await _transactionStore.UpdateDeliveryDemand(deliveryDemand);
+
+                    //update deliverer's contribution
+                    var getContributionRequest = new GetContributionsRequest
+                    {
+                        ProcessId = process.Id,
+                        Type = "Delivery"
+                    };
+                    var deliveryContributions = await _transactionStore.GetContributions(getContributionRequest);
+                    var deliveryContribution = deliveryContributions.Contributions[0];
+                    deliveryContribution.Status = "PickedUp";
+                    await _transactionStore.UpdateContribution(deliveryContribution);
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else //Destination validation
+            {
+                //The process for validating on destination is different
+                //The ngo enters into the campaign page and enters the code (instead of having to open the specific process
+
+                var getProcessesResult = await _transactionStore.GetProcesses(request.CampaignId);
+                var process = getProcessesResult.Processes.Find(request => request.DeliveryCode == request.DeliveryCode);
+                if (process != null)
+                {
+                    //update process
+                    process.Status = "Completed";
+                    process.TimeCompleted = UnixTimeSeconds();
+                    await _transactionStore.UpdateProcess(process);
+
+                    //update delivery demand
+                    var getDeliveryDemandRequest = new GetDeliveryDemandsRequest
+                    {
+                        ProcessId = process.Id
+                    };
+                    var getDeliveryDemandsResult = await _transactionStore.GetDeliveryDemands(getDeliveryDemandRequest);
+                    var deliveryDemand = getDeliveryDemandsResult.DeliveryDemands[0];
+                    deliveryDemand.Status = "Completed";
+                    await _transactionStore.UpdateDeliveryDemand(deliveryDemand);
+
+                    //update deliverer's contribution
+                    var getContributionRequest = new GetContributionsRequest
+                    {
+                        ProcessId = process.Id,
+                        Type = "Delivery"
+                    };
+                    var deliveryContributions = await _transactionStore.GetContributions(getContributionRequest);
+                    var deliveryContribution = deliveryContributions.Contributions[0];
+                    deliveryContribution.Status = "Completed";
+                    await _transactionStore.UpdateContribution(deliveryContribution);
+
+                    //update campaign
+                    var campaign = await _transactionStore.GetCampaign(request.CampaignId);
+                    campaign.CurrentState++;
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
         }
 
         public Task ApproveContribution(string contributionId)//
@@ -146,7 +252,7 @@ namespace HumanityService.Services
             await _transactionStore.DeleteCampaign(campaignId);
         }
 
-        public async Task CancelContribution(string contributionId)
+        public async Task DeleteContribution(string contributionId)
         {
             //If donation or volunteering delete the process (process, contributions, deliveryDemand)
             //
@@ -168,7 +274,6 @@ namespace HumanityService.Services
         public Task EditContribution(EditContributionRequest request)
         {
             throw new NotImplementedException();
-            //1st
             //edit the contribution
             //edit delivery demand if needed
         }
@@ -225,6 +330,18 @@ namespace HumanityService.Services
         private long UnixTimeSeconds()
         {
             return DateTimeOffset.UtcNow.ToUnixTimeSeconds();
+        }
+
+
+        private string CreateDeliveryCode()
+        {
+            // ex output: "230798"
+            // The code is simple to facilitate typing for donors
+            var random = new Random();
+            string s = string.Empty;
+            for (int i = 0; i < 6; i++)
+                s = String.Concat(s, random.Next(10).ToString());
+            return s;
         }
     }
 }
