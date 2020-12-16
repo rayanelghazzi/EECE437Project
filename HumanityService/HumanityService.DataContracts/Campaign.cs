@@ -25,7 +25,7 @@ namespace HumanityService.DataContracts
     public enum CampaignStatus
     {
         Active,
-        Expired
+        Inactive
     };
 
     public enum ContributionType

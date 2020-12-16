@@ -33,7 +33,8 @@ namespace HumanityService.Stores
             nameof(NgoEntity.Password),
             nameof(NgoEntity.PhoneNumber),
             nameof(NgoEntity.RegistrationNumber),
-            nameof(NgoEntity.WebsiteAddress)
+            nameof(NgoEntity.WebsiteAddress),
+            nameof(NgoEntity.Description)
         };
 
         public UserStore(IConnectionFactory sqlConnectionFactory, ILocationStore locationStore)

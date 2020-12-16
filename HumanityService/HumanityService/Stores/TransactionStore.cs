@@ -58,13 +58,16 @@ namespace HumanityService.Stores
         {
             nameof(ContributionEntity.Id),
             nameof(ContributionEntity.ProcessId),
+            nameof(ContributionEntity.DeliveryDemandId),
+            nameof(ContributionEntity.DeliveryCode),
             nameof(ContributionEntity.Type),
             nameof(ContributionEntity.Username),
             nameof(ContributionEntity.Status),
             nameof(ContributionEntity.TimeWindowStart),
             nameof(ContributionEntity.TimeWindowEnd),
             nameof(ContributionEntity.TimeCreated),
-            nameof(ContributionEntity.TimeCompleted)
+            nameof(ContributionEntity.TimeCompleted),
+            nameof(ContributionEntity.OtherInfo)
         };
 
         private static readonly string[] ProcessesTableColumns =
@@ -73,6 +76,7 @@ namespace HumanityService.Stores
             nameof(ProcessEntity.CampaignId),
             nameof(ProcessEntity.Status),
             nameof(ProcessEntity.TimeCreated),
+            nameof(ProcessEntity.TimePickedUp),
             nameof(ProcessEntity.TimeCompleted),
             nameof(ProcessEntity.DeliveryCode)
         };
@@ -87,7 +91,6 @@ namespace HumanityService.Stores
             nameof(DeliveryDemandEntity.TimeWindowStart),
             nameof(DeliveryDemandEntity.TimeWindowEnd),
             nameof(DeliveryDemandEntity.Status),
-            nameof(DeliveryDemandEntity.ProcessId),
             nameof(DeliveryDemandEntity.TimeCreated),
             nameof(DeliveryDemandEntity.TimeCompleted),
             nameof(DeliveryDemandEntity.OtherInfo)
@@ -97,7 +100,7 @@ namespace HumanityService.Stores
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
-            var sql = new QueryBuilder().InsertInto("campaigns", CampaignsTableColumns).Build();
+            var sql = new QueryBuilder().InsertInto(CampaignEntity.TableName, CampaignsTableColumns).Build();
             campaign.Id = CreateId();
             var campaignEntity = ToCampaignEntity(campaign);
             await connection.ExecuteAsync(sql, campaignEntity);
@@ -108,7 +111,7 @@ namespace HumanityService.Stores
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
-            var sql = new QueryBuilder().InsertInto("delivery-demands", CampaignsTableColumns).Build();
+            var sql = new QueryBuilder().InsertInto(DeliveryDemandEntity.TableName, DeliveryDemandsTableColumns).Build();
             deliveryDemand.Id = CreateId();
             var deliveryDemandEntity = ToDeliveryDemandEntity(deliveryDemand);
             await connection.ExecuteAsync(sql, deliveryDemandEntity);
@@ -119,10 +122,10 @@ namespace HumanityService.Stores
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
-            var sql = new QueryBuilder().InsertInto("processes", CampaignsTableColumns).Build();
+            var sql = new QueryBuilder().InsertInto(ProcessEntity.TableName, ProcessesTableColumns).Build();
             process.Id = CreateId();
             var processEntity = ToProcessEntity(process);
-            await connection.QuerySingle(sql, processEntity);
+            await connection.ExecuteAsync(sql, processEntity);
             return process.Id;
         }
 
@@ -130,7 +133,7 @@ namespace HumanityService.Stores
         {
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
-            var sql = new QueryBuilder().InsertInto("contributions", CampaignsTableColumns).Build();
+            var sql = new QueryBuilder().InsertInto(ContributionEntity.TableName, ContributionsTableColumns).Build();
             contribution.Id = CreateId();
             var contributionEntity = ToContributionEntity(contribution);
             await connection.ExecuteAsync(sql, contribution);
@@ -142,7 +145,7 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
 
-            var sql = new QueryBuilder().DeleteFrom("campaigns")
+            var sql = new QueryBuilder().DeleteFrom(CampaignEntity.TableName)
                 .Where("Id = @CampaignId").Build();
 
             await connection.ExecuteAsync(sql, new
@@ -156,7 +159,7 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
 
-            var sql = new QueryBuilder().DeleteFrom("contributions")
+            var sql = new QueryBuilder().DeleteFrom(ContributionEntity.TableName)
                 .Where("Id = @ContributionId").Build();
 
             await connection.ExecuteAsync(sql, new
@@ -170,7 +173,7 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
 
-            var sql = new QueryBuilder().DeleteFrom("delivery-demands")
+            var sql = new QueryBuilder().DeleteFrom(DeliveryDemandEntity.TableName)
                 .Where("Id = @DeliveryDemandId").Build();
 
             await connection.ExecuteAsync(sql, new
@@ -184,7 +187,7 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
 
-            var sql = new QueryBuilder().DeleteFrom("processes")
+            var sql = new QueryBuilder().DeleteFrom(ProcessEntity.TableName)
                 .Where("Id = @ProcessId").Build();
 
             await connection.ExecuteAsync(sql, new
@@ -198,14 +201,14 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
 
-            var sql = new QueryBuilder().Update("campaigns", CampaignsTableColumns)
+            var sql = new QueryBuilder().Update(CampaignEntity.TableName, CampaignsTableColumns)
                 .Where($"Id = @Id").Build();
 
 
             int rowsAffected = await connection.ExecuteAsync(sql, campaign);
             if (rowsAffected == 0)
             {
-                if (!await EntityExists("campaigns", campaign.Id))
+                if (!await EntityExists(CampaignEntity.TableName, campaign.Id))
                 {
                     throw new StorageErrorException($"Campaign entity with Id {campaign.Id} was not found", 404);
                 }
@@ -218,14 +221,14 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
 
-            var sql = new QueryBuilder().Update("contributions", ContributionsTableColumns)
+            var sql = new QueryBuilder().Update(ContributionEntity.TableName, ContributionsTableColumns)
                 .Where($"Id = @Id").Build();
 
 
             int rowsAffected = await connection.ExecuteAsync(sql, contribution);
             if (rowsAffected == 0)
             {
-                if (!await EntityExists("contributions", contribution.Id))
+                if (!await EntityExists(ContributionEntity.TableName, contribution.Id))
                 {
                     throw new StorageErrorException($"Contribution entity with Id {contribution.Id} was not found", 404);
                 }
@@ -238,14 +241,14 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
 
-            var sql = new QueryBuilder().Update("delivery-demands", DeliveryDemandsTableColumns)
+            var sql = new QueryBuilder().Update(DeliveryDemandEntity.TableName, DeliveryDemandsTableColumns)
                 .Where($"Id = @Id").Build();
 
 
             int rowsAffected = await connection.ExecuteAsync(sql, deliveryDemand);
             if (rowsAffected == 0)
             {
-                if (!await EntityExists("delivery-demands", deliveryDemand.Id))
+                if (!await EntityExists(DeliveryDemandEntity.TableName, deliveryDemand.Id))
                 {
                     throw new StorageErrorException($"DeliveryDemand entity with Id {deliveryDemand.Id} was not found", 404);
                 }
@@ -258,14 +261,14 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
 
-            var sql = new QueryBuilder().Update("processes", ProcessesTableColumns)
+            var sql = new QueryBuilder().Update(ProcessEntity.TableName, ProcessesTableColumns)
                 .Where($"Id = @Id").Build();
 
 
             int rowsAffected = await connection.ExecuteAsync(sql, process);
             if (rowsAffected == 0)
             {
-                if (!await EntityExists("processes", process.Id))
+                if (!await EntityExists(ProcessEntity.TableName, process.Id))
                 {
                     throw new StorageErrorException($"Process entity with Id {process.Id} was not found", 404);
                 }
@@ -279,7 +282,7 @@ namespace HumanityService.Stores
             connection.Open();
 
             var sql = new QueryBuilder()
-                .SelectColumns("campaigns", CampaignsTableColumns)
+                .SelectColumns(CampaignEntity.TableName, CampaignsTableColumns)
                 .Where("Id = @Id")
                 .Build();
 
@@ -332,7 +335,7 @@ namespace HumanityService.Stores
             connection.Open();
 
             var sql = new QueryBuilder()
-                .SelectColumns("contributions", ContributionsTableColumns)
+                .SelectColumns(ContributionEntity.TableName, ContributionsTableColumns)
                 .Where("Id = @Id")
                 .Build();
 
@@ -385,7 +388,7 @@ namespace HumanityService.Stores
             connection.Open();
 
             var sql = new QueryBuilder()
-                .SelectColumns("deliver-demands", DeliveryDemandsTableColumns)
+                .SelectColumns(DeliveryDemandEntity.TableName, DeliveryDemandsTableColumns)
                 .Where("Id = @Id")
                 .Build();
 
@@ -440,7 +443,7 @@ namespace HumanityService.Stores
             connection.Open();
 
             var sql = new QueryBuilder()
-                .SelectColumns("processes", ProcessesTableColumns)
+                .SelectColumns(ProcessEntity.TableName, ProcessesTableColumns)
                 .Where("Id = @Id")
                 .Build();
 
@@ -530,9 +533,9 @@ namespace HumanityService.Stores
             contribution.Location = location;
             return contribution;
         }
-        private ProcessEntity ToProcessEntity(Process campaign)
+        private ProcessEntity ToProcessEntity(Process process)
         {
-            var entity = _mapper.Map<ProcessEntity>(campaign);
+            var entity = _mapper.Map<ProcessEntity>(process);
             return entity;
         }
 

@@ -7,9 +7,9 @@ namespace HumanityService.Stores
     [System.ComponentModel.DataAnnotations.Schema.Table(TableName)]
     public class DeliveryDemandEntity
     {
-        public const string TableName = "DeliveryDemands";
+        public const string TableName = "[delivery-demands]";
 
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string CampaignName { get; set; }
         public string ProcessId { get; set; }
         public string PickupUsername { get; set; }

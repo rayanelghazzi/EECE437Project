@@ -30,7 +30,7 @@ namespace HumanityService.DataContracts
     public enum ContributionStatus
     {
         Pending, 
-        Accepted,
+        InProgress,
         PickedUp,
         Completed, 
         Canceled

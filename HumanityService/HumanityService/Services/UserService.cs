@@ -1,7 +1,10 @@
 ﻿
 using HumanityService.DataContracts;
+using HumanityService.Exceptions;
 using HumanityService.Services.Interfaces;
 using HumanityService.Stores.Interfaces;
+using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace HumanityService.Services
@@ -16,44 +19,141 @@ namespace HumanityService.Services
             _userStore = userStore;
         }
 
-        public Task AddNgo(Ngo ngo)
+        public async Task AddNgo(Ngo ngo)
         {
-            throw new System.NotImplementedException();
+            IsValidNgo(ngo);
+            await _userStore.AddNgo(ngo);
         }
 
-        public Task AddUser(User user)
+        public async Task AddUser(User user)
         {
-            throw new System.NotImplementedException();
+            IsValidUser(user);
+            await _userStore.AddUser(user);
         }
 
-        public Task DeleteNgo(string ngo)
+        public async Task DeleteNgo(string ngoUsername)
         {
-            throw new System.NotImplementedException();
+            await _userStore.DeleteNgo(ngoUsername);
         }
 
-        public Task DeleteUser(string username)
+        public async Task DeleteUser(string username)
         {
-            throw new System.NotImplementedException();
+            await _userStore.DeleteUser(username);
         }
 
-        public Task<Ngo> GetNgo(string ngo)
+        public async Task<Ngo> GetNgo(string ngoUsername)
         {
-            throw new System.NotImplementedException();
+            var ngo = await _userStore.GetNgo(ngoUsername);
+            return ngo;
         }
 
-        public Task<User> GetUser(string username)
+        public async Task<User> GetUser(string username)
         {
-            throw new System.NotImplementedException();
+            var user = await _userStore.GetUser(username);
+            return user;
         }
 
-        public Task UpdateNgo(Ngo ngo)
+        public async Task UpdateNgo(Ngo ngo)
         {
-            throw new System.NotImplementedException();
+            IsValidNgo(ngo);
+            await _userStore.UpdateNgo(ngo);
         }
 
-        public Task UpdateUser(User user)
+        public async Task UpdateUser(User user)
         {
-            throw new System.NotImplementedException();
+            IsValidUser(user);
+            await _userStore.UpdateUser(user);
+        }
+
+        private static void IsValidNgo(Ngo user)
+        {
+            if (!(IsValidString(user.Username)
+                 && IsValidString(user.Name)
+                 && IsValidString(user.RegistrationNumber)
+                 && IsValidString(user.Password)
+                 && IsValidString(user.PhoneNumber)
+                 && IsValidString(user.Email)
+                 && IsValidString(user.Location.Coordinates)
+                 && IsValidString(user.Location.Description)))
+            {
+                throw new BadRequestException("One of the required fields is empty");
+            }
+
+            else if (!IsValidEmail(user.Email))
+            {
+                throw new BadRequestException($"The Email {user.Email} is not a valid Email");
+            }
+
+            else if (!IsValidPassword(user.Password))
+            {
+                throw new BadRequestException("The Password is not valid, it should contain a number, a capital letter, and has a minimum of 8 characters");
+            }
+
+            else if (!IsLebanesePhoneNumber(user.PhoneNumber))
+            {
+                throw new BadRequestException("The phone number is incorrect, it should contain 8 digits");
+            }
+        }
+
+        private static void IsValidUser(User user)
+        {
+            if (!(IsValidString(user.Username)
+                 && IsValidString(user.FirstName)
+                 && IsValidString(user.LastName)
+                 && IsValidString(user.Password)
+                 && IsValidString(user.PhoneNumber)
+                 && IsValidString(user.Email)
+                 && IsValidString(user.Location.Coordinates)
+                 && IsValidString(user.Location.Description)))
+            {
+                throw new BadRequestException("One of the required fields is empty");
+            }
+
+            else if (!IsValidEmail(user.Email))
+            {
+                throw new BadRequestException($"The Email {user.Email} is not a valid Email");
+            }
+
+            else if (!IsValidPassword(user.Password))
+            {
+                throw new BadRequestException("The Password is not valid, it should contain a number, a capital letter, and has a minimum of 8 characters");
+            }
+
+            else if (!IsLebanesePhoneNumber(user.PhoneNumber))
+            {
+                throw new BadRequestException("The phone number is incorrect, it should contain 8 digits");
+            }
+        }
+
+        private static bool IsValidEmail(string email)
+        {
+            if (string.IsNullOrWhiteSpace(email)) return false;
+            var emailValidator = new EmailAddressAttribute();
+            return emailValidator.IsValid(email);
+        }
+
+        public static bool IsValidPassword(string plainText)
+        {
+            var hasNumber = CompiledRegex(@"[0-9]+");
+            var hasUpperChar = CompiledRegex(@"[A-Z]+");
+            var hasMinimum8Chars = CompiledRegex(@".{8,}");
+            return hasNumber.IsMatch(plainText) && hasUpperChar.IsMatch(plainText) && hasMinimum8Chars.IsMatch(plainText);
+        }
+
+        public static bool IsLebanesePhoneNumber(string number)
+        {
+            var isLebanesePhone = CompiledRegex(@"^[0-9]{8}$");
+            return isLebanesePhone.IsMatch(number);
+        }
+
+        private static Regex CompiledRegex(string regExp)
+        {
+            return new Regex(regExp, RegexOptions.Compiled);
+        }
+
+        public static bool IsValidString(string value)
+        {
+            return !string.IsNullOrWhiteSpace(value);
         }
     }
 }

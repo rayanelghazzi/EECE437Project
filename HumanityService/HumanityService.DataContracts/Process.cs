@@ -17,10 +17,11 @@ namespace HumanityService.DataContracts
     /// </summary>
     public enum ProcessStatus
     {
+        Pending,
         InProgress,
         PickepUp,
         Completed,
-        Canceled
+        Cancelled
     };
 
 }

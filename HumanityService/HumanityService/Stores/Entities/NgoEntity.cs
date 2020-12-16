@@ -10,7 +10,7 @@
         public string Password { get; set; }
         public string RegistrationNumber { get; set; }
         public string WebsiteAddress { get; set; }
-        public long PhoneNumber { get; set; }
+        public string PhoneNumber { get; set; }
         public string Description { get; set; }
     }
 }

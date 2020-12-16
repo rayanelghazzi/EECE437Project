@@ -45,9 +45,9 @@ namespace HumanityService.Migrations.Migrations
                     RegistrationNumber = table.Column<string>(maxLength: 100, nullable: false),
                     Email = table.Column<string>(maxLength: 128, nullable: false),
                     PhoneNumber = table.Column<string>(maxLength: 16, nullable: false),
-                    WebsiteAddress = table.Column<string>(maxLength: 100, nullable: false),
+                    WebsiteAddress = table.Column<string>(maxLength: 100),
                     Password = table.Column<string>(maxLength: 128, nullable: false),
-                    Description = table.Column<string>(nullable: false)
+                    Description = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -84,12 +84,10 @@ namespace HumanityService.Migrations.Migrations
                     Id = table.Column<string>(maxLength: 100, nullable: false),
                     CampaignId = table.Column<string>(maxLength: 100, nullable: false),
                     Status = table.Column<string>(maxLength: 128, nullable: false),
-                    TimeWindowStart = table.Column<long>(nullable: false),
-                    TimeWindowEnd = table.Column<long>(nullable:false),
                     TimeCreated = table.Column<long>(nullable: false, defaultValue: 0L),
                     TimePickedUp = table.Column<long>(nullable: false, defaultValue: 0L),
                     TimeCompleted = table.Column<long>(nullable: false, defaultValue: 0L),
-                    DeliveryCode = table.Column<string>()
+                    DeliveryCode = table.Column<string>(nullable:true)
                 },
                 constraints: table =>
                 {
@@ -107,7 +105,7 @@ namespace HumanityService.Migrations.Migrations
                     Username = table.Column<string>(maxLength: 36, nullable: false),
                     Type = table.Column<string>(maxLength: 100, nullable: false),
                     Status = table.Column<string>(maxLength: 128, nullable: false),
-                    OtherInfo = table.Column<string>(),
+                    OtherInfo = table.Column<string>(nullable: true),
                     TimeWindowStart = table.Column<long>(nullable: false),
                     TimeWindowEnd = table.Column<long>(nullable: false),
                     TimeCreated = table.Column<long>(nullable: false, defaultValue: 0L),
@@ -127,7 +125,6 @@ namespace HumanityService.Migrations.Migrations
                     CampaignName = table.Column<string>(maxLength: 100, nullable: false),
                     PickupUsername = table.Column<string>(maxLength: 36, nullable: false),
                     DestinationUsername = table.Column<string>(maxLength: 36, nullable: false),
-                    Type = table.Column<string>(maxLength: 100, nullable: false),
                     Status = table.Column<string>(maxLength: 128, nullable: false),
                     OtherInfo = table.Column<string>(maxLength: 128, nullable: false),
                     TimeWindowStart = table.Column<long>(nullable: false),

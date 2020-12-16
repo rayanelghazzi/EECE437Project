@@ -16,11 +16,11 @@ namespace HumanityService.Services
         private readonly INotificationService _notificationService;
         private readonly IMatchingService _matchingService;
 
-        public TransactionService(ITransactionStore transactionStore, INotificationService notificationService, IMatchingService matchingService)
+        public TransactionService(ITransactionStore transactionStore)
         {
             _transactionStore = transactionStore;
-            _notificationService = notificationService;
-            _matchingService = matchingService;
+            //_notificationService = notificationService;
+            //_matchingService = matchingService;
         }
 
         public Task<Campaign> FindMatch(string username, string type, string category)
@@ -32,16 +32,17 @@ namespace HumanityService.Services
 
         public async Task<string> AnswerCampaign(AnswerCampaignRequest request)
         {
+            // What if one of them failed? You have to delete all of them
             var campaign = await _transactionStore.GetCampaign(request.CampaignId);
 
             Process process = new Process
             {
                 CampaignId = request.CampaignId,
-                Status = "InProgress",
+                Status = "Pending",
                 TimeCreated = UnixTimeSeconds(),
                 TimePickedUp = 0L,
                 TimeCompleted = 0L,
-                DeliveryCode = Guid.NewGuid().ToString()
+                DeliveryCode = ""
             };
             var processId = await _transactionStore.AddProcess(process);
 
@@ -89,6 +90,7 @@ namespace HumanityService.Services
 
             //Update Process with delivery code
             var process = await _transactionStore.GetProcess(deliveryDemand.ProcessId);
+            process.Status = "InProgress";
             process.DeliveryCode = deliveryCode;
             await _transactionStore.UpdateProcess(process);
 
@@ -100,7 +102,7 @@ namespace HumanityService.Services
                 DeliveryCode = deliveryCode,
                 Type = "Delivery",
                 Username = request.Username,
-                Status = "Accepted",
+                Status = "InProgress",
                 TimeWindowStart = request.TimeWindowStart,
                 TimeWindowEnd = request.TimeWindowEnd,
                 OtherInfo = request.OtherInfo,
@@ -119,7 +121,7 @@ namespace HumanityService.Services
 
             var getContributionsResult = await _transactionStore.GetContributions(getContributionsRequest);
             var donorContribution = getContributionsResult.Contributions[0];
-            donorContribution.Status = "Accepted";
+            donorContribution.Status = "InProgress";
             await _transactionStore.UpdateContribution(donorContribution);
 
             return deliveryContributionId;
@@ -194,6 +196,7 @@ namespace HumanityService.Services
                     var getDeliveryDemandsResult = await _transactionStore.GetDeliveryDemands(getDeliveryDemandRequest);
                     var deliveryDemand = getDeliveryDemandsResult.DeliveryDemands[0];
                     deliveryDemand.Status = "Completed";
+                    deliveryDemand.TimeCompleted = UnixTimeSeconds();
                     await _transactionStore.UpdateDeliveryDemand(deliveryDemand);
 
                     //update deliverer's contribution
@@ -205,12 +208,13 @@ namespace HumanityService.Services
                     var deliveryContributions = await _transactionStore.GetContributions(getContributionRequest);
                     var deliveryContribution = deliveryContributions.Contributions[0];
                     deliveryContribution.Status = "Completed";
+                    deliveryContribution.TimeCompleted = UnixTimeSeconds();
                     await _transactionStore.UpdateContribution(deliveryContribution);
 
                     //update campaign
                     var campaign = await _transactionStore.GetCampaign(request.CampaignId);
                     campaign.CurrentState++;
-
+                    await _transactionStore.UpdateCampaign(campaign);
                     return true;
                 }
                 else
@@ -220,11 +224,11 @@ namespace HumanityService.Services
             }
         }
 
-        public Task ApproveContribution(string contributionId)//
+        public Task ApproveContribution(string contributionId)
         {
             throw new NotImplementedException();
-            //update campaign
-            //
+            //update contribution
+            //Used with volunteering contributions
         }
 
         public async Task<string> CreateCampaign(CreateCampaignRequest request)
@@ -237,6 +241,7 @@ namespace HumanityService.Services
                 Type = request.Type,
                 Category = request.Category,
                 Target = request.Target,
+                Status = "Active",
                 CurrentState = 0,
                 TimeCreated = UnixTimeSeconds(),
                 TimeCompleted = 0, 
@@ -247,35 +252,137 @@ namespace HumanityService.Services
             return campaignId; 
         }
 
-        public async Task DeleteCampaign(string campaignId)
+        public async Task CancelCampaign(string campaignId)
         {
-            await _transactionStore.DeleteCampaign(campaignId);
+            //cancel campaign
+            var campaign = await _transactionStore.GetCampaign(campaignId);
+            campaign.Status = "Inactive";
+            campaign.TimeCompleted = UnixTimeSeconds();
+            await _transactionStore.UpdateCampaign(campaign);
+
+            //cancel all ongoing processes
+            var getProcessesResult = await _transactionStore.GetProcesses(campaignId);
+            foreach (var process in getProcessesResult.Processes)
+            {
+                //Only cancel processes that haven't been accepted yet
+                if(process.Status == "Pending")
+                {
+                    process.Status = "Cancelled";
+                    await _transactionStore.UpdateProcess(process);
+
+                    //cancel contributions
+                    var getContributionsRequest = new GetContributionsRequest
+                    {
+                        ProcessId = process.Id
+                    };
+                    var getContributionsResult = await _transactionStore.GetContributions(getContributionsRequest);
+
+                    foreach (var contribution in getContributionsResult.Contributions)
+                    {
+                        contribution.Status = "Cancelled";
+                        await _transactionStore.UpdateContribution(contribution);
+                    }
+
+                    //cancel delivery demands
+                    var getDeliveryDemandsRequest = new GetDeliveryDemandsRequest
+                    {
+                        ProcessId = process.Id
+                    };
+                    var getDeliveryDemandsResult = await _transactionStore.GetDeliveryDemands(getDeliveryDemandsRequest);
+
+                    foreach (var deliveryDemand in getDeliveryDemandsResult.DeliveryDemands)
+                    {
+                        deliveryDemand.Status = "Cancelled";
+                        await _transactionStore.UpdateDeliveryDemand(deliveryDemand);
+                    }
+                }
+            }
         }
 
-        public async Task DeleteContribution(string contributionId)
+        public async Task CancelContribution(string contributionId)
         {
-            //If donation or volunteering delete the process (process, contributions, deliveryDemand)
-            //
-            //If delivery Demand update donation to pending and update delivery demand to
+            var contribution = await _transactionStore.GetContribution(contributionId);
+
+            //If donation or volunteering
+            if (contribution.Type == "Delivery")
+            {
+                // Cancel the delivery contribution
+                contribution.Status = "Cancelled";
+                await _transactionStore.UpdateContribution(contribution);
+
+                // Set the process to pending
+                var process = await _transactionStore.GetProcess(contribution.ProcessId);
+                process.Status = "Pending";
+                await _transactionStore.UpdateProcess(process);
+
+                // Set the donor's contribution to Pending
+                var getContributionsRequest = new GetContributionsRequest
+                {
+                    ProcessId = contribution.ProcessId,
+                    Type = "Donation"
+                };
+                var getContributionsResult = await _transactionStore.GetContributions(getContributionsRequest);
+                var donorContribution = getContributionsResult.Contributions[0];
+                donorContribution.Status = "Pending";
+                await _transactionStore.UpdateContribution(donorContribution);
+
+                // Set the delivery demand to Pending
+                var getDeliveryDemandsRequest = new GetDeliveryDemandsRequest
+                {
+                    ProcessId = contribution.ProcessId
+                };
+                var getDeliveryDemandsResult = await _transactionStore.GetDeliveryDemands(getDeliveryDemandsRequest);
+                var deliveryDemand = getDeliveryDemandsResult.DeliveryDemands[0];
+                deliveryDemand.Status = "Pending";
+                await _transactionStore.UpdateDeliveryDemand(deliveryDemand);
+            }
+            else //If Donation or volunteering
+            {
+                // Cancel the delivery contribution
+                contribution.Status = "Cancelled";
+                await _transactionStore.UpdateContribution(contribution);
+
+                var process = await _transactionStore.GetProcess(contribution.ProcessId);
+                process.Status = "Cancelled";
+                await _transactionStore.UpdateProcess(process);
+
+                var getContributionsRequest = new GetContributionsRequest
+                {
+                    ProcessId = contribution.ProcessId,
+                    Type = "Delivery"
+                };
+                var getContributionsResult = await _transactionStore.GetContributions(getContributionsRequest);
+                var donorContribution = getContributionsResult.Contributions[0];
+                donorContribution.Status = "Cancelled";
+                await _transactionStore.UpdateContribution(donorContribution);
+
+                var getDeliveryDemandsRequest = new GetDeliveryDemandsRequest
+                {
+                    ProcessId = contribution.ProcessId
+                };
+                var getDeliveryDemandsResult = await _transactionStore.GetDeliveryDemands(getDeliveryDemandsRequest);
+                var deliveryDemand = getDeliveryDemandsResult.DeliveryDemands[0];
+                deliveryDemand.Status = "Cancelled";
+                await _transactionStore.UpdateDeliveryDemand(deliveryDemand);
+            }
         }
 
-        public Task DeleteDeliveryDemand(string deliveryDemandId)
+        public async Task EditCampaign(EditCampaignRequest request)
         {
-            throw new NotImplementedException();
-            //Might need it if NGOs have the ability to change all these requirements
-        }
-
-        public Task EditCampaign(EditCampaignRequest request)
-        {
-            throw new NotImplementedException();
-            // How do we only allow the right user to edit his camapaign
+            var campaign = await _transactionStore.GetCampaign(request.CampaignId);
+            campaign.Name = request.CampaignName;
+            campaign.Type = request.Type;
+            campaign.Category = request.Category;
+            campaign.Target = request.Target;
+            campaign.Status = request.Status;
+            campaign.Description = request.Description;
+            await _transactionStore.UpdateCampaign(campaign);
         }
 
         public Task EditContribution(EditContributionRequest request)
         {
-            throw new NotImplementedException();
-            //edit the contribution
-            //edit delivery demand if needed
+            //Do we need it? Just cancel the one you already have
+            throw new NotImplementedException(); 
         }
 
 
