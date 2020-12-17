@@ -7,7 +7,6 @@ namespace HumanityService.DataContracts.Requests
     public class AnswerDeliveryDemandRequest
     {
         public string Username { get; set; }
-        public string DeliveryDemandId { get; set; }
         public long TimeWindowStart { get; set; }
         public long TimeWindowEnd { get; set; }
         public Location Location { get; set; }

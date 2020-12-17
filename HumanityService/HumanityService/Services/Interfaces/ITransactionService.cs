@@ -13,17 +13,17 @@ namespace HumanityService.Services.Interfaces
         Task<Campaign> GetCampaign(string campaignId);
         Task<GetCampaignsResult> GetCampaigns(GetCampaignsRequest request);
         Task<string> CreateCampaign(CreateCampaignRequest request);
-        Task EditCampaign(EditCampaignRequest request);
+        Task EditCampaign(string campaignId, EditCampaignRequest request);
         Task CancelCampaign(string campaignId);
-        Task<string> AnswerCampaign(AnswerCampaignRequest request);
+        Task<string> AnswerCampaign(string campaignId, AnswerCampaignRequest request);
 
         Task<DeliveryDemand> GetDeliveryDemand(string deliveryDemandId);
         Task<GetDeliveryDemandsResult> GetDeliveryDemands(GetDeliveryDemandsRequest request);
-        Task<string> AnswerDeliveryDemand(AnswerDeliveryDemandRequest request);
+        Task<string> AnswerDeliveryDemand(string deliveryDemandId, AnswerDeliveryDemandRequest request);
 
         Task<Contribution> GetContribution(string contributionId);
         Task<GetContributionsResult> GetContributions(GetContributionsRequest request);
-        Task EditContribution(EditContributionRequest request);
+        Task EditContribution(string contributionId, EditContributionRequest request);
         Task CancelContribution(string contributionId);
         Task ApproveContribution(string contributionId);
 

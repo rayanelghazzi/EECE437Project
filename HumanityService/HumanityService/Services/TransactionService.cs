@@ -30,14 +30,14 @@ namespace HumanityService.Services
             //what should we return (we have delivery demands and campaigns)
         }
 
-        public async Task<string> AnswerCampaign(AnswerCampaignRequest request)
+        public async Task<string> AnswerCampaign(string campaignId, AnswerCampaignRequest request)
         {
             // What if one of them failed? You have to delete all of them
-            var campaign = await _transactionStore.GetCampaign(request.CampaignId);
+            var campaign = await _transactionStore.GetCampaign(campaignId);
 
             Process process = new Process
             {
-                CampaignId = request.CampaignId,
+                CampaignId = campaignId,
                 Status = "Pending",
                 TimeCreated = UnixTimeSeconds(),
                 TimePickedUp = 0L,
@@ -74,14 +74,13 @@ namespace HumanityService.Services
                 TimeCompleted = 0
             };
             await _transactionStore.AddDeliveryDemand(deliveryDemand);
-
             return contributionId; 
         }
 
-        public async Task<string> AnswerDeliveryDemand(AnswerDeliveryDemandRequest request)
+        public async Task<string> AnswerDeliveryDemand(string deliveryDemandId, AnswerDeliveryDemandRequest request)
         {
             //Update DeliveryDemand
-            var deliveryDemand = await _transactionStore.GetDeliveryDemand(request.DeliveryDemandId);
+            var deliveryDemand = await _transactionStore.GetDeliveryDemand(deliveryDemandId);
             deliveryDemand.Status = "InProgress";
             await _transactionStore.UpdateDeliveryDemand(deliveryDemand);
 
@@ -98,7 +97,7 @@ namespace HumanityService.Services
             Contribution deliveryContribution = new Contribution
             {
                 ProcessId = deliveryDemand.ProcessId,
-                DeliveryDemandId = deliveryDemand.Id,
+                DeliveryDemandId = deliveryDemandId,
                 DeliveryCode = deliveryCode,
                 Type = "Delivery",
                 Username = request.Username,
@@ -367,9 +366,9 @@ namespace HumanityService.Services
             }
         }
 
-        public async Task EditCampaign(EditCampaignRequest request)
+        public async Task EditCampaign(string campaignId, EditCampaignRequest request)
         {
-            var campaign = await _transactionStore.GetCampaign(request.CampaignId);
+            var campaign = await _transactionStore.GetCampaign(campaignId);
             campaign.Name = request.CampaignName;
             campaign.Type = request.Type;
             campaign.Category = request.Category;
@@ -379,7 +378,7 @@ namespace HumanityService.Services
             await _transactionStore.UpdateCampaign(campaign);
         }
 
-        public Task EditContribution(EditContributionRequest request)
+        public Task EditContribution(string contributionId, EditContributionRequest request)
         {
             //Do we need it? Just cancel the one you already have
             throw new NotImplementedException(); 
