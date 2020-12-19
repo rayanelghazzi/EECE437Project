@@ -43,7 +43,6 @@ namespace HumanityService.Controllers
         [HttpPost("campaigns")]
         public async Task<IActionResult> CreateCampaign([FromBody] CreateCampaignRequest request)
         {
-            throw new Exception("Exception while fetching all the students from the storage.");
             await _transactionService.CreateCampaign(request);
             return Ok();
         }
