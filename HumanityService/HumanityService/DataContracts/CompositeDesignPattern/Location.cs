@@ -1,4 +1,4 @@
-﻿namespace HumanityService.DataContracts
+﻿namespace HumanityService.DataContracts.CompositeDesignPattern
 {
     public class Location
     {

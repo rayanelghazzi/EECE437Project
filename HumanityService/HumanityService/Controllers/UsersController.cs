@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using HumanityService.DataContracts;
+using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 

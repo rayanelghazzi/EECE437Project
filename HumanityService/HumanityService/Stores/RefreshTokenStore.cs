@@ -9,19 +9,19 @@ namespace HumanityService.Stores
 {
     public class RefreshTokenStore : IRefreshTokenStore
     {
-        public Task AddRefreshToken(RefreshToken refreshToken)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task AddRefreshToken(RefreshToken refreshToken)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public Task DeleteRefreshToken(string refreshTokenId, string username)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task DeleteRefreshToken(string refreshTokenId, string username)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
-        public Task<RefreshToken> GetRefreshToken(string refreshTokenId, string username)
-        {
-            throw new NotImplementedException();
-        }
+        //public Task<RefreshToken> GetRefreshToken(string refreshTokenId, string username)
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

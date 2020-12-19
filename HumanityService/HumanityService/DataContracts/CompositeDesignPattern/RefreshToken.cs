@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HumanityService.DataContracts
+namespace HumanityService.DataContracts.CompositeDesignPattern
 {
     public class RefreshToken
     {

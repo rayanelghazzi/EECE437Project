@@ -1,4 +1,4 @@
-﻿using HumanityService.DataContracts;
+﻿using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.DataContracts.Requests;
 using HumanityService.Services.Interfaces;
 using System;
@@ -18,10 +18,14 @@ namespace HumanityService.Services
         public Task<Campaign> MatchUserToCampaign(GetCampaignsRequest request)
         {
             throw new NotImplementedException();
-            //Volunteering
-
+            ////Volunteering
+            //Get volunteering campaigns with similar type and category
+            //Get the time required to get to each one
+            //Idk what else
 
             //Donations 
+            //Get volunteering campaigns with similar type and category
+            //Return campaign with smallest reach/target ratio
         }
 
         public Task<DeliveryDemand> MatchUserToDeliveryDemand(GetDeliveryDemandsRequest request)

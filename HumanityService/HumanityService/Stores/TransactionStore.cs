@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Dapper;
-using HumanityService.DataContracts;
+using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.DataContracts.Requests;
 using HumanityService.DataContracts.Results;
 using HumanityService.Exceptions;
@@ -101,7 +101,6 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
             var sql = new QueryBuilder().InsertInto(CampaignEntity.TableName, CampaignsTableColumns).Build();
-            campaign.Id = CreateId();
             var campaignEntity = ToCampaignEntity(campaign);
             await connection.ExecuteAsync(sql, campaignEntity);
             return campaign.Id;
@@ -112,7 +111,6 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
             var sql = new QueryBuilder().InsertInto(DeliveryDemandEntity.TableName, DeliveryDemandsTableColumns).Build();
-            deliveryDemand.Id = CreateId();
             var deliveryDemandEntity = ToDeliveryDemandEntity(deliveryDemand);
             await connection.ExecuteAsync(sql, deliveryDemandEntity);
             return deliveryDemand.Id;
@@ -123,7 +121,6 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
             var sql = new QueryBuilder().InsertInto(ProcessEntity.TableName, ProcessesTableColumns).Build();
-            process.Id = CreateId();
             var processEntity = ToProcessEntity(process);
             await connection.ExecuteAsync(sql, processEntity);
             return process.Id;
@@ -134,7 +131,6 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
             var sql = new QueryBuilder().InsertInto(ContributionEntity.TableName, ContributionsTableColumns).Build();
-            contribution.Id = CreateId();
             var contributionEntity = ToContributionEntity(contribution);
             await connection.ExecuteAsync(sql, contribution);
             return contribution.Id;
@@ -394,7 +390,7 @@ namespace HumanityService.Stores
 
             var deliveryDemandEntity = await connection.QueryFirstOrDefaultAsync<DeliveryDemandEntity>(sql, new { Id = deliveryDemandId });
             var pickupLocation = await _locationStore.GetLocation(deliveryDemandEntity.PickupUsername);
-            var destinationLocation = await _locationStore.GetLocation(deliveryDemandEntity.DestinationUsername);
+            var destinationLocation = await _locationStore.GetLocation(deliveryDemandEntity.DestinationUsername); //if dd not found throw
             var deliveryDemand = ToDeliveryDemand(deliveryDemandEntity, pickupLocation, destinationLocation);
 
             if (deliveryDemand == null)
@@ -567,10 +563,5 @@ namespace HumanityService.Stores
             deliveryDemand.DestinationLocation = destinationLocation;
             return deliveryDemand;
         }     
-
-        private string CreateId()
-        {
-            return Guid.NewGuid().ToString();
-        }
     }
 }

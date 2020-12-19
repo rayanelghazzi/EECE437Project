@@ -84,29 +84,29 @@ namespace Client
             };
         }
 
-        static public AnswerCampaignRequest CreateAnswerCampaignRequest()
-        {
-            return new AnswerCampaignRequest
-            {
-                Username = "leomessi",
-                CampaignId = "fd081e82-521d-4f32-868d-58a3d3f60baf",
-                TimeWindowStart = 160800000,
-                TimeWindowEnd = 1608034525,
-                OtherInfo = "I have 3 bags of clothes to donate"
-            };
-        }
+        //static public AnswerCampaignRequest CreateAnswerCampaignRequest()
+        //{
+        //    return new AnswerCampaignRequest
+        //    {
+        //        Username = "leomessi",
+        //        CampaignId = "fd081e82-521d-4f32-868d-58a3d3f60baf",
+        //        TimeWindowStart = 160800000,
+        //        TimeWindowEnd = 1608034525,
+        //        OtherInfo = "I have 3 bags of clothes to donate"
+        //    };
+        //}
 
-        static  public AnswerDeliveryDemandRequest CreateAnswerDeliveryDemandRequest()
-        {
-            return new AnswerDeliveryDemandRequest
-            {
-                Username = "crisronaldo",
-                DeliveryDemandId = "11bf96d8-99fe-40f9-a84e-36576065462c",
-                TimeWindowStart = 161800000,
-                TimeWindowEnd = 1608030000,
-                OtherInfo = ""
-            };
-        }
+        //static  public AnswerDeliveryDemandRequest CreateAnswerDeliveryDemandRequest()
+        //{
+        //    return new AnswerDeliveryDemandRequest
+        //    {
+        //        Username = "crisronaldo",
+        //        DeliveryDemandId = "11bf96d8-99fe-40f9-a84e-36576065462c",
+        //        TimeWindowStart = 161800000,
+        //        TimeWindowEnd = 1608030000,
+        //        OtherInfo = ""
+        //    };
+        //}
 
         static public ValidateDeliveryRequest CreateValidateDeliveryRequestPickup()
         {
@@ -148,8 +148,8 @@ namespace Client
             var ngo = CreateNgo();
 
             var createCampaignRequest = CreateCampaignRequest();
-            var answerCamapaignRequest = CreateAnswerCampaignRequest();
-            var answerDeliveryDemandRequest = CreateAnswerDeliveryDemandRequest();
+            //var answerCamapaignRequest = CreateAnswerCampaignRequest();
+            //var answerDeliveryDemandRequest = CreateAnswerDeliveryDemandRequest();
             var validateDeliveryRequestPickup = CreateValidateDeliveryRequestPickup();
             var validateDeliveryRequestDestination = CreateValidateDeliveryRequestDestination();
 

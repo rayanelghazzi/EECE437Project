@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Dapper;
-using HumanityService.DataContracts;
+using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.Exceptions;
 using HumanityService.Stores.Interfaces;
 using System;

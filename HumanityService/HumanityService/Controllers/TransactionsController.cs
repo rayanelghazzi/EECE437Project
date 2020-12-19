@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using HumanityService.DataContracts;
+using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.DataContracts.Requests;
 using HumanityService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;

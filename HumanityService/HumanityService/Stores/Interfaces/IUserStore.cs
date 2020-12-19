@@ -1,4 +1,4 @@
-﻿using HumanityService.DataContracts;
+﻿using HumanityService.DataContracts.CompositeDesignPattern;
 using System.Threading.Tasks;
 
 namespace HumanityService.Stores.Interfaces

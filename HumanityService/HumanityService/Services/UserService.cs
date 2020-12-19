@@ -1,5 +1,5 @@
 ﻿
-using HumanityService.DataContracts;
+using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.Exceptions;
 using HumanityService.Services.Interfaces;
 using HumanityService.Stores.Interfaces;

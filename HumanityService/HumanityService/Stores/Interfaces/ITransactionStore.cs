@@ -1,9 +1,6 @@
-﻿using HumanityService.DataContracts;
+﻿using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.DataContracts.Requests;
 using HumanityService.DataContracts.Results;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HumanityService.Stores.Interfaces

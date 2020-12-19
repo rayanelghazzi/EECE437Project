@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using HumanityService.DataContracts;
+using HumanityService.DataContracts.CompositeDesignPattern;
 using System;
 using System.Collections.Generic;
 using System.Linq;

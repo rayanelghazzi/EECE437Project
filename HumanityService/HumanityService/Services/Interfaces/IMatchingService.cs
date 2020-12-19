@@ -1,4 +1,4 @@
-﻿using HumanityService.DataContracts;
+﻿using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.DataContracts.Requests;
 using System;
 using System.Collections.Generic;
