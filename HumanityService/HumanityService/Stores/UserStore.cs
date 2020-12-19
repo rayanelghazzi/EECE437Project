@@ -113,14 +113,12 @@ namespace HumanityService.Stores
                 .Build();
 
             var ngoEntity = await connection.QueryFirstOrDefaultAsync<NgoEntity>(sql, new { Username = ngoUsername });
-            var location = await _locationStore.GetLocation(ngoUsername);
-            var ngo = ToNgo(ngoEntity, location);
-
-            if (ngo == null)
+            if (ngoEntity == null)
             {
                 throw new StorageErrorException($"Ngo entity with username {ngoUsername} was not found", 404);
             }
-
+            var location = await _locationStore.GetLocation(ngoUsername);
+            var ngo = ToNgo(ngoEntity, location);
             return ngo;
         }
 
@@ -135,13 +133,12 @@ namespace HumanityService.Stores
                 .Build();
 
             var userEntity = await connection.QueryFirstOrDefaultAsync<UserEntity>(sql, new { Username = username });
-            var location = await _locationStore.GetLocation(username);
-            var user = ToUser(userEntity, location);
-
-            if (user == null)
+            if (userEntity == null)
             {
                 throw new StorageErrorException($"User entity with username {username} was not found", 404);
             }
+            var location = await _locationStore.GetLocation(username);
+            var user = ToUser(userEntity, location);
 
             return user;
         }
@@ -155,18 +152,12 @@ namespace HumanityService.Stores
                 .Where($"Username = @Username").Build();
 
             var ngoEntity = ToNgoEntity(ngo);
- 
             int rowsAffected = await connection.ExecuteAsync(sql, ngoEntity);
-            await _locationStore.UpdateLocation(ngo.Username, ngo.Location);
-
             if (rowsAffected == 0)
             {
-                if (!await UserOrNgoExists("ngos", ngo.Username))
-                {
-                    throw new StorageErrorException($"Ngo entity with username {ngo.Username} was not found", 404);
-                }
-                throw new StorageErrorException($"The entity you are trying to update has changed, reload the entity and try again", 412);
+                throw new StorageErrorException($"Ngo entity with username {ngo.Username} was not found", 404);
             }
+            await _locationStore.UpdateLocation(ngo.Username, ngo.Location);
         }
 
         public async Task UpdateUser(User user)
@@ -178,16 +169,12 @@ namespace HumanityService.Stores
                 .Where($"Username = @Username").Build();
 
             var userEntity = ToUserEntity(user);
-            await _locationStore.UpdateLocation(user.Username, user.Location);
             int rowsAffected = await connection.ExecuteAsync(sql, user);
             if (rowsAffected == 0)
             {
-                if (!await UserOrNgoExists("users", user.Username))
-                {
-                    throw new StorageErrorException($"User entity with username {user.Username} was not found", 404);
-                }
-                throw new StorageErrorException($"The entity you are trying to update has changed, reload the entity and try again", 412);
+                throw new StorageErrorException($"User entity with username {user.Username} was not found", 404);
             }
+            await _locationStore.UpdateLocation(user.Username, user.Location);
         }
 
 

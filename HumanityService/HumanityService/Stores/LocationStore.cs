@@ -3,10 +3,7 @@ using Dapper;
 using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.Exceptions;
 using HumanityService.Stores.Interfaces;
-using System;
-using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HumanityService.Stores
@@ -82,11 +79,7 @@ namespace HumanityService.Stores
             int rowsAffected = await connection.ExecuteAsync(sql, locationEntity);
             if (rowsAffected == 0)
             {
-                if (!await LocationExists(username))
-                {
-                    throw new StorageErrorException($"Location entity with username {username} was not found", 404);
-                }
-                throw new StorageErrorException($"The entity you are trying to update has changed, reload the entity and try again", 412);
+                throw new StorageErrorException($"Location entity with username {username} was not found", 404);
             }
         }
 

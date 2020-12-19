@@ -200,15 +200,10 @@ namespace HumanityService.Stores
             var sql = new QueryBuilder().Update(CampaignEntity.TableName, CampaignsTableColumns)
                 .Where($"Id = @Id").Build();
 
-
             int rowsAffected = await connection.ExecuteAsync(sql, campaign);
             if (rowsAffected == 0)
             {
-                if (!await EntityExists(CampaignEntity.TableName, campaign.Id))
-                {
-                    throw new StorageErrorException($"Campaign entity with Id {campaign.Id} was not found", 404);
-                }
-                throw new StorageErrorException($"The entity you are trying to update has changed, reload the entity and try again", 412);
+                throw new StorageErrorException($"Campaign entity with Id {campaign.Id} was not found", 404);
             }
         }
 
@@ -224,11 +219,7 @@ namespace HumanityService.Stores
             int rowsAffected = await connection.ExecuteAsync(sql, contribution);
             if (rowsAffected == 0)
             {
-                if (!await EntityExists(ContributionEntity.TableName, contribution.Id))
-                {
-                    throw new StorageErrorException($"Contribution entity with Id {contribution.Id} was not found", 404);
-                }
-                throw new StorageErrorException($"The entity you are trying to update has changed, reload the entity and try again", 412);
+                throw new StorageErrorException($"Contribution entity with Id {contribution.Id} was not found", 404);
             }
         }
 
@@ -244,11 +235,7 @@ namespace HumanityService.Stores
             int rowsAffected = await connection.ExecuteAsync(sql, deliveryDemand);
             if (rowsAffected == 0)
             {
-                if (!await EntityExists(DeliveryDemandEntity.TableName, deliveryDemand.Id))
-                {
-                    throw new StorageErrorException($"DeliveryDemand entity with Id {deliveryDemand.Id} was not found", 404);
-                }
-                throw new StorageErrorException($"The entity you are trying to update has changed, reload the entity and try again", 412);
+                throw new StorageErrorException($"DeliveryDemand entity with Id {deliveryDemand.Id} was not found", 404);
             }
         }
 
@@ -264,11 +251,7 @@ namespace HumanityService.Stores
             int rowsAffected = await connection.ExecuteAsync(sql, process);
             if (rowsAffected == 0)
             {
-                if (!await EntityExists(ProcessEntity.TableName, process.Id))
-                {
-                    throw new StorageErrorException($"Process entity with Id {process.Id} was not found", 404);
-                }
-                throw new StorageErrorException($"The entity you are trying to update has changed, reload the entity and try again", 412);
+                throw new StorageErrorException($"Process entity with Id {process.Id} was not found", 404);
             }
         }
 
@@ -283,15 +266,12 @@ namespace HumanityService.Stores
                 .Build();
 
             var campaignEntity = await connection.QueryFirstOrDefaultAsync<CampaignEntity>(sql, new { Id = campaignId });
-            var location = await _locationStore.GetLocation(campaignEntity.Username);
-            var campaign = ToCampaign(campaignEntity, location);
-
-            if (campaign == null)
+            if (campaignEntity == null)
             {
                 throw new StorageErrorException($"Campaign entity with Id {campaignId} was not found", 404);
             }
-
-            return campaign;
+            var location = await _locationStore.GetLocation(campaignEntity.Username);
+            return ToCampaign(campaignEntity, location);
         }
 
         public async Task<GetCampaignsResult> GetCampaigns(GetCampaignsRequest request)
@@ -310,7 +290,6 @@ namespace HumanityService.Stores
                 .Build();
 
             var campaignEntities = (await connection.QueryAsync<CampaignEntity>(sql, request)).ToList();
-
             List<Campaign> campaigns = new List<Campaign>();
             foreach(var entity in campaignEntities)
             {
@@ -336,15 +315,15 @@ namespace HumanityService.Stores
                 .Build();
 
             var contributionEntity = await connection.QueryFirstOrDefaultAsync<ContributionEntity>(sql, new { Id = contributionId });
-            var location = await _locationStore.GetLocation(contributionEntity.Username);
-            var contribution = ToContribution(contributionEntity, location);
 
-            if (contribution == null)
+            if (contributionEntity == null)
             {
                 throw new StorageErrorException($"Contribution entity with Id {contributionId} was not found", 404);
             }
 
-            return contribution;
+            var location = await _locationStore.GetLocation(contributionEntity.Username);
+
+            return ToContribution(contributionEntity, location);
         }
 
         public async Task<GetContributionsResult> GetContributions(GetContributionsRequest request)
@@ -389,16 +368,13 @@ namespace HumanityService.Stores
                 .Build();
 
             var deliveryDemandEntity = await connection.QueryFirstOrDefaultAsync<DeliveryDemandEntity>(sql, new { Id = deliveryDemandId });
-            var pickupLocation = await _locationStore.GetLocation(deliveryDemandEntity.PickupUsername);
-            var destinationLocation = await _locationStore.GetLocation(deliveryDemandEntity.DestinationUsername); //if dd not found throw
-            var deliveryDemand = ToDeliveryDemand(deliveryDemandEntity, pickupLocation, destinationLocation);
-
-            if (deliveryDemand == null)
+            if (deliveryDemandEntity == null)
             {
                 throw new StorageErrorException($"DeliveryDemand entity with Id {deliveryDemandId} was not found", 404);
             }
-
-            return deliveryDemand;
+            var pickupLocation = await _locationStore.GetLocation(deliveryDemandEntity.PickupUsername);
+            var destinationLocation = await _locationStore.GetLocation(deliveryDemandEntity.DestinationUsername);
+            return ToDeliveryDemand(deliveryDemandEntity, pickupLocation, destinationLocation);
         }
 
         public async Task<GetDeliveryDemandsResult> GetDeliveryDemands(GetDeliveryDemandsRequest request)
