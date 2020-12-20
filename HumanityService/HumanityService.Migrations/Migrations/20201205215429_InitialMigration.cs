@@ -12,8 +12,9 @@ namespace HumanityService.Migrations.Migrations
                 columns: table => new
                 {
                     Username = table.Column<string>(maxLength: 36, nullable: false),
-                    Coordinates = table.Column<string>(nullable: false),
-                    Description = table.Column<string>(nullable: false)
+                    Description = table.Column<string>(nullable: false),
+                    Longitude = table.Column<double>(nullable: false),
+                    Latitude = table.Column<double>(nullable: false)
                 },
                 constraints: table =>
                 {

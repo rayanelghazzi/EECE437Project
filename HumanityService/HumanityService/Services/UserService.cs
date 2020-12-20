@@ -3,6 +3,7 @@ using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.Exceptions;
 using HumanityService.Services.Interfaces;
 using HumanityService.Stores.Interfaces;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -73,8 +74,8 @@ namespace HumanityService.Services
                  && IsValidString(user.Password)
                  && IsValidString(user.PhoneNumber)
                  && IsValidString(user.Email)
-                 && IsValidString(user.Location.Coordinates)
-                 && IsValidString(user.Location.Description)))
+                 && IsValidString(user.Location.Description)
+                 && IsValidCoordinates(user.Location.Longitude, user.Location.Latitude)))
             {
                 throw new BadRequestException("One of the required fields is empty");
             }
@@ -95,6 +96,11 @@ namespace HumanityService.Services
             }
         }
 
+        private static bool IsValidCoordinates(double longitude, double latitude)
+        {
+            return longitude >= -180 && longitude <= 180 && latitude >= -90 && latitude <= 90;
+        }
+
         private static void IsValidUser(User user)
         {
             if (!(IsValidString(user.Username)
@@ -103,7 +109,7 @@ namespace HumanityService.Services
                  && IsValidString(user.Password)
                  && IsValidString(user.PhoneNumber)
                  && IsValidString(user.Email)
-                 && IsValidString(user.Location.Coordinates)
+                 && IsValidCoordinates(user.Location.Longitude, user.Location.Latitude)
                  && IsValidString(user.Location.Description)))
             {
                 throw new BadRequestException("One of the required fields is empty");

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanityService.Migrations"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanityService", "HumanityService\HumanityService.csproj", "{3C8842CE-D2B4-486E-AA78-D42639633A44}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{091E2EB1-1D17-47E4-B146-44304B9DF3DC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{3C8842CE-D2B4-486E-AA78-D42639633A44}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C8842CE-D2B4-486E-AA78-D42639633A44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C8842CE-D2B4-486E-AA78-D42639633A44}.Release|Any CPU.Build.0 = Release|Any CPU
+		{091E2EB1-1D17-47E4-B146-44304B9DF3DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{091E2EB1-1D17-47E4-B146-44304B9DF3DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{091E2EB1-1D17-47E4-B146-44304B9DF3DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{091E2EB1-1D17-47E4-B146-44304B9DF3DC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

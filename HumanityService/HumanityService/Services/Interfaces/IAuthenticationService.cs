@@ -1,4 +1,5 @@
 ﻿using HumanityService.DataContracts;
+using HumanityService.DataContracts.Results;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,8 +9,8 @@ namespace HumanityService.Services.Interfaces
 {
     public interface IAuthenticationService
     {
-        Task Login(string username, string password);
-        Task Logout(string username, string accessTokenId, string refreshToken);
-        Task RefreshAccessToken(string username, string oldAccessToken, string refreshToken);
+        Task<AuthenticationResult> LoginUser(string username, string password);
+
+        Task<AuthenticationResult> LoginNgo(string username, string password);
     }
 }

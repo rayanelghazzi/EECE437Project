@@ -38,13 +38,11 @@ namespace HumanityService
             services.AddSingleton<INotificationService, NotificationService>();
 
             services.AddSingleton<ITransactionStore, TransactionStore>();
-            services.AddSingleton<IRefreshTokenStore, RefreshTokenStore>();
             services.AddSingleton<IUserStore, UserStore>();
             services.AddSingleton<ILocationStore, LocationStore>();
 
             services.AddSingleton<IConnectionFactory, SqlConnectionFactory>();
             services.AddSingleton<UserStore>();
-            services.AddSingleton<RefreshTokenStore>();
             services.AddSingleton<TransactionStore>();
             services.AddSingleton<LocationStore>(); 
 

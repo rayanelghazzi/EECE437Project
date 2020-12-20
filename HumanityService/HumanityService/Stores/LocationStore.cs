@@ -20,7 +20,8 @@ namespace HumanityService.Stores
         private static readonly string[] LocationsTableColumns =
         {
             nameof(LocationEntity.Username),
-            nameof(LocationEntity.Coordinates),
+            nameof(LocationEntity.Longitude),
+            nameof(LocationEntity.Latitude),
             nameof(LocationEntity.Description)
         };
 
@@ -102,7 +103,8 @@ namespace HumanityService.Stores
             return new LocationEntity
             {
                 Username = username,
-                Coordinates = location.Coordinates,
+                Longitude = location.Longitude,
+                Latitude = location.Latitude,
                 Description = location.Description
             };
         }
@@ -111,7 +113,8 @@ namespace HumanityService.Stores
         {
             return new Location
             {
-                Coordinates = location.Coordinates,
+                Longitude = location.Longitude,
+                Latitude = location.Latitude,
                 Description = location.Description
             };
         }

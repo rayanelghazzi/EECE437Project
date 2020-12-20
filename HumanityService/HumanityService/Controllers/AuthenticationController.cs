@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using HumanityService.DataContracts.Requests;
+using HumanityService.DataContracts.Results;
 using HumanityService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,22 +17,18 @@ namespace HumanityService.Controllers
             _authenticationService = authenticationService;
         }
 
-        //[HttpGet("login")]
-        //public async Task<IActionResult> Login(LoginRequest request)
-        //{
+        [HttpGet("login")]
+        public async Task<IActionResult> LoginUser(LoginRequest request)
+        {
+            var result = await _authenticationService.LoginUser(request.Username, request.Password);
+            return Ok(result);
+        }
 
-        //}
-
-        //[HttpPost("logout")]
-        //public async Task<IActionResult> Logout(LogoutRequest request)
-        //{
-
-        //}
-
-        //[HttpGet("refresh-access-token")]
-        //public async Task<IActionResult> RefreshAccessToken(RefreshTokenRequest request)
-        //{
-
-        //}
+        [HttpGet("login")]
+        public async Task<IActionResult> LoginNgo(LoginRequest request)
+        {
+            var result = await _authenticationService.LoginNgo(request.Username, request.Password);
+            return Ok(result);
+        }
     }
 }

@@ -1,4 +1,5 @@
-﻿using HumanityService.Services.Interfaces;
+﻿using HumanityService.DataContracts.Results;
+using HumanityService.Services.Interfaces;
 using HumanityService.Stores.Interfaces;
 using System;
 using System.Threading.Tasks;
@@ -7,28 +8,29 @@ namespace HumanityService.Services
 {
     public class AuthenticationService : IAuthenticationService
     {
-        private readonly IRefreshTokenStore _refreshTokenStore;
         private readonly IUserService _userService;
 
-        public AuthenticationService(IRefreshTokenStore refreshTokenStore, IUserService userService)
+        public AuthenticationService(IUserService userService)
         {
-            _refreshTokenStore = refreshTokenStore;
             _userService = userService;
         }
 
-        public Task Login(string username, string password)
+        public async Task<AuthenticationResult> LoginUser(string username, string password)
         {
-            throw new NotImplementedException();
+            var user = await _userService.GetUser(username);
+            return new AuthenticationResult
+            {
+                PasswordIsValid = user.Password == password
+            };
         }
 
-        public Task Logout(string username, string accessTokenId, string refreshToken)
+        public async Task<AuthenticationResult> LoginNgo(string username, string password)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task RefreshAccessToken(string username, string oldAccessToken, string refreshToken)
-        {
-            throw new NotImplementedException();
+            var user = await _userService.GetNgo(username);
+            return new AuthenticationResult
+            {
+                PasswordIsValid = user.Password == password
+            };
         }
     }
 }

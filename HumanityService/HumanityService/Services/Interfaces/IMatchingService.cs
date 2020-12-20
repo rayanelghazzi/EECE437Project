@@ -1,8 +1,5 @@
 ﻿using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.DataContracts.Requests;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace HumanityService.Services.Interfaces
