@@ -1,6 +1,8 @@
 ﻿using HumanityService.DataContracts;
 using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,11 +38,7 @@ namespace HumanityService.Client
 
         public async Task GetNgoInfo(string username)
         {
-            var responseMessage = await _httpClient.GetAsync($"api/profile/{username}");
-            await EnsureSuccessOrThrowAsync(responseMessage);
-            string json = await responseMessage.Content.ReadAsStringAsync();
-            var fetchedStudent = JsonConvert.DeserializeObject<User>(json);
-            return fetchedStudent;
+
         }
 
         public async Task<AuthenticationResult> LoginUser(LoginRequest loginRequest)
@@ -83,42 +81,71 @@ namespace HumanityService.Client
             return fetchedCampaign;
         }
 
-        public async Task<GetCampaignsResult> GetCampaigns(GetCampaignsRequest request)
+        public async Task<GetCampaignsResult> GetCampaigns(string ngoName = null, string username = null, string type = null, string category = null, string status = null)
         {
-            var responseMessage = await _httpClient.GetAsync($"api/transactions/campaigns");
+            var uri = BuildGetCampaignsUri(ngoName, username, type, category, status);
+            var responseMessage = await _httpClient.GetAsync(uri);
             await EnsureSuccessOrThrowAsync(responseMessage);
             string json = await responseMessage.Content.ReadAsStringAsync();
             var getCampaignsResult = JsonConvert.DeserializeObject<GetCampaignsResult>(json);
             return getCampaignsResult;
         }
 
-        public async Task MatchCampaign(MatchCampaignRequest request)
+        public async Task<Campaign> MatchCampaign(MatchCampaignRequest matchCampaignRequest)
         {
-            var responseMessage = await _httpClient.GetAsync($"api/transactions/campaigns/match");
+            string json = JsonConvert.SerializeObject(matchCampaignRequest);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "api/transactions/campaigns/match")
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+
+            HttpResponseMessage responseMessage = await _httpClient.SendAsync(request);
             await EnsureSuccessOrThrowAsync(responseMessage);
-            string json = await responseMessage.Content.ReadAsStringAsync();
-            var getCampaignsResult = JsonConvert.DeserializeObject<GetCampaignsResult>(json);
-            return getCampaignsResult;
+            string recievedJson = await responseMessage.Content.ReadAsStringAsync();
+            var campaign = JsonConvert.DeserializeObject<Campaign>(recievedJson);
+            return campaign;
         }
 
-        public async Task CreateCampaign(CreateCampaignRequest request)
+        public async Task CreateCampaign(CreateCampaignRequest createCampaignRequest)
         {
+            string json = JsonConvert.SerializeObject(createCampaignRequest);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "api/transactions/campaigns")
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
 
+            HttpResponseMessage responseMessage = await _httpClient.SendAsync(request);
+            await EnsureSuccessOrThrowAsync(responseMessage);
         }
 
-        public async Task AnswerCampaign(string campaignId, AnswerCampaignRequest request)
+        public async Task AnswerCampaign(string campaignId, AnswerCampaignRequest answerCampaignRequest)
         {
+            string json = JsonConvert.SerializeObject(answerCampaignRequest);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"api/transactions/campaigns/answer-campaign/{campaignId}")
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
 
+            HttpResponseMessage responseMessage = await _httpClient.SendAsync(request);
+            await EnsureSuccessOrThrowAsync(responseMessage);
         }
 
-        public async Task EditCampaign(string campaignId, EditCampaignRequest request)
+        public async Task EditCampaign(string campaignId, EditCampaignRequest editCampaignRequest)
         {
-
+            string json = JsonConvert.SerializeObject(editCampaignRequest);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Put, $"api/transactions/campaigns/{campaignId}")
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+            HttpResponseMessage responseMessage = await _httpClient.SendAsync(request);
+            await EnsureSuccessOrThrowAsync(responseMessage);
         }
 
         public async Task CancelCampaign(string campaignId)
         {
-
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, $"api/transactions/campaings/{campaignId}");
+            var responseMessage = await _httpClient.SendAsync(request);
+            await EnsureSuccessOrThrowAsync(responseMessage);
         }
 
         public async Task<DeliveryDemand> GetDeliveryDemand(string deliveryDemandId)
@@ -130,19 +157,40 @@ namespace HumanityService.Client
             return fetchedDeliveryDemand;
         }
 
-        public async Task GetDeliveryDemands(GetDeliveryDemandsRequest request)
+        public async Task<GetDeliveryDemandsResult> GetDeliveryDemands(string processId = null, string campaignName = null, string pickupUsername = null, string destinationUsername = null, string status = null)
         {
-
+            var uri = BuildGetDeliveryDemandsUri(processId, campaignName, pickupUsername, destinationUsername, status);
+            var responseMessage = await _httpClient.GetAsync(uri);
+            await EnsureSuccessOrThrowAsync(responseMessage);
+            string json = await responseMessage.Content.ReadAsStringAsync();
+            var getDeliveryDemandsResult = JsonConvert.DeserializeObject<GetDeliveryDemandsResult>(json);
+            return getDeliveryDemandsResult;
         }
 
-        public async Task MatchDeliveryDemand(MatchDeliveryDemandRequest request)
+        public async Task<DeliveryDemand> MatchDeliveryDemand(MatchDeliveryDemandRequest matchDeliveryDemandRequest)
         {
+            string json = JsonConvert.SerializeObject(matchDeliveryDemandRequest);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "api/transactions/delivery-demands/match")
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
 
+            HttpResponseMessage responseMessage = await _httpClient.SendAsync(request);
+            await EnsureSuccessOrThrowAsync(responseMessage);
+            string recievedJson = await responseMessage.Content.ReadAsStringAsync();
+            var deliveryDemand = JsonConvert.DeserializeObject<DeliveryDemand>(recievedJson);
+            return deliveryDemand;
         }
 
-        public async Task AnswerDeliveryDemand(string deliveryDemandId, AnswerDeliveryDemandRequest request)
+        public async Task AnswerDeliveryDemand(string deliveryDemandId, AnswerDeliveryDemandRequest answerDeliveryDemandRequest)
         {
-
+            string json = JsonConvert.SerializeObject(answerDeliveryDemandRequest);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"api/transactions/delivery-demands/answer-delivery-demand/{deliveryDemandId}")
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+            HttpResponseMessage responseMessage = await _httpClient.SendAsync(request);
+            await EnsureSuccessOrThrowAsync(responseMessage);
         }
 
         public async Task<Contribution> GetContribution(string contributionId)
@@ -154,19 +202,28 @@ namespace HumanityService.Client
             return fetchedContribution;
         }
 
-        public async Task GetContributions(GetContributionsRequest request)
+        public async Task<GetContributionsResult> GetContributions(string username = null, string processId = null, string deliveryDemandId = null, string type = null, string status = null)
         {
-
+            var uri = BuildGetDeliveryDemandsUri(username, processId, deliveryDemandId, type, status);
+            var responseMessage = await _httpClient.GetAsync(uri);
+            await EnsureSuccessOrThrowAsync(responseMessage);
+            string json = await responseMessage.Content.ReadAsStringAsync();
+            var getContributionsResult = JsonConvert.DeserializeObject<GetContributionsResult>(json);
+            return getContributionsResult;
         }
 
         public async Task ApproveContribution(string contributionId)
         {
-
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"api/transactions/contributions/{contributionId}");
+            HttpResponseMessage responseMessage = await _httpClient.SendAsync(request);
+            await EnsureSuccessOrThrowAsync(responseMessage);
         }
 
         public async Task CancelContribution(string contributionId)
         {
-
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Delete, $"api/transactions/contributions/{contributionId}");
+            var responseMessage = await _httpClient.SendAsync(request);
+            await EnsureSuccessOrThrowAsync(responseMessage);
         }
 
         public async Task<Process> GetProcess(string processId)
@@ -178,14 +235,24 @@ namespace HumanityService.Client
             return fetchedProcess;
         }
 
-        public async Task GetProcesses(GetProcessesRequest request)
+        public async Task<GetProcessesResult> GetProcesses(string campaignId)
         {
-
+            var responseMessage = await _httpClient.GetAsync($"api/transactions/processes?campaignId={campaignId}");
+            await EnsureSuccessOrThrowAsync(responseMessage);
+            string json = await responseMessage.Content.ReadAsStringAsync();
+            var getProcessesResult = JsonConvert.DeserializeObject<GetProcessesResult>(json);
+            return getProcessesResult;
         }
 
-        public async Task ValidateDelivery(ValidateDeliveryRequest request)
+        public async Task ValidateDelivery(ValidateDeliveryRequest validateDeliveryRequest)
         {
-
+            string json = JsonConvert.SerializeObject(validateDeliveryRequest);
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "api/transactions/validate-delivery")
+            {
+                Content = new StringContent(json, Encoding.UTF8, "application/json")
+            };
+            HttpResponseMessage responseMessage = await _httpClient.SendAsync(request);
+            await EnsureSuccessOrThrowAsync(responseMessage);
         }
 
         private static async Task EnsureSuccessOrThrowAsync(HttpResponseMessage responseMessage)
@@ -197,36 +264,50 @@ namespace HumanityService.Client
             }
         }
 
-        //public async Task AddUser(User user)
-        //{
-        //    string json = JsonConvert.SerializeObject(user);
-        //    HttpResponseMessage responseMessage = await _httpClient.PostAsync("api/profile", new StringContent(json, Encoding.UTF8,
-        //        "application/json"));
-        //    EnsureSuccessOrThrow(responseMessage);
-        //}
+        string BuildGetCampaignsUri(string ngoName = null, string username = null, string type = null, string category = null, string status = null)
+        {
+            List<string> parameters = new List<string>();
+            AddParameter("ngoName", ngoName, parameters);
+            AddParameter("username", username, parameters);
+            AddParameter("type", type, parameters);
+            AddParameter("category", category, parameters);
+            AddParameter("status", status, parameters);
 
-        //public async Task<User> GetUser(string username)
-        //{
-        //    var responseMessage = await _httpClient.GetAsync($"api/profile/{username}");
-        //    EnsureSuccessOrThrow(responseMessage);
-        //    string json = await responseMessage.Content.ReadAsStringAsync();
-        //    var fetchedStudent = JsonConvert.DeserializeObject<User>(json);
-        //    return fetchedStudent;
-        //}
+            string joinedParameters = string.Join("&", parameters);
+            return $"api/transactions/campaigns?{joinedParameters}";
+        }
 
-        //public async Task UpdateUser(User user)
-        //{
-        //    var body = new UpdateUserRequestBody
-        //    {
-        //        FirstName = user.FirstName,
-        //        LastName = user.LastName,
-        //        ProfilePictureId = user.ProfilePictureId
-        //    };
+        string BuildGetDeliveryDemandsUri(string processId = null, string campaignName = null, string pickupUsername = null, string destinationUsername = null, string status = null)
+        {
+            List<string> parameters = new List<string>();
+            AddParameter("processId", processId, parameters);
+            AddParameter("campaignName", campaignName, parameters);
+            AddParameter("pickupUsername", pickupUsername, parameters);
+            AddParameter("destinationUsername", destinationUsername, parameters);
+            AddParameter("status", status, parameters);
 
-        //    string json = JsonConvert.SerializeObject(body);
-        //    HttpResponseMessage responseMessage = await _httpClient.PutAsync($"api/profile/{user.Username}", new StringContent(json,
-        //        Encoding.UTF8, "application/json"));
-        //    EnsureSuccessOrThrow(responseMessage);
-        //}
+            string joinedParameters = string.Join("&", parameters);
+            return $"api/transactions/delivery-demands?{joinedParameters}";
+        }
+
+        string BuildGetContributionsUri(string username = null, string processId = null, string deliveryDemandId = null, string type = null, string status = null)
+        {
+            List<string> parameters = new List<string>();
+            AddParameter("username", username, parameters);
+            AddParameter("processId", processId, parameters);
+            AddParameter("deliveryDemandId", deliveryDemandId, parameters);
+            AddParameter("type", type, parameters);
+            AddParameter("status", status, parameters);
+
+            string joinedParameters = string.Join("&", parameters);
+            return $"api/transactions/contributions?{joinedParameters}";
+        }
+
+
+        static void AddParameter(string parameterName, object parameterValue, List<string> parameters)
+        {
+            if (parameterValue == null) return;
+            parameters.Add($"{parameterName}={parameterValue}");
+        }
     }
 }

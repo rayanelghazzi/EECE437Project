@@ -95,7 +95,7 @@ namespace HumanityService.Controllers
             return Ok(deliveryDemands);
         }
 
-        [HttpPost("delivery-demand/match")]
+        [HttpPost("delivery-demands/match")]
         public async Task<IActionResult> MatchDeliveryDemand([FromBody] MatchDeliveryDemandRequest request)
         {
             var deliveryDemand = await _transactionService.MatchDeliveryDemand(request);
