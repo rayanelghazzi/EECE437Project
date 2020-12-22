@@ -58,34 +58,26 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             TimeCompleted = 0;
         }
 
-        public async Task OnAnswerDeliveryDemand()
+        public async Task SetStatusInProgress()
         {
             Status = "InProgress";
             await Update();
         }
 
-        public async Task ValidatePickupDonor()
-        {
-            Status = "PickedUp";
-            TimeCompleted = Utils.UnixTimeSeconds();
-            await Update();
-        }
-
-        public async Task ValidatePickupDeliverer()
+        public async Task SetStatusPickedUp()
         {
             Status = "PickedUp";
             await Update();
         }
 
-        public async Task ValidateDestinationDonor()
+        public async Task SetStatusCompleted()
         {
             Status = "Completed";
             await Update();
         }
 
-        public async Task ValidateDestinationDeliverer()
+        public async Task SetTimeCompleted()
         {
-            Status = "Completed";
             TimeCompleted = Utils.UnixTimeSeconds();
             await Update();
         }

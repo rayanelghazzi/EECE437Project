@@ -69,7 +69,7 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             await Update();
 
             Contribution contribution = (Contribution)components.Find(x => x is Contribution && x.Status != "Cancelled");
-            await contribution.ValidatePickupDeliverer();
+            await contribution.SetStatusPickedUp();
         }
 
         public async Task ValidateDestination()
@@ -79,7 +79,8 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             await Update();
 
             Contribution contribution = (Contribution)components.Find(x => x is Contribution && x.Status != "Cancelled");
-            await contribution.ValidateDestinationDeliverer();
+            await contribution.SetStatusCompleted();
+            await contribution.SetTimeCompleted();
         }
 
         public async Task Cancel()

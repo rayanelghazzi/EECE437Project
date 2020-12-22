@@ -14,7 +14,7 @@ namespace HumanityService.Stores
         public string Type { get; set; }
         public string Category { get; set; }
         public int Target { get; set; }
-        public int CurrentState { get; set; }
+        public int CompletedCount { get; set; }
         public long TimeCreated { get; set; }
         public long TimeCompleted { get; set; }
         public string Description { get; set; }

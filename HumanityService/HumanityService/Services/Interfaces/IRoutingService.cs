@@ -9,5 +9,6 @@ namespace HumanityService.Services.Interfaces
     public interface IRoutingService
     {
         Task<double> GetETA(Location delivererCoordinates, Location donorCoordinates, Location ngoCoordinates, string transportationType);
+        Task<double> GetETA(Location volunteerCoordinates, Location ngoCoordinates, string transportationType);
     }
 }

@@ -16,18 +16,22 @@ namespace HumanityService.Services
         private readonly INotificationService _notificationService;
         private readonly IMatchingService _matchingService;
 
-        public TransactionService(ITransactionStore transactionStore)
+        public TransactionService(ITransactionStore transactionStore, IMatchingService matchingService)
         {
             _transactionStore = transactionStore;
-            //_notificationService = notificationService;
-            //_matchingService = matchingService;
+            _matchingService = matchingService;
         }
 
-        public Task<Campaign> FindMatch(string username, string type, string category)
+        public async Task<Campaign> MatchCampaign(MatchCampaignRequest request)
         {
-            throw new NotImplementedException();
-            //call matching service with some parameters
-            //what should we return (we have delivery demands and campaigns)
+            var campaign = await _matchingService.MatchUserToCampaign(request);
+            return campaign;
+        }
+
+        public async Task<DeliveryDemand> MatchDeliveryDemand(MatchDeliveryDemandRequest request)
+        {
+            var deliveryDemand = await _matchingService.MatchUserToDeliveryDemand(request);
+            return deliveryDemand;
         }
 
         public async Task AnswerCampaign(string campaignId, AnswerCampaignRequest request)
@@ -64,6 +68,9 @@ namespace HumanityService.Services
                 {
                     process = await BuildProcess(process.Id);
                     await process.ValidateDelivery("Destination");
+                    var campaign = await _transactionStore.GetCampaign(process.CampaignId);
+                    campaign.CompletedCount++;
+                    await _transactionStore.UpdateCampaign(campaign);
                     return true;
                 }
                 else return false;

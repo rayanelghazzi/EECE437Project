@@ -6,8 +6,8 @@ namespace HumanityService.Services.Interfaces
 {
     public interface IMatchingService
     {
-        Task<Campaign> MatchUserToCampaign(GetCampaignsRequest request);
+        Task<Campaign> MatchUserToCampaign(MatchCampaignRequest request);
 
-        Task<DeliveryDemand> MatchUserToDeliveryDemand(GetDeliveryDemandsRequest request);
+        Task<DeliveryDemand> MatchUserToDeliveryDemand(MatchDeliveryDemandRequest request);
     }
 }

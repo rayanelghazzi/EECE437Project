@@ -1,7 +1,5 @@
-﻿
-using HumanityService.DataContracts.Requests;
+﻿using HumanityService.DataContracts.Requests;
 using HumanityService.Stores.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -38,9 +36,29 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             Contribution contribution = new Contribution(Id, campaignType, request);
             AddComponent(contribution);
 
-            //Have to check if volunteering or not
-            DeliveryDemand deliveryDemand = new DeliveryDemand(Id, campaignName, campaignUsername, request);
-            AddComponent(deliveryDemand);
+            if (campaignType == "Donation")
+            {
+                DeliveryDemand deliveryDemand = new DeliveryDemand(Id, campaignName, campaignUsername, request);
+                AddComponent(deliveryDemand);
+            }
+        }
+
+        public async Task ValidateContribution() //For volunteer
+        {
+            Status = "InProgress";
+            await Update();
+
+            Contribution contribution = (Contribution)components.Find(x => x is Contribution);
+            await contribution.SetStatusInProgress();
+        }
+
+        public async Task CompleteContribution() //For volunteer
+        {
+            Status = "Completed";
+            await Update();
+
+            Contribution contribution = (Contribution)components.Find(x => x is Contribution);
+            await contribution.SetStatusCompleted();
         }
 
 
@@ -55,7 +73,7 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             await deliveryDemand.AnswerDeliveryDemand(deliveryCode, request);
 
             Contribution contribution = (Contribution)components.Find(x => x is Contribution);
-            await contribution.OnAnswerDeliveryDemand();
+            await contribution.SetStatusInProgress();
         }
 
         public async Task ValidateDelivery(string pickupOrDestination)
@@ -70,7 +88,8 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
                 await deliveryDemand.ValidatePickup();
 
                 Contribution contribution = (Contribution)components.Find(x => x is Contribution);
-                await contribution.ValidatePickupDonor();
+                await contribution.SetStatusPickedUp();
+                await contribution.SetTimeCompleted();
             }
             else
             {
@@ -82,13 +101,13 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
                 await deliveryDemand.ValidateDestination();
 
                 Contribution contribution = (Contribution)components.Find(x => x is Contribution);
-                await contribution.ValidateDestinationDonor();
+                await contribution.SetStatusCompleted();
             }
         }
 
         public async Task Cancel()
         {
-            // Only accept processes that aren't ongoing (e.g delivery demand not accepted yet)
+            // Only cancel processes that aren't ongoing (e.g delivery demand not accepted yet)
             if(Status == "Pending")
             {
                 Status = "Cancelled";

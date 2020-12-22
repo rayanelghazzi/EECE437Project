@@ -16,7 +16,7 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
         public string Type { get; set; }
         public string Category { get; set; }
         public int Target { get; set; }
-        public int CurrentState { get; set; }
+        public int CompletedCount { get; set; }
         public long TimeCreated { get; set; }
         public long TimeCompleted { get; set; }
         public string Description { get; set; }
@@ -38,17 +38,12 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             NgoName = createCampaignRequest.NgoName;
             Type = createCampaignRequest.Type;
             Category = createCampaignRequest.Category;
-            Target = createCampaignRequest.Target;
             Status = "Active";
-            CurrentState = 0;
+            Target = createCampaignRequest.Target;
+            CompletedCount = 0;
             TimeCreated = Utils.UnixTimeSeconds();
             TimeCompleted = 0;
             Description = createCampaignRequest.Description;
-        }
-
-        public void UpdateCampaign()
-        {
-
         }
 
         public async Task Cancel()

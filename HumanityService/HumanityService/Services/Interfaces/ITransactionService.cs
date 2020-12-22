@@ -7,7 +7,9 @@ namespace HumanityService.Services.Interfaces
 {
     public interface ITransactionService
     {
-        Task<Campaign> FindMatch(string username, string type, string category);
+        Task<Campaign> MatchCampaign(MatchCampaignRequest request);
+        Task<DeliveryDemand> MatchDeliveryDemand(MatchDeliveryDemandRequest request);
+
         Task<Campaign> GetCampaign(string campaignId);
         Task<GetCampaignsResult> GetCampaigns(GetCampaignsRequest request);
         Task CreateCampaign(CreateCampaignRequest request);

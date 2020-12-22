@@ -48,7 +48,7 @@ namespace HumanityService.Stores
             nameof(CampaignEntity.Type),
             nameof(CampaignEntity.Category),
             nameof(CampaignEntity.Target),
-            nameof(CampaignEntity.CurrentState),
+            nameof(CampaignEntity.CompletedCount),
             nameof(CampaignEntity.TimeCreated),
             nameof(CampaignEntity.TimeCompleted),
             nameof(CampaignEntity.Description)

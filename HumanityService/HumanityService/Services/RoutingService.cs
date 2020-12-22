@@ -19,22 +19,30 @@ namespace HumanityService.Services
 
         public async Task<double> GetETA(Location delivererCoordinates, Location donorCoordinates, Location ngoCoordinates, string transportationType)
         {
-            var coord1 = new List<double>();
-            coord1.Add(delivererCoordinates.Longitude);
-            coord1.Add(delivererCoordinates.Latitude);
+            var coord1 = new List<double>
+            {
+                delivererCoordinates.Longitude,
+                delivererCoordinates.Latitude
+            };
 
-            var coord2 = new List<double>();
-            coord2.Add(donorCoordinates.Longitude);
-            coord2.Add(donorCoordinates.Latitude);
+            var coord2 = new List<double>()
+            {
+                donorCoordinates.Longitude,
+                donorCoordinates.Latitude
+            };
 
-            var coord3 = new List<double>();
-            coord3.Add(ngoCoordinates.Longitude);
-            coord3.Add(ngoCoordinates.Latitude);
+            var coord3 = new List<double>
+            {
+                ngoCoordinates.Longitude,
+                ngoCoordinates.Latitude
+            };
 
-            var coord = new List<List<double>>();
-            coord.Add(coord1);
-            coord.Add(coord2);
-            coord.Add(coord3);
+            var coord = new List<List<double>>
+            {
+                coord1,
+                coord2,
+                coord3
+            };
 
             var matrix = await GetTimeDistanceMatrix(coord, transportationType);
             var durationMatrix = matrix.durations;
@@ -43,6 +51,34 @@ namespace HumanityService.Services
 
             return eta;
         }
+
+        public async Task<double> GetETA(Location volunteerCoordinates, Location ngoCoordinates, string transportationType)
+        {
+            var coord1 = new List<double>()
+            {
+                volunteerCoordinates.Longitude,
+                volunteerCoordinates.Latitude
+            };
+
+            var coord2 = new List<double>
+            {
+                ngoCoordinates.Longitude,
+                ngoCoordinates.Latitude
+            };
+
+            var coord = new List<List<double>>
+            {
+                coord1,
+                coord2
+            };
+
+            var matrix = await GetTimeDistanceMatrix(coord, transportationType);
+            var durationMatrix = matrix.durations;
+            var eta = durationMatrix[0][1]; //volunteer-ngo duration time by given transportation type
+
+            return eta;
+        }
+
 
         private async Task<OpenrouteserviceMatrixResponse> GetTimeDistanceMatrix(List<List<double>> coordinatesMatrix, string transportationType)
         {

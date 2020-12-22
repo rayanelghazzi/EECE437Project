@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using HumanityService.DataContracts.CompositeDesignPattern;
+﻿using System.Threading.Tasks;
 using HumanityService.DataContracts.Requests;
 using HumanityService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
@@ -34,11 +30,12 @@ namespace HumanityService.Controllers
             return Ok(campaigns);
         }
 
-        //[HttpGet("campaigns/find-match")]
-        //public async Task<IActionResult> FindMatchingCampaign()
-        //{
-            
-        //}
+        [HttpGet("campaigns/match")]
+        public async Task<IActionResult> MatchCampaign([FromBody] MatchCampaignRequest request)
+        {
+            var campaign = await _transactionService.MatchCampaign(request);
+            return Ok(campaign);
+        }
 
         [HttpPost("campaigns")]
         public async Task<IActionResult> CreateCampaign([FromBody] CreateCampaignRequest request)
@@ -50,7 +47,6 @@ namespace HumanityService.Controllers
         [HttpPost("campaigns/answer-campaign/{campaignId}")]
         public async Task<IActionResult> AnswerCampaign(string campaignId, [FromBody] AnswerCampaignRequest request)
         {
-            //TO SECURE
             await _transactionService.AnswerCampaign(campaignId, request);
             return Ok();
         }
@@ -58,7 +54,6 @@ namespace HumanityService.Controllers
         [HttpPut("campaigns/{campaignId}")]
         public async Task<IActionResult> EditCampaign(string campaignId, [FromBody] EditCampaignRequest request)
         {
-            //TO SECURE
             await _transactionService.EditCampaign(campaignId, request);
             return Ok();
         }
@@ -66,7 +61,6 @@ namespace HumanityService.Controllers
         [HttpDelete("campaigns/{campaignId}")]
         public async Task<IActionResult> CancelCampaign(string campaignId)
         {
-            //TO SECURE
             await _transactionService.CancelCampaign(campaignId);
             return Ok();
         }
@@ -85,10 +79,16 @@ namespace HumanityService.Controllers
             return Ok(deliveryDemands);
         }
 
+        [HttpGet("delivery-demand/match")]
+        public async Task<IActionResult> MatchDeliveryDemand([FromBody] MatchDeliveryDemandRequest request)
+        {
+            var deliveryDemand = await _transactionService.MatchDeliveryDemand(request);
+            return Ok(deliveryDemand);
+        }
+
         [HttpPost("delivery-demands/answer-delivery-demand/{deliveryDemandId}")]
         public async Task<IActionResult> AnswerDeliveryDemand(string deliveryDemandId, [FromBody] AnswerDeliveryDemandRequest request)
         {
-            //TO SECURE
             await _transactionService.AnswerDeliveryDemand(deliveryDemandId, request);
             return Ok();
         }
@@ -110,7 +110,6 @@ namespace HumanityService.Controllers
         [HttpPost("contributions/{contributionId}")]
         public async Task<IActionResult> ApproveContribution(string contributionId)
         {
-            //See if still needed
             await _transactionService.ApproveContribution(contributionId);
             return Ok(); 
         }
@@ -118,7 +117,6 @@ namespace HumanityService.Controllers
         [HttpDelete("contributions/{contributionId}")]
         public async Task<IActionResult> CancelContribution(string contributionId)
         {
-            //TO SECURE
             await _transactionService.CancelContribution(contributionId);
             return Ok();
         }
@@ -140,7 +138,6 @@ namespace HumanityService.Controllers
         [HttpPost("validate-delivery")]
         public async Task<IActionResult> ValidateDelivery([FromBody] ValidateDeliveryRequest request)
         {
-            //TO SECURE
             await _transactionService.ValidateDelivery(request);
             return Ok();
         }

@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanityService", "Humanity
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Client", "Client\Client.csproj", "{091E2EB1-1D17-47E4-B146-44304B9DF3DC}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApp1", "WindowsFormsApp1\WindowsFormsApp1.csproj", "{463392DC-31C0-418E-B4F0-5F0432C0D841}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{091E2EB1-1D17-47E4-B146-44304B9DF3DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{091E2EB1-1D17-47E4-B146-44304B9DF3DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{091E2EB1-1D17-47E4-B146-44304B9DF3DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{463392DC-31C0-418E-B4F0-5F0432C0D841}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{463392DC-31C0-418E-B4F0-5F0432C0D841}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{463392DC-31C0-418E-B4F0-5F0432C0D841}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{463392DC-31C0-418E-B4F0-5F0432C0D841}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
