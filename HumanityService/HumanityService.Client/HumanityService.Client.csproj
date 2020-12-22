@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -52,7 +55,7 @@
     <Compile Include="CampaignMatch.Designer.cs">
       <DependentUpon>CampaignMatch.cs</DependentUpon>
     </Compile>
-    <Compile Include="Client.cs" />
+    <Compile Include="HumanityServiceClient.cs" />
     <Compile Include="ContributionPage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,7 +92,6 @@
     <Compile Include="DataContracts\Requests\MatchCampaignRequest.cs" />
     <Compile Include="DataContracts\Requests\MatchDeliveryDemandRequest.cs" />
     <Compile Include="DataContracts\Requests\OpenrouteserviceMatrixRequest.cs" />
-    <Compile Include="DataContracts\Requests\RefreshTokenRequest.cs" />
     <Compile Include="DataContracts\Requests\ValidateDeliveryRequest.cs" />
     <Compile Include="DataContracts\Results\AuthenticationResult.cs" />
     <Compile Include="DataContracts\Results\GetCampaignsResult.cs" />
@@ -115,6 +117,7 @@
     <Compile Include="EnterInfoDonate.Designer.cs">
       <DependentUpon>EnterInfoDonate.cs</DependentUpon>
     </Compile>
+    <Compile Include="HumanityServiceException.cs" />
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -189,6 +192,7 @@
     <EmbeddedResource Include="WelcomeScreen.resx">
       <DependentUpon>WelcomeScreen.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

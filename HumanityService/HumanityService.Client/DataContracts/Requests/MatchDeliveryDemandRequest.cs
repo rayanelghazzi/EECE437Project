@@ -1,7 +1,4 @@
-﻿using HumanityService.DataContracts.CompositeDesignPattern;
-
-
-namespace HumanityService.Client.DataContracts.Requests
+﻿namespace HumanityService.DataContracts
 {
     public class MatchDeliveryDemandRequest
     {

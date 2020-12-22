@@ -1,9 +1,4 @@
-﻿using HumanityService.DataContracts.CompositeDesignPattern;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace HumanityService.Client.DataContracts
+﻿namespace HumanityService.DataContracts
 {
     public class AnswerDeliveryDemandRequest
     {

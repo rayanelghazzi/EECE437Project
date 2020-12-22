@@ -1,4 +1,4 @@
-﻿namespace HumanityService.Client.DataContracts.Results
+﻿namespace HumanityService.DataContracts
 {
     public class AuthenticationResult
     {

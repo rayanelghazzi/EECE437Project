@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace HumanityService.Client.DataContracts.Requests
+namespace HumanityService.DataContracts
 {
     public class OpenrouteserviceMatrixRequest
     {

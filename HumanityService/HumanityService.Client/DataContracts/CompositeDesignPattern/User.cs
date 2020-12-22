@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HumanityService.Client.DataContracts
+namespace HumanityService.DataContracts
 {
     public class User
     {

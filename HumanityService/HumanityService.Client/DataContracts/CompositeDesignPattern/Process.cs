@@ -1,10 +1,4 @@
-﻿using HumanityService.DataContracts.Requests;
-using HumanityService.Stores.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-
-namespace HumanityService.Client.DataContracts
+﻿namespace HumanityService.DataContracts
 {
     public class Process
     {

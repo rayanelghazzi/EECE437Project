@@ -1,8 +1,6 @@
-﻿using HumanityService.DataContracts.CompositeDesignPattern;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
-namespace HumanityService.Client.DataContracts.Results
+namespace HumanityService.DataContracts
 {
     public class GetCampaignsResult
     {

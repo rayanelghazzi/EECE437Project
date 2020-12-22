@@ -1,12 +1,9 @@
-﻿using HumanityService.DataContracts.Requests;
-using HumanityService.Stores;
-using HumanityService.Stores.Interfaces;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace HumanityService.Client.DataContracts
+namespace HumanityService.DataContracts
 {
-    public class Campaign : IComponent
+    public class Campaign
     {
         public string Id { get; set; }
         public string Name { get; set; }

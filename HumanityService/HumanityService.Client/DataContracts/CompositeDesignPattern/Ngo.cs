@@ -1,4 +1,4 @@
-﻿namespace HumanityService.Client.DataContracts
+﻿namespace HumanityService.DataContracts
 {
     public class Ngo
     {

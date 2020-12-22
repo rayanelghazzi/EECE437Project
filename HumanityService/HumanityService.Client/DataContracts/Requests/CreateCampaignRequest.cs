@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HumanityService.Client.DataContracts.Requests
+namespace HumanityService.DataContracts
 {
     public class CreateCampaignRequest
     {

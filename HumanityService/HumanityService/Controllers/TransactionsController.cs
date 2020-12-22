@@ -24,13 +24,21 @@ namespace HumanityService.Controllers
         }
 
         [HttpGet("campaigns")]
-        public async Task<IActionResult> GetCampaigns([FromBody] GetCampaignsRequest request)
+        public async Task<IActionResult> GetCampaigns(string ngoName = null, string username = null, string type = null, string category = null, string status = null)
         {
+            var request = new GetCampaignsRequest
+            {
+                NgoName = ngoName,
+                Username = username,
+                Type = type,
+                Category = category,
+                Status = status
+            };
             var campaigns = await _transactionService.GetCampaigns(request);
             return Ok(campaigns);
         }
 
-        [HttpGet("campaigns/match")]
+        [HttpPost("campaigns/match")]
         public async Task<IActionResult> MatchCampaign([FromBody] MatchCampaignRequest request)
         {
             var campaign = await _transactionService.MatchCampaign(request);
@@ -73,13 +81,21 @@ namespace HumanityService.Controllers
         }
 
         [HttpGet("delivery-demands")]
-        public async Task<IActionResult> GetDeliveryDemands([FromBody] GetDeliveryDemandsRequest request)
+        public async Task<IActionResult> GetDeliveryDemands(string processId = null, string campaignName = null, string pickupUsername = null, string destinationUsername = null, string status = null)
         {
+            var request = new GetDeliveryDemandsRequest
+            {
+                ProcessId = processId,
+                CampaignName = campaignName,
+                PickupUsername = pickupUsername,
+                DestinationUsername = destinationUsername,
+                Status = status
+            };
             var deliveryDemands = await _transactionService.GetDeliveryDemands(request);
             return Ok(deliveryDemands);
         }
 
-        [HttpGet("delivery-demand/match")]
+        [HttpPost("delivery-demand/match")]
         public async Task<IActionResult> MatchDeliveryDemand([FromBody] MatchDeliveryDemandRequest request)
         {
             var deliveryDemand = await _transactionService.MatchDeliveryDemand(request);
@@ -101,8 +117,16 @@ namespace HumanityService.Controllers
         }
 
         [HttpGet("contributions")]
-        public async Task<IActionResult> GetContributions([FromBody] GetContributionsRequest request)
+        public async Task<IActionResult> GetContributions(string username = null, string processId = null, string deliveryDemandId = null, string type = null, string status = null)
         {
+            var request = new GetContributionsRequest
+            {
+                Username = username,
+                ProcessId = processId,
+                DeliveryDemandId = deliveryDemandId,
+                Type = type,
+                Status = status
+            };
             var contributions = await _transactionService.GetContributions(request);
             return Ok(contributions);
         }
@@ -129,9 +153,9 @@ namespace HumanityService.Controllers
         }
 
         [HttpGet("processes")]
-        public async Task<IActionResult> GetProcesses(GetProcessesRequest request)
+        public async Task<IActionResult> GetProcesses(string campaignId)
         {
-            var processes = await _transactionService.GetProcesses(request.CampaignId);
+            var processes = await _transactionService.GetProcesses(campaignId);
             return Ok(processes);
         }
 
@@ -141,7 +165,5 @@ namespace HumanityService.Controllers
             await _transactionService.ValidateDelivery(request);
             return Ok();
         }
-
-
     }
 }

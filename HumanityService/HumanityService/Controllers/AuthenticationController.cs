@@ -17,15 +17,15 @@ namespace HumanityService.Controllers
             _authenticationService = authenticationService;
         }
 
-        [HttpGet("login")]
-        public async Task<IActionResult> LoginUser(LoginRequest request)
+        [HttpPost("login-user")]
+        public async Task<IActionResult> LoginUser([FromBody] LoginRequest request)
         {
             var result = await _authenticationService.LoginUser(request.Username, request.Password);
             return Ok(result);
         }
 
-        [HttpGet("login")]
-        public async Task<IActionResult> LoginNgo(LoginRequest request)
+        [HttpPost("login-ngo")]
+        public async Task<IActionResult> LoginNgo([FromBody]  LoginRequest request)
         {
             var result = await _authenticationService.LoginNgo(request.Username, request.Password);
             return Ok(result);
