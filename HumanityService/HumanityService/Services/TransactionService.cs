@@ -24,13 +24,27 @@ namespace HumanityService.Services
 
         public async Task<Campaign> MatchCampaign(MatchCampaignRequest request)
         {
-            var campaign = await _matchingService.MatchUserToCampaign(request);
+            var getCampaignsRequest = new GetCampaignsRequest
+            {
+                Status = "Active",
+                Type = request.Type,
+                Category = request.Category
+            };
+            var getCampaignsResult = await _transactionStore.GetCampaigns(getCampaignsRequest);
+            var campaigns = getCampaignsResult.Campaigns;
+            var campaign = await _matchingService.MatchUserToCampaign(campaigns, request);
             return campaign;
         }
 
         public async Task<DeliveryDemand> MatchDeliveryDemand(MatchDeliveryDemandRequest request)
         {
-            var deliveryDemand = await _matchingService.MatchUserToDeliveryDemand(request);
+            var getDeliveryDemandsRequest = new GetDeliveryDemandsRequest
+            {
+                Status = "Pending"
+            };
+            var getDeliveryDemandsResult = await _transactionStore.GetDeliveryDemands(getDeliveryDemandsRequest);
+            var deliveryDemands = getDeliveryDemandsResult.DeliveryDemands;
+            var deliveryDemand = await _matchingService.MatchUserToDeliveryDemand(deliveryDemands, request);
             return deliveryDemand;
         }
 

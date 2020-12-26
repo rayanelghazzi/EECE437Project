@@ -39,7 +39,6 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             Type = createCampaignRequest.Type;
             Category = createCampaignRequest.Category;
             Status = "Active";
-            Target = createCampaignRequest.Target;
             CompletedCount = 0;
             TimeCreated = Utils.UnixTimeSeconds();
             TimeCompleted = 0;

@@ -11,24 +11,14 @@ namespace HumanityService.Services
     public class MatchingService : IMatchingService
     {
         private readonly IRoutingService _routingService;
-        private readonly ITransactionService _transactionService;
         
-        public MatchingService(IRoutingService routingService, ITransactionService transactionService)
+        public MatchingService(IRoutingService routingService)
         {
             _routingService = routingService;
-            _transactionService = transactionService;
         }
 
-        public async Task<Campaign> MatchUserToCampaign(MatchCampaignRequest request)
+        public async Task<Campaign> MatchUserToCampaign(List<Campaign> campaigns, MatchCampaignRequest request)
         {
-            var getCampaignsRequest = new GetCampaignsRequest
-            {
-                Status = "Active",
-                Type = request.Type,
-                Category = request.Category
-            };
-            var getCampaignsResult = await _transactionService.GetCampaigns(getCampaignsRequest);
-            var campaigns = getCampaignsResult.Campaigns;
             if (campaigns.Count == 0) return null;
 
             if(request.Type == "Donation")
@@ -53,20 +43,13 @@ namespace HumanityService.Services
         }
 
         //change params: we need Deliverer's location, donor's location, and destination location + his time range + deliverer transportation (e.g car, pedestrian, )
-        public async Task<DeliveryDemand> MatchUserToDeliveryDemand(MatchDeliveryDemandRequest request) 
+        public async Task<DeliveryDemand> MatchUserToDeliveryDemand(List<DeliveryDemand> deliveryDemandsRaw, MatchDeliveryDemandRequest request) 
         {
-            //Get all pending delivery demands
-            var getDeliveryDemandsRequest = new GetDeliveryDemandsRequest
-            {
-                Status = "Pending"
-            };
-            var getDeliveryDemandsResult = await _transactionService.GetDeliveryDemands(getDeliveryDemandsRequest);
-
 
             // We filter out all active donation contributions that are not included in this time range
             var deliveryDemands = new List<DeliveryDemand>();
 
-            foreach(var deliveryDemand in getDeliveryDemandsResult.DeliveryDemands)
+            foreach(var deliveryDemand in deliveryDemandsRaw)
             {
                 if(deliveryDemand.TimeWindowEnd > request.TimeWindowStart)
                 {

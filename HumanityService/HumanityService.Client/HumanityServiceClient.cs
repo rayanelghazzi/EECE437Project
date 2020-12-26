@@ -12,7 +12,7 @@ namespace HumanityService.Client
     class HumanityServiceClient
     {
         private readonly HttpClient _httpClient;
-        private Uri baseAddress = new Uri("ENTER BASE URL HERE");
+        private Uri baseAddress = new Uri("https://localhost:44324");
 
         public HumanityServiceClient()
         {

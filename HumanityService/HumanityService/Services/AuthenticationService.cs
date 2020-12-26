@@ -17,20 +17,41 @@ namespace HumanityService.Services
 
         public async Task<AuthenticationResult> LoginUser(string username, string password)
         {
-            var user = await _userService.GetUser(username);
-            return new AuthenticationResult
+            try
             {
-                PasswordIsValid = user.Password == password
-            };
+                var user = await _userService.GetUser(username);
+                return new AuthenticationResult
+                {
+                    PasswordIsValid = user.Password == password
+                };
+            }
+            catch
+            {
+                return new AuthenticationResult
+                {
+                    PasswordIsValid = false
+                };
+            }
+        
         }
 
         public async Task<AuthenticationResult> LoginNgo(string username, string password)
         {
-            var user = await _userService.GetNgo(username);
-            return new AuthenticationResult
+            try
             {
-                PasswordIsValid = user.Password == password
-            };
+                var ngo = await _userService.GetNgo(username);
+                return new AuthenticationResult
+                {
+                    PasswordIsValid = ngo.Password == password
+                };
+            }
+            catch
+            {
+                return new AuthenticationResult
+                {
+                    PasswordIsValid = false
+                };
+            }
         }
     }
 }

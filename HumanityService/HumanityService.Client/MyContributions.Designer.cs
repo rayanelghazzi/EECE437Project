@@ -38,7 +38,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label1.Location = new System.Drawing.Point(142, 20);
+            this.label1.Location = new System.Drawing.Point(145, 39);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(159, 25);
             this.label1.TabIndex = 3;
@@ -47,7 +47,7 @@
             // panel1
             // 
             this.panel1.Controls.Add(this.vScrollBar1);
-            this.panel1.Location = new System.Drawing.Point(24, 77);
+            this.panel1.Location = new System.Drawing.Point(27, 96);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(393, 433);
             this.panel1.TabIndex = 2;
@@ -63,7 +63,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(465, 566);
+            this.ClientSize = new System.Drawing.Size(453, 589);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel1);
             this.Name = "MyContributions";

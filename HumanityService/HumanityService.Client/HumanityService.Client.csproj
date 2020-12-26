@@ -49,19 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CampaignMatch.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="CampaignMatch.Designer.cs">
-      <DependentUpon>CampaignMatch.cs</DependentUpon>
-    </Compile>
     <Compile Include="HumanityServiceClient.cs" />
-    <Compile Include="ContributionPage.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="ContributionPage.Designer.cs">
-      <DependentUpon>ContributionPage.cs</DependentUpon>
-    </Compile>
     <Compile Include="Dashboard.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -99,25 +87,19 @@
     <Compile Include="DataContracts\Results\GetDeliveryDemandsResult.cs" />
     <Compile Include="DataContracts\Results\GetProcessesResult.cs" />
     <Compile Include="DataContracts\Results\OpenrouteserviceMatrixResponse.cs" />
-    <Compile Include="DeliveryDemandMatch.cs">
+    <Compile Include="MatchDeliveryDemand.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DeliveryDemandMatch.Designer.cs">
-      <DependentUpon>DeliveryDemandMatch.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Donate.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Donate.Designer.cs">
-      <DependentUpon>Donate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="EnterInfoDonate.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="EnterInfoDonate.Designer.cs">
-      <DependentUpon>EnterInfoDonate.cs</DependentUpon>
+    <Compile Include="MatchDeliveryDemand.Designer.cs">
+      <DependentUpon>MatchDeliveryDemand.cs</DependentUpon>
     </Compile>
     <Compile Include="HumanityServiceException.cs" />
+    <Compile Include="MatchCampaign.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MatchCampaign.Designer.cs">
+      <DependentUpon>MatchCampaign.cs</DependentUpon>
+    </Compile>
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -132,41 +114,17 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SignIn.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SignIn.Designer.cs">
-      <DependentUpon>SignIn.cs</DependentUpon>
-    </Compile>
-    <Compile Include="SignUp.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="SignUp.Designer.cs">
-      <DependentUpon>SignUp.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Volunteer.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Volunteer.Designer.cs">
-      <DependentUpon>Volunteer.cs</DependentUpon>
-    </Compile>
     <Compile Include="WelcomeScreen.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="WelcomeScreen.Designer.cs">
       <DependentUpon>WelcomeScreen.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="CampaignMatch.resx">
-      <DependentUpon>CampaignMatch.cs</DependentUpon>
+    <EmbeddedResource Include="MatchDeliveryDemand.resx">
+      <DependentUpon>MatchDeliveryDemand.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DeliveryDemandMatch.resx">
-      <DependentUpon>DeliveryDemandMatch.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Donate.resx">
-      <DependentUpon>Donate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="EnterInfoDonate.resx">
-      <DependentUpon>EnterInfoDonate.cs</DependentUpon>
+    <EmbeddedResource Include="MatchCampaign.resx">
+      <DependentUpon>MatchCampaign.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
@@ -183,12 +141,6 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SignIn.resx">
-      <DependentUpon>SignIn.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Volunteer.resx">
-      <DependentUpon>Volunteer.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="WelcomeScreen.resx">
       <DependentUpon>WelcomeScreen.cs</DependentUpon>
     </EmbeddedResource>

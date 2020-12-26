@@ -1,6 +1,6 @@
 ﻿namespace HumanityService.Client
 {
-    partial class ContributionPage
+    partial class MatchDeliveryDemand
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // MatchDeliveryDemand
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Text = "ContributionPage";
+            this.ClientSize = new System.Drawing.Size(362, 517);
+            this.Name = "MatchDeliveryDemand";
+            this.Text = "DeliveryDemandMatch";
+            this.ResumeLayout(false);
+
         }
 
         #endregion

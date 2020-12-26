@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace HumanityService.Client
 {
-    public partial class DeliveryDemandMatch : Form
+    public partial class MatchDeliveryDemand : Form
     {
-        public DeliveryDemandMatch()
+        public MatchDeliveryDemand()
         {
             InitializeComponent();
         }

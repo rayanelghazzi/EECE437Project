@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace HumanityService.Client
 {
-    public partial class CampaignMatch : Form
+    public partial class MatchCampaign : Form
     {
-        public CampaignMatch()
+        public MatchCampaign()
         {
             InitializeComponent();
         }

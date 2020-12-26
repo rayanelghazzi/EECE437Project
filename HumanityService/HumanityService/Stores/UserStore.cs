@@ -108,7 +108,7 @@ namespace HumanityService.Stores
             connection.Open();
 
             var sql = new QueryBuilder()
-                .SelectColumns("ngos", UsersTableColumns)
+                .SelectColumns("ngos", NgosTableColumns)
                 .Where("Username = @Username")
                 .Build();
 
@@ -148,7 +148,7 @@ namespace HumanityService.Stores
             using IDbConnection connection = _sqlConnectionFactory.CreateConnection();
             connection.Open();
 
-            var sql = new QueryBuilder().Update("ngos", UsersTableColumns)
+            var sql = new QueryBuilder().Update("ngos", NgosTableColumns)
                 .Where($"Username = @Username").Build();
 
             var ngoEntity = ToNgoEntity(ngo);
