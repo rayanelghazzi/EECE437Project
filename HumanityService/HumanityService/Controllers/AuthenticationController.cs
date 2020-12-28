@@ -16,7 +16,7 @@ namespace HumanityService.Controllers
         {
             _authenticationService = authenticationService;
         }
-
+        //List of Http Methods (API)
         [HttpPost("login-user")]
         public async Task<IActionResult> LoginUser([FromBody] LoginRequest request)
         {

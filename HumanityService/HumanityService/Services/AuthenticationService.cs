@@ -17,6 +17,7 @@ namespace HumanityService.Services
 
         public async Task<AuthenticationResult> LoginUser(string username, string password)
         {
+            // Tries if user password is matching with database and returns boolean
             try
             {
                 var user = await _userService.GetUser(username);
@@ -37,6 +38,7 @@ namespace HumanityService.Services
 
         public async Task<AuthenticationResult> LoginNgo(string username, string password)
         {
+            // Tries if user password is matching with database and returns boolean
             try
             {
                 var ngo = await _userService.GetNgo(username);

@@ -15,7 +15,7 @@ namespace HumanityService.Controllers
         {
             _transactionService = transactionService;
         }
-
+        //List of Http Methods (API)
         [HttpGet("campaigns/{campaignId}")]
         public async Task<IActionResult> GetCampaign(string campaignId)
         {
