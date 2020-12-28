@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using HumanityService.DataContracts.Requests;
+using HumanityService.DataContracts.Results;
 using HumanityService.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -162,8 +163,12 @@ namespace HumanityService.Controllers
         [HttpPost("validate-delivery")]
         public async Task<IActionResult> ValidateDelivery([FromBody] ValidateDeliveryRequest request)
         {
-            await _transactionService.ValidateDelivery(request);
-            return Ok();
+            var isValid = await _transactionService.ValidateDelivery(request);
+            var response = new ValidateDeliveryResult
+            {
+                IsValid = isValid
+            };
+            return Ok(response);
         }
     }
 }

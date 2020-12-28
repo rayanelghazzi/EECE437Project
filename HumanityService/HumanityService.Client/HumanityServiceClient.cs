@@ -1,4 +1,5 @@
-﻿using HumanityService.DataContracts;
+﻿using HumanityService.Client.DataContracts.Results;
+using HumanityService.DataContracts;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,13 @@ namespace HumanityService.Client
 
         }
 
-        public async Task GetUserInfo(string username)
+        public async Task<UserInfo> GetUserInfo(string username)
         {
-
+            var responseMessage = await _httpClient.GetAsync($"api/users/users/{username}");
+            await EnsureSuccessOrThrowAsync(responseMessage);
+            string json = await responseMessage.Content.ReadAsStringAsync();
+            var fetchedUser = JsonConvert.DeserializeObject<UserInfo>(json);
+            return fetchedUser;
         }
 
 
@@ -36,9 +41,13 @@ namespace HumanityService.Client
 
         }
 
-        public async Task GetNgoInfo(string username)
+        public async Task<NgoInfo> GetNgoInfo(string username)
         {
-
+            var responseMessage = await _httpClient.GetAsync($"api/users/ngos/{username}");
+            await EnsureSuccessOrThrowAsync(responseMessage);
+            string json = await responseMessage.Content.ReadAsStringAsync();
+            var fetchedUser = JsonConvert.DeserializeObject<NgoInfo>(json);
+            return fetchedUser;
         }
 
         public async Task<AuthenticationResult> LoginUser(LoginRequest loginRequest)
@@ -204,7 +213,7 @@ namespace HumanityService.Client
 
         public async Task<GetContributionsResult> GetContributions(string username = null, string processId = null, string deliveryDemandId = null, string type = null, string status = null)
         {
-            var uri = BuildGetDeliveryDemandsUri(username, processId, deliveryDemandId, type, status);
+            var uri = BuildGetContributionsUri(username, processId, deliveryDemandId, type, status);
             var responseMessage = await _httpClient.GetAsync(uri);
             await EnsureSuccessOrThrowAsync(responseMessage);
             string json = await responseMessage.Content.ReadAsStringAsync();
@@ -244,7 +253,7 @@ namespace HumanityService.Client
             return getProcessesResult;
         }
 
-        public async Task ValidateDelivery(ValidateDeliveryRequest validateDeliveryRequest)
+        public async Task<ValidateDeliveryResult> ValidateDelivery(ValidateDeliveryRequest validateDeliveryRequest)
         {
             string json = JsonConvert.SerializeObject(validateDeliveryRequest);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "api/transactions/validate-delivery")
@@ -253,6 +262,9 @@ namespace HumanityService.Client
             };
             HttpResponseMessage responseMessage = await _httpClient.SendAsync(request);
             await EnsureSuccessOrThrowAsync(responseMessage);
+            string recievedJson = await responseMessage.Content.ReadAsStringAsync();
+            var validateDeliveryResult = JsonConvert.DeserializeObject<ValidateDeliveryResult>(recievedJson);
+            return validateDeliveryResult;
         }
 
         private static async Task EnsureSuccessOrThrowAsync(HttpResponseMessage responseMessage)

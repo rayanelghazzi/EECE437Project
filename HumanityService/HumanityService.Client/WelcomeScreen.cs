@@ -61,7 +61,9 @@ namespace HumanityService.Client
                 {
                     Properties.Settings.Default["Username"] = UsernameTextBox.Text;
                     Properties.Settings.Default.Save();
-                    //Go to Dashboard with username
+                    Dashboard dashboard = new Dashboard();
+                    this.Hide();
+                    dashboard.Show();
                 }
                 else
                 {

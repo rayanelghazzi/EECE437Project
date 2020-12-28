@@ -77,7 +77,7 @@ namespace HumanityService.Services
             else
             {
                 var getProcessesResult = await _transactionStore.GetProcesses(request.CampaignId);
-                Process process = getProcessesResult.Processes.Find(request => request.DeliveryCode == request.DeliveryCode);
+                Process process = getProcessesResult.Processes.Find(x => x.DeliveryCode == request.DeliveryCode);
                 if (process != null)
                 {
                     process = await BuildProcess(process.Id);
@@ -198,19 +198,24 @@ namespace HumanityService.Services
             {
                 ProcessId = processId
             };
+
             var deliveryDemands = await _transactionStore.GetDeliveryDemands(getDeliveryDemands);
-            var deliveryDemand = deliveryDemands.DeliveryDemands[0]; //might be out of range
 
-            contributions.Contributions.ForEach(contribution =>
+            if(deliveryDemands.DeliveryDemands.Count != 0)
             {
-                if(contribution.Type == "Delivery")
-                {
-                    deliveryDemand.AddComponent(contribution);
-                }
-            });
-            process.AddComponent(deliveryDemand);
-            process.AddComponent(donorContribution);
+                var deliveryDemand = deliveryDemands.DeliveryDemands[0]; //might be out of range
 
+                contributions.Contributions.ForEach(contribution =>
+                {
+                    if (contribution.Type == "Delivery")
+                    {
+                        deliveryDemand.AddComponent(contribution);
+                    }
+                });
+                process.AddComponent(deliveryDemand);
+            }
+
+            process.AddComponent(donorContribution);
             process.SetStore(_transactionStore);
 
             return process; 
