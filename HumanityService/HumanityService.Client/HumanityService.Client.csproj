@@ -49,6 +49,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataContracts\CompositeDesignPattern\IComponent.cs" />
+    <Compile Include="DataContracts\Results\MatchDeliveryDemandResult.cs" />
     <Compile Include="DataContracts\Results\ValidateDeliveryResult.cs" />
     <Compile Include="HumanityServiceClient.cs" />
     <Compile Include="Dashboard.cs">

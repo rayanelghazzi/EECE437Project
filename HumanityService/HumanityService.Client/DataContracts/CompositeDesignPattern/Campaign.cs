@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace HumanityService.DataContracts
 {
-    public class Campaign
+    public class Campaign : IComponent
     {
         public string Id { get; set; }
         public string Name { get; set; }

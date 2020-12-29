@@ -1,5 +1,6 @@
 ﻿using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.DataContracts.Requests;
+using HumanityService.DataContracts.Results;
 using HumanityService.Services.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -43,7 +44,7 @@ namespace HumanityService.Services
         }
 
         //change params: we need Deliverer's location, donor's location, and destination location + his time range + deliverer transportation (e.g car, pedestrian, )
-        public async Task<DeliveryDemand> MatchUserToDeliveryDemand(List<DeliveryDemand> deliveryDemandsRaw, MatchDeliveryDemandRequest request) 
+        public async Task<MatchDeliveryDemandResult> MatchUserToDeliveryDemand(List<DeliveryDemand> deliveryDemandsRaw, MatchDeliveryDemandRequest request) 
         {
 
             // We filter out all active donation contributions that are not included in this time range
@@ -72,8 +73,11 @@ namespace HumanityService.Services
 
             //Sort the delivery demands from least to most time consuming to deliverer
             deliveryDemandsETA.Sort();
-            
-            return deliveryDemandsETA[0].Item2;
+            return new MatchDeliveryDemandResult
+            {
+                DeliveryDemand = deliveryDemandsETA[0].Item2,
+                ETA = deliveryDemandsETA[0].Item1
+            };
         }
     }
 }

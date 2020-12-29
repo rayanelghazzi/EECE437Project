@@ -43,7 +43,7 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             }
         }
 
-        public async Task ValidateContribution() //For volunteer
+        public async Task ApproveContribution() //For volunteer
         {
             Status = "InProgress";
             await Update();
@@ -52,7 +52,7 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             await contribution.SetStatusInProgress();
         }
 
-        public async Task CompleteContribution() //For volunteer
+        public async Task ValidateContribution() //For volunteer
         {
             Status = "Completed";
             await Update();

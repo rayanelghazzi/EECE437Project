@@ -176,7 +176,7 @@ namespace HumanityService.Client
             return getDeliveryDemandsResult;
         }
 
-        public async Task<DeliveryDemand> MatchDeliveryDemand(MatchDeliveryDemandRequest matchDeliveryDemandRequest)
+        public async Task<MatchDeliveryDemandResult> MatchDeliveryDemand(MatchDeliveryDemandRequest matchDeliveryDemandRequest)
         {
             string json = JsonConvert.SerializeObject(matchDeliveryDemandRequest);
             HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, "api/transactions/delivery-demands/match")
@@ -187,8 +187,8 @@ namespace HumanityService.Client
             HttpResponseMessage responseMessage = await _httpClient.SendAsync(request);
             await EnsureSuccessOrThrowAsync(responseMessage);
             string recievedJson = await responseMessage.Content.ReadAsStringAsync();
-            var deliveryDemand = JsonConvert.DeserializeObject<DeliveryDemand>(recievedJson);
-            return deliveryDemand;
+            var matchDeliveryDemandResult = JsonConvert.DeserializeObject<MatchDeliveryDemandResult>(recievedJson);
+            return matchDeliveryDemandResult;
         }
 
         public async Task AnswerDeliveryDemand(string deliveryDemandId, AnswerDeliveryDemandRequest answerDeliveryDemandRequest)
@@ -223,7 +223,13 @@ namespace HumanityService.Client
 
         public async Task ApproveContribution(string contributionId)
         {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"api/transactions/contributions/{contributionId}");
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"api/transactions/contributions/approve/{contributionId}");
+            HttpResponseMessage responseMessage = await _httpClient.SendAsync(request);
+            await EnsureSuccessOrThrowAsync(responseMessage);
+        }
+        public async Task ValidateContribution(string contributionId)
+        {
+            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, $"api/transactions/contributions/validate/{contributionId}");
             HttpResponseMessage responseMessage = await _httpClient.SendAsync(request);
             await EnsureSuccessOrThrowAsync(responseMessage);
         }

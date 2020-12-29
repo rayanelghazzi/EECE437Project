@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace HumanityService.DataContracts
 {
-    public class Contribution
+    public class Contribution : IComponent
     {
         public string Id { get; set; }
         public string ProcessId { get; set; }

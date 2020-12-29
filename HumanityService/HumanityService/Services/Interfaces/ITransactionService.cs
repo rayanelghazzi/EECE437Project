@@ -8,7 +8,7 @@ namespace HumanityService.Services.Interfaces
     public interface ITransactionService
     {
         Task<Campaign> MatchCampaign(MatchCampaignRequest request);
-        Task<DeliveryDemand> MatchDeliveryDemand(MatchDeliveryDemandRequest request);
+        Task<MatchDeliveryDemandResult> MatchDeliveryDemand(MatchDeliveryDemandRequest request);
 
         Task<Campaign> GetCampaign(string campaignId);
         Task<GetCampaignsResult> GetCampaigns(GetCampaignsRequest request);
@@ -25,6 +25,7 @@ namespace HumanityService.Services.Interfaces
         Task<GetContributionsResult> GetContributions(GetContributionsRequest request);
         Task CancelContribution(string contributionId);
         Task ApproveContribution(string contributionId);
+        Task ValidateContribution(string contributionId);
 
         Task<Process> GetProcess(string processId);
         Task<GetProcessesResult> GetProcesses(string campaignId);

@@ -36,7 +36,7 @@ namespace HumanityService.Services
             return campaign;
         }
 
-        public async Task<DeliveryDemand> MatchDeliveryDemand(MatchDeliveryDemandRequest request)
+        public async Task<MatchDeliveryDemandResult> MatchDeliveryDemand(MatchDeliveryDemandRequest request)
         {
             var getDeliveryDemandsRequest = new GetDeliveryDemandsRequest
             {
@@ -44,8 +44,8 @@ namespace HumanityService.Services
             };
             var getDeliveryDemandsResult = await _transactionStore.GetDeliveryDemands(getDeliveryDemandsRequest);
             var deliveryDemands = getDeliveryDemandsResult.DeliveryDemands;
-            var deliveryDemand = await _matchingService.MatchUserToDeliveryDemand(deliveryDemands, request);
-            return deliveryDemand;
+            var matchDeliveryDemandResult = await _matchingService.MatchUserToDeliveryDemand(deliveryDemands, request);
+            return matchDeliveryDemandResult;
         }
 
         public async Task AnswerCampaign(string campaignId, AnswerCampaignRequest request)
@@ -91,11 +91,18 @@ namespace HumanityService.Services
             }
         }
 
-        public Task ApproveContribution(string contributionId)
+        public async Task ApproveContribution(string contributionId)
         {
-            throw new NotImplementedException();
-            //update contribution
-            //Used with volunteering contributions
+            var contribution = await _transactionStore.GetContribution(contributionId);
+            var process = await BuildProcess(contribution.ProcessId);
+            await process.ApproveContribution();
+        }
+
+        public async Task ValidateContribution(string contributionId)
+        {
+            var contribution = await _transactionStore.GetContribution(contributionId);
+            var process = await BuildProcess(contribution.ProcessId);
+            await process.ValidateContribution();
         }
 
         public async Task CreateCampaign(CreateCampaignRequest request)

@@ -14,6 +14,7 @@ namespace HumanityService.Client
     public partial class Dashboard : Form
     {
         private static Campaign selectedCampaign { get; set; }
+        private static Contribution selectedContribution { get; set; }
 
         private HumanityServiceClient client;
         public Dashboard()
@@ -24,6 +25,8 @@ namespace HumanityService.Client
             DeliveryCodeLabel.Hide();
             DeliveryCodeTextBox.Hide();
             ValidateDeliveryButton.Hide();
+            ValidateContributionButton.Hide();
+            ApproveVolunteerButton.Hide();
         }
 
         private async void treeView_Enter(object sender, EventArgs e)
@@ -40,42 +43,72 @@ namespace HumanityService.Client
                 foreach (var process in getProcessesResult.Processes)
                 {
                     TreeNode nodeLevel2 = nodeLevel1.Nodes.Add("Process (" + process.Status + ")");
+                    nodeLevel2.Tag = process;
 
                     var getDeliveryDemandsResult = await client.GetDeliveryDemands(process.Id);
                     if (getDeliveryDemandsResult.DeliveryDemands.Count != 0)
                     {
-                        nodeLevel2.Nodes.Add("Delivery Demand (" + process.Status + ")");
+                        var deliveryDemand = getDeliveryDemandsResult.DeliveryDemands[0];
+                        TreeNode node = nodeLevel2.Nodes.Add("Delivery Demand (" + deliveryDemand.Status + ")");
+                        node.Tag = deliveryDemand;
                     }
                     var getContributionsResult = await client.GetContributions(processId: process.Id);
                     foreach (var contribution in getContributionsResult.Contributions)
                     {
                         if (contribution.Type != "Delivery")
                         {
-                            nodeLevel2.Nodes.Add("Contribution (" + contribution.Status + ")");
+                            TreeNode node = nodeLevel2.Nodes.Add("Contribution (" + contribution.Status + ")");
+                            node.Tag = contribution;
                         }
                         else
                         {
-                            nodeLevel2.Nodes[0].Nodes.Add("Contribution (" + contribution.Status + ")");
+                            TreeNode node = nodeLevel2.Nodes[0].Nodes.Add("Contribution (" + contribution.Status + ")");
+                            node.Tag = contribution;
                         }
                     }
                 }
             }
+            treeView.ExpandAll();
         }
 
         private void treeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            if (treeView.SelectedNode.Tag != null)
+            HumanityService.DataContracts.IComponent component = (HumanityService.DataContracts.IComponent) treeView.SelectedNode.Tag;
+            if(component is Campaign)
             {
                 selectedCampaign = ((Campaign)treeView.SelectedNode.Tag);
-                DeliveryCodeLabel.Show();
-                DeliveryCodeTextBox.Show();
-                ValidateDeliveryButton.Show();
+                if(selectedCampaign.Type == "Donation")
+                {
+                    DeliveryCodeLabel.Show();
+                    DeliveryCodeTextBox.Show();
+                    ValidateDeliveryButton.Show();
+                    ValidateContributionButton.Hide();
+                    ApproveVolunteerButton.Hide();
+                }
+            }
+            else if (component is Contribution)
+            {
+                DeliveryCodeLabel.Hide();
+                DeliveryCodeTextBox.Hide();
+                ValidateDeliveryButton.Hide();
+
+                selectedContribution = (Contribution)treeView.SelectedNode.Tag;
+                if(selectedContribution.Type == "Volunteering" && selectedContribution.Status == "Pending")
+                {
+                    ApproveVolunteerButton.Show();
+                }
+                else if(selectedContribution.Type == "Volunteering" && selectedContribution.Status == "InProgress")
+                {
+                    ValidateContributionButton.Show();
+                }
             }
             else
             {
                 DeliveryCodeLabel.Hide();
                 DeliveryCodeTextBox.Hide();
                 ValidateDeliveryButton.Hide();
+                ValidateContributionButton.Hide();
+                ApproveVolunteerButton.Hide();
             }
         }
 
@@ -114,6 +147,18 @@ namespace HumanityService.Client
             WelcomeScreen welcomeScreen = new WelcomeScreen();
             this.Hide();
             welcomeScreen.Show();
+        }
+
+        private async void ValidateContributionButton_Click(object sender, EventArgs e)
+        {
+            await client.ValidateContribution(selectedContribution.Id);
+            treeView.Focus();
+        }
+
+        private async void ApproveVolunteerButton_Click(object sender, EventArgs e)
+        {
+            await client.ApproveContribution(selectedContribution.Id);
+            treeView.Focus();
         }
     }
 }

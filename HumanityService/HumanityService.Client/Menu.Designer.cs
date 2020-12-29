@@ -157,6 +157,12 @@
             this.ContributionPanel_ViewNgoLocation = new System.Windows.Forms.Button();
             this.ContributionPanel_InstructionsLabel = new System.Windows.Forms.Label();
             this.ContributionPanel_InstructionsValue = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
+            this.DeliveryDemandMatchPanel_ETAValue = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.DeliveryDemandMatchPanel_InstructionsValue = new System.Windows.Forms.Label();
+            this.button1 = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.MenuPanel.SuspendLayout();
             this.VolunteeringPanel.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -184,7 +190,7 @@
             this.MenuPanel.Controls.Add(this.MenuPanel_DonateButton);
             this.MenuPanel.Controls.Add(this.MenuPanel_MyContributionsButton);
             this.MenuPanel.Controls.Add(this.MenuPanel_VolunteerButton);
-            this.MenuPanel.Location = new System.Drawing.Point(7, 14);
+            this.MenuPanel.Location = new System.Drawing.Point(0, 0);
             this.MenuPanel.Name = "MenuPanel";
             this.MenuPanel.Size = new System.Drawing.Size(400, 638);
             this.MenuPanel.TabIndex = 10;
@@ -531,7 +537,7 @@
             this.DonationsPanel.Controls.Add(this.DonationsPanel_BackButton);
             this.DonationsPanel.Controls.Add(this.flowLayoutPanel2);
             this.DonationsPanel.Controls.Add(this.label2);
-            this.DonationsPanel.Location = new System.Drawing.Point(24, 12);
+            this.DonationsPanel.Location = new System.Drawing.Point(0, 0);
             this.DonationsPanel.Name = "DonationsPanel";
             this.DonationsPanel.Size = new System.Drawing.Size(400, 634);
             this.DonationsPanel.TabIndex = 12;
@@ -649,7 +655,7 @@
             this.DeliveryDemandMatchPanel.Controls.Add(this.BackToChoices2);
             this.DeliveryDemandMatchPanel.Controls.Add(this.DeliveryDemandMatchPanel_AnswerCampaignButton);
             this.DeliveryDemandMatchPanel.Controls.Add(this.label16);
-            this.DeliveryDemandMatchPanel.Location = new System.Drawing.Point(14, 12);
+            this.DeliveryDemandMatchPanel.Location = new System.Drawing.Point(0, 0);
             this.DeliveryDemandMatchPanel.Name = "DeliveryDemandMatchPanel";
             this.DeliveryDemandMatchPanel.Size = new System.Drawing.Size(400, 638);
             this.DeliveryDemandMatchPanel.TabIndex = 14;
@@ -658,6 +664,13 @@
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.button2);
+            this.panel3.Controls.Add(this.button1);
+            this.panel3.Controls.Add(this.DeliveryDemandMatchPanel_InstructionsValue);
+            this.panel3.Controls.Add(this.label36);
+            this.panel3.Controls.Add(this.DeliveryDemandMatchPanel_ETAValue);
+            this.panel3.Controls.Add(this.label24);
             this.panel3.Controls.Add(this.DeliveryDemandMatchPanel_CampaignNameLabel);
             this.panel3.Location = new System.Drawing.Point(20, 121);
             this.panel3.Name = "panel3";
@@ -669,7 +682,7 @@
             this.DeliveryDemandMatchPanel_CampaignNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DeliveryDemandMatchPanel_CampaignNameLabel.Location = new System.Drawing.Point(14, 2);
             this.DeliveryDemandMatchPanel_CampaignNameLabel.Name = "DeliveryDemandMatchPanel_CampaignNameLabel";
-            this.DeliveryDemandMatchPanel_CampaignNameLabel.Size = new System.Drawing.Size(329, 85);
+            this.DeliveryDemandMatchPanel_CampaignNameLabel.Size = new System.Drawing.Size(329, 94);
             this.DeliveryDemandMatchPanel_CampaignNameLabel.TabIndex = 0;
             this.DeliveryDemandMatchPanel_CampaignNameLabel.Text = "Campaign Name";
             this.DeliveryDemandMatchPanel_CampaignNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -698,7 +711,7 @@
             // 
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.label16.Location = new System.Drawing.Point(95, 66);
+            this.label16.Location = new System.Drawing.Point(107, 64);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(182, 25);
             this.label16.TabIndex = 9;
@@ -709,7 +722,7 @@
             this.MyContributionsPanel.Controls.Add(this.MyContributionsPanel_ListView);
             this.MyContributionsPanel.Controls.Add(this.button5);
             this.MyContributionsPanel.Controls.Add(this.label22);
-            this.MyContributionsPanel.Location = new System.Drawing.Point(18, 17);
+            this.MyContributionsPanel.Location = new System.Drawing.Point(0, 0);
             this.MyContributionsPanel.Name = "MyContributionsPanel";
             this.MyContributionsPanel.Size = new System.Drawing.Size(400, 630);
             this.MyContributionsPanel.TabIndex = 17;
@@ -935,6 +948,7 @@
             // panel4
             // 
             this.panel4.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.panel4.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel4.Controls.Add(this.VolunteeringCampaignMatchPanel_DescriptionLabel);
             this.panel4.Controls.Add(this.VolunteeringCampaignMatchPanel_NgoLabel);
             this.panel4.Controls.Add(this.label23);
@@ -1029,7 +1043,7 @@
             this.VolunteeringCampaignMatchPanel.Controls.Add(this.VolunteeringCampaignMatchPanel_ContributeButton);
             this.VolunteeringCampaignMatchPanel.Controls.Add(this.panel4);
             this.VolunteeringCampaignMatchPanel.Controls.Add(this.label27);
-            this.VolunteeringCampaignMatchPanel.Location = new System.Drawing.Point(18, 12);
+            this.VolunteeringCampaignMatchPanel.Location = new System.Drawing.Point(0, 0);
             this.VolunteeringCampaignMatchPanel.Name = "VolunteeringCampaignMatchPanel";
             this.VolunteeringCampaignMatchPanel.Size = new System.Drawing.Size(400, 651);
             this.VolunteeringCampaignMatchPanel.TabIndex = 23;
@@ -1081,7 +1095,7 @@
             this.DonationCampaignMatchPanel.Controls.Add(this.BackToChoices);
             this.DonationCampaignMatchPanel.Controls.Add(this.DonationCampaignMatchPanel_ContributeButton);
             this.DonationCampaignMatchPanel.Controls.Add(this.label12);
-            this.DonationCampaignMatchPanel.Location = new System.Drawing.Point(10, 14);
+            this.DonationCampaignMatchPanel.Location = new System.Drawing.Point(0, 0);
             this.DonationCampaignMatchPanel.Name = "DonationCampaignMatchPanel";
             this.DonationCampaignMatchPanel.Size = new System.Drawing.Size(400, 632);
             this.DonationCampaignMatchPanel.TabIndex = 18;
@@ -1090,6 +1104,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.SystemColors.InactiveCaption;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel2.Controls.Add(this.DonationCampaignMatchPanel_DescriptionLabel);
             this.panel2.Controls.Add(this.DonationCampaignMatchPanel_NgoLabel);
             this.panel2.Controls.Add(this.label37);
@@ -1162,7 +1177,7 @@
             this.VolunteeringInfoPanel.Controls.Add(this.VolunteeringInfoPanel_FindMatch);
             this.VolunteeringInfoPanel.Controls.Add(this.VolunteeringInfoPanel_Title);
             this.VolunteeringInfoPanel.Controls.Add(this.label35);
-            this.VolunteeringInfoPanel.Location = new System.Drawing.Point(21, 15);
+            this.VolunteeringInfoPanel.Location = new System.Drawing.Point(0, 0);
             this.VolunteeringInfoPanel.Name = "VolunteeringInfoPanel";
             this.VolunteeringInfoPanel.Size = new System.Drawing.Size(400, 621);
             this.VolunteeringInfoPanel.TabIndex = 24;
@@ -1385,6 +1400,7 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.ContributionPanel_DescriptionLabel);
             this.panel1.Controls.Add(this.ContributionPanel_NgoLabel);
             this.panel1.Controls.Add(this.label31);
@@ -1536,11 +1552,71 @@
             this.ContributionPanel_InstructionsValue.TabIndex = 16;
             this.ContributionPanel_InstructionsValue.Text = "time completed";
             // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(32, 152);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(63, 24);
+            this.label24.TabIndex = 1;
+            this.label24.Text = "ETA: ";
+            // 
+            // DeliveryDemandMatchPanel_ETAValue
+            // 
+            this.DeliveryDemandMatchPanel_ETAValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DeliveryDemandMatchPanel_ETAValue.Location = new System.Drawing.Point(101, 150);
+            this.DeliveryDemandMatchPanel_ETAValue.Name = "DeliveryDemandMatchPanel_ETAValue";
+            this.DeliveryDemandMatchPanel_ETAValue.Size = new System.Drawing.Size(242, 32);
+            this.DeliveryDemandMatchPanel_ETAValue.TabIndex = 2;
+            this.DeliveryDemandMatchPanel_ETAValue.Text = "eta";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label36.Location = new System.Drawing.Point(32, 191);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(200, 24);
+            this.label36.TabIndex = 3;
+            this.label36.Text = "Donor\'s Instructions:";
+            // 
+            // DeliveryDemandMatchPanel_InstructionsValue
+            // 
+            this.DeliveryDemandMatchPanel_InstructionsValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.DeliveryDemandMatchPanel_InstructionsValue.Location = new System.Drawing.Point(31, 224);
+            this.DeliveryDemandMatchPanel_InstructionsValue.Name = "DeliveryDemandMatchPanel_InstructionsValue";
+            this.DeliveryDemandMatchPanel_InstructionsValue.Size = new System.Drawing.Size(312, 85);
+            this.DeliveryDemandMatchPanel_InstructionsValue.TabIndex = 4;
+            this.DeliveryDemandMatchPanel_InstructionsValue.Text = "eta";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(188, 333);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(155, 35);
+            this.button1.TabIndex = 15;
+            this.button1.Tag = "ngo";
+            this.button1.Text = "View NGO\'s Location";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(17, 333);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(165, 35);
+            this.button2.TabIndex = 16;
+            this.button2.Tag = "donor";
+            this.button2.Text = "View Donor\'s Location";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.ContributionPanel_ViewLocation_Click);
+            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(416, 660);
+            this.ClientSize = new System.Drawing.Size(400, 670);
+            this.Controls.Add(this.DeliveryDemandMatchPanel);
             this.Controls.Add(this.DonationInfoPanel);
             this.Controls.Add(this.ContributionPanel);
             this.Controls.Add(this.DeliveryInfoPanel);
@@ -1550,7 +1626,6 @@
             this.Controls.Add(this.VolunteeringInfoPanel);
             this.Controls.Add(this.MyContributionsPanel);
             this.Controls.Add(this.VolunteeringCampaignMatchPanel);
-            this.Controls.Add(this.DeliveryDemandMatchPanel);
             this.Controls.Add(this.MenuPanel);
             this.Name = "Menu";
             this.Text = "Menu";
@@ -1567,6 +1642,7 @@
             this.DeliveryDemandMatchPanel.ResumeLayout(false);
             this.DeliveryDemandMatchPanel.PerformLayout();
             this.panel3.ResumeLayout(false);
+            this.panel3.PerformLayout();
             this.MyContributionsPanel.ResumeLayout(false);
             this.MyContributionsPanel.PerformLayout();
             this.DonationInfoPanel.ResumeLayout(false);
@@ -1722,5 +1798,11 @@
         private System.Windows.Forms.Button ContributionPanel_ViewDonorLocation;
         private System.Windows.Forms.Label ContributionPanel_InstructionsValue;
         private System.Windows.Forms.Label ContributionPanel_InstructionsLabel;
+        private System.Windows.Forms.Label DeliveryDemandMatchPanel_ETAValue;
+        private System.Windows.Forms.Label label24;
+        private System.Windows.Forms.Label DeliveryDemandMatchPanel_InstructionsValue;
+        private System.Windows.Forms.Label label36;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button1;
     }
 }

@@ -99,8 +99,8 @@ namespace HumanityService.Controllers
         [HttpPost("delivery-demands/match")]
         public async Task<IActionResult> MatchDeliveryDemand([FromBody] MatchDeliveryDemandRequest request)
         {
-            var deliveryDemand = await _transactionService.MatchDeliveryDemand(request);
-            return Ok(deliveryDemand);
+            var matchDeliveryDemandResult = await _transactionService.MatchDeliveryDemand(request);
+            return Ok(matchDeliveryDemandResult);
         }
 
         [HttpPost("delivery-demands/answer-delivery-demand/{deliveryDemandId}")]
@@ -132,11 +132,18 @@ namespace HumanityService.Controllers
             return Ok(contributions);
         }
 
-        [HttpPost("contributions/{contributionId}")]
+        [HttpPost("contributions/approve/{contributionId}")]
         public async Task<IActionResult> ApproveContribution(string contributionId)
         {
             await _transactionService.ApproveContribution(contributionId);
             return Ok(); 
+        }
+
+        [HttpPost("contributions/validate/{contributionId}")]
+        public async Task<IActionResult> ValidateContribution(string contributionId)
+        {
+            await _transactionService.ValidateContribution(contributionId);
+            return Ok();
         }
 
         [HttpDelete("contributions/{contributionId}")]

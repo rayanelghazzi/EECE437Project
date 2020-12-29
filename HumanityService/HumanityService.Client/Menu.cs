@@ -12,6 +12,7 @@ namespace HumanityService.Client
         private static List<Panel> panels = new List<Panel>();
         private static Campaign matchedCampaign;
         private static DeliveryDemand matchedDeliveryDemand;
+        private static double ETA;
         private static string volunteeringTag;
         private static string contributionIdTag;
         private static Dictionary<string,string> transportationType = new Dictionary<string, string>();
@@ -111,13 +112,26 @@ namespace HumanityService.Client
                 DelivererLocation = location,
                 TransportationType = transportationType[DeliveryInfoPanel_TransportationType.Text]
             };
-            matchedDeliveryDemand = await client.MatchDeliveryDemand(matchDeliveryDemandRequest);
+            var matchDeliveryDemandResult = await client.MatchDeliveryDemand(matchDeliveryDemandRequest);
+            matchedDeliveryDemand = matchDeliveryDemandResult.DeliveryDemand;
+            ETA = matchDeliveryDemandResult.ETA;
             Navigate(DeliveryDemandMatchPanel);
         }
 
-        private void DeliveryDemandMatchPanel_Paint(object sender, PaintEventArgs e)
+        private async void DeliveryDemandMatchPanel_Paint(object sender, PaintEventArgs e)
         {
+            var donor = await client.GetUserInfo(matchedDeliveryDemand.PickupUsername);
+            var ngo = await client.GetNgoInfo(matchedDeliveryDemand.DestinationUsername);
+            donorLocation = donor.Location;
+            ngoLocation = ngo.Location;
+
+            var etaMinutes = Math.Ceiling(ETA / 60);
+            var etaString = etaMinutes.ToString();
             DeliveryDemandMatchPanel_CampaignNameLabel.Text = matchedDeliveryDemand.CampaignName;
+            DeliveryDemandMatchPanel_ETAValue.Text = etaString + " minutes";
+            DeliveryDemandMatchPanel_InstructionsValue.Text = matchedDeliveryDemand.OtherInfo;
+
+
         }
 
         private async void DeliveryDemandMatchPanel_AnswerCampaignButton_Click(object sender, EventArgs e)

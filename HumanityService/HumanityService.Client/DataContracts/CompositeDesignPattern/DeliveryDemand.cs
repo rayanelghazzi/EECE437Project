@@ -1,6 +1,6 @@
 ﻿namespace HumanityService.DataContracts
 {
-    public class DeliveryDemand
+    public class DeliveryDemand : IComponent
     {
         public string Id { get; set; }
         public string ProcessId { get; set; }

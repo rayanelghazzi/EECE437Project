@@ -34,6 +34,8 @@
             this.ValidateDeliveryButton = new System.Windows.Forms.Button();
             this.RefreshButton = new System.Windows.Forms.Button();
             this.Signout = new System.Windows.Forms.Button();
+            this.ApproveVolunteerButton = new System.Windows.Forms.Button();
+            this.ValidateContributionButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // treeView
@@ -97,11 +99,33 @@
             this.Signout.UseVisualStyleBackColor = true;
             this.Signout.Click += new System.EventHandler(this.Signout_Click);
             // 
+            // ApproveVolunteerButton
+            // 
+            this.ApproveVolunteerButton.Location = new System.Drawing.Point(12, 341);
+            this.ApproveVolunteerButton.Name = "ApproveVolunteerButton";
+            this.ApproveVolunteerButton.Size = new System.Drawing.Size(238, 48);
+            this.ApproveVolunteerButton.TabIndex = 6;
+            this.ApproveVolunteerButton.Text = "Approve Volunteer";
+            this.ApproveVolunteerButton.UseVisualStyleBackColor = true;
+            this.ApproveVolunteerButton.Click += new System.EventHandler(this.ApproveVolunteerButton_Click);
+            // 
+            // ValidateContributionButton
+            // 
+            this.ValidateContributionButton.Location = new System.Drawing.Point(12, 341);
+            this.ValidateContributionButton.Name = "ValidateContributionButton";
+            this.ValidateContributionButton.Size = new System.Drawing.Size(238, 48);
+            this.ValidateContributionButton.TabIndex = 7;
+            this.ValidateContributionButton.Text = "Validate Contribution";
+            this.ValidateContributionButton.UseVisualStyleBackColor = true;
+            this.ValidateContributionButton.Click += new System.EventHandler(this.ValidateContributionButton_Click);
+            // 
             // Dashboard
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1075, 519);
+            this.ClientSize = new System.Drawing.Size(1075, 520);
+            this.Controls.Add(this.ValidateContributionButton);
+            this.Controls.Add(this.ApproveVolunteerButton);
             this.Controls.Add(this.Signout);
             this.Controls.Add(this.RefreshButton);
             this.Controls.Add(this.ValidateDeliveryButton);
@@ -123,5 +147,7 @@
         private System.Windows.Forms.Button ValidateDeliveryButton;
         private System.Windows.Forms.Button RefreshButton;
         private System.Windows.Forms.Button Signout;
+        private System.Windows.Forms.Button ApproveVolunteerButton;
+        private System.Windows.Forms.Button ValidateContributionButton;
     }
 }
