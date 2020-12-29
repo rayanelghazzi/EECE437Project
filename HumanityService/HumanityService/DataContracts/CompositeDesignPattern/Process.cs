@@ -25,17 +25,20 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
 
         public Process(string campaignId, string campaignName, string campaignUsername, string campaignType, AnswerCampaignRequest request)
         {
+            //Process constructor
             Id = Utils.CreateId();
             CampaignId = campaignId;
+            //Initially, a process' status is: Pending
             Status = "Pending";
             TimeCreated = Utils.UnixTimeSeconds();
             TimePickedUp = 0L;
             TimeCompleted = 0L;
             DeliveryCode = "";
-
+            //A new contribution availabilty gets posted
             Contribution contribution = new Contribution(Id, campaignType, request);
             AddComponent(contribution);
 
+            //A process automatically intiates a new delivery demand if the campaign is a physical donation.
             if (campaignType == "Donation")
             {
                 DeliveryDemand deliveryDemand = new DeliveryDemand(Id, campaignName, campaignUsername, request);
@@ -43,7 +46,7 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             }
         }
 
-        public async Task ApproveContribution() //For volunteer
+        public async Task ApproveContribution() //For volunteer. Once a contribution is assigned, its status is updated to: InProgress.
         {
             Status = "InProgress";
             await Update();
@@ -52,7 +55,7 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             await contribution.SetStatusInProgress();
         }
 
-        public async Task ValidateContribution() //For volunteer
+        public async Task ValidateContribution() //For volunteer. Once a contribution is completed, its status is updated to: Completed.
         {
             Status = "Completed";
             await Update();
@@ -63,8 +66,10 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
 
 
         public async Task AnswerDeliveryDemand(string deliveryDemandId, AnswerDeliveryDemandRequest request)
+        //For delivery courier. Once a delivery demand is answered, its status is updated to: InProgress.
         {
             Status = "InProgress";
+            // Delivery Code is auto-generated for later valdation
             var deliveryCode = CreateDeliveryCode();
             DeliveryCode = deliveryCode;
             await Update();
@@ -77,6 +82,7 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
         }
 
         public async Task ValidateDelivery(string pickupOrDestination)
+        // Function to update delivery status and validate with delivery courier at once.
         {
             if(pickupOrDestination == "Pickup")
             {
@@ -121,6 +127,7 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
         }
 
         public async Task CancelDeliveryContribution()
+        // Once a delivery contribution (answer) is canceled, its status is back to: Pending and its reset.
         {
             Status = "Pending";
             await Update();
