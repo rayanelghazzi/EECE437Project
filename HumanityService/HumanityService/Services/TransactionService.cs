@@ -210,7 +210,7 @@ namespace HumanityService.Services
 
             if(deliveryDemands.DeliveryDemands.Count != 0)
             {
-                var deliveryDemand = deliveryDemands.DeliveryDemands[0]; //might be out of range
+                var deliveryDemand = deliveryDemands.DeliveryDemands[0];
 
                 contributions.Contributions.ForEach(contribution =>
                 {

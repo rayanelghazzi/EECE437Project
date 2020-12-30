@@ -90,12 +90,6 @@
     <Compile Include="DataContracts\Results\GetDeliveryDemandsResult.cs" />
     <Compile Include="DataContracts\Results\GetProcessesResult.cs" />
     <Compile Include="DataContracts\Results\OpenrouteserviceMatrixResponse.cs" />
-    <Compile Include="MatchDeliveryDemand.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MatchDeliveryDemand.Designer.cs">
-      <DependentUpon>MatchDeliveryDemand.cs</DependentUpon>
-    </Compile>
     <Compile Include="HumanityServiceException.cs" />
     <Compile Include="MatchCampaign.cs">
       <SubType>Form</SubType>
@@ -109,12 +103,6 @@
     <Compile Include="Menu.Designer.cs">
       <DependentUpon>Menu.cs</DependentUpon>
     </Compile>
-    <Compile Include="MyContributions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MyContributions.Designer.cs">
-      <DependentUpon>MyContributions.cs</DependentUpon>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WelcomeScreen.cs">
@@ -126,17 +114,11 @@
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MatchDeliveryDemand.resx">
-      <DependentUpon>MatchDeliveryDemand.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="MatchCampaign.resx">
       <DependentUpon>MatchCampaign.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MyContributions.resx">
-      <DependentUpon>MyContributions.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

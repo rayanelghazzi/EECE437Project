@@ -74,6 +74,12 @@
             this.label3 = new System.Windows.Forms.Label();
             this.DeliveryDemandMatchPanel = new System.Windows.Forms.Panel();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.DeliveryDemandMatchPanel_InstructionsValue = new System.Windows.Forms.Label();
+            this.label36 = new System.Windows.Forms.Label();
+            this.DeliveryDemandMatchPanel_ETAValue = new System.Windows.Forms.Label();
+            this.label24 = new System.Windows.Forms.Label();
             this.DeliveryDemandMatchPanel_CampaignNameLabel = new System.Windows.Forms.Label();
             this.BackToChoices2 = new System.Windows.Forms.Button();
             this.DeliveryDemandMatchPanel_AnswerCampaignButton = new System.Windows.Forms.Button();
@@ -135,6 +141,10 @@
             this.VolunteeringInfoPanel_Title = new System.Windows.Forms.Label();
             this.label35 = new System.Windows.Forms.Label();
             this.ContributionPanel = new System.Windows.Forms.Panel();
+            this.ContributionPanel_InstructionsValue = new System.Windows.Forms.Label();
+            this.ContributionPanel_InstructionsLabel = new System.Windows.Forms.Label();
+            this.ContributionPanel_ViewNgoLocation = new System.Windows.Forms.Button();
+            this.ContributionPanel_ViewDonorLocation = new System.Windows.Forms.Button();
             this.ContributionPanel_Refresh = new System.Windows.Forms.Button();
             this.ContributionPanel_TimeCompletedLabel = new System.Windows.Forms.Label();
             this.ContributionPanel_TimeCreatedLabel = new System.Windows.Forms.Label();
@@ -153,16 +163,6 @@
             this.ContributionPanel_DeliveryCodeValue = new System.Windows.Forms.Label();
             this.ContributionPanel_DeliveryCodeTextBox = new System.Windows.Forms.MaskedTextBox();
             this.ContributionPanel_DeliveryCodeLabel = new System.Windows.Forms.Label();
-            this.ContributionPanel_ViewDonorLocation = new System.Windows.Forms.Button();
-            this.ContributionPanel_ViewNgoLocation = new System.Windows.Forms.Button();
-            this.ContributionPanel_InstructionsLabel = new System.Windows.Forms.Label();
-            this.ContributionPanel_InstructionsValue = new System.Windows.Forms.Label();
-            this.label24 = new System.Windows.Forms.Label();
-            this.DeliveryDemandMatchPanel_ETAValue = new System.Windows.Forms.Label();
-            this.label36 = new System.Windows.Forms.Label();
-            this.DeliveryDemandMatchPanel_InstructionsValue = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.MenuPanel.SuspendLayout();
             this.VolunteeringPanel.SuspendLayout();
             this.flowLayoutPanel1.SuspendLayout();
@@ -677,6 +677,65 @@
             this.panel3.Size = new System.Drawing.Size(362, 397);
             this.panel3.TabIndex = 24;
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(17, 333);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(165, 35);
+            this.button2.TabIndex = 16;
+            this.button2.Tag = "donor";
+            this.button2.Text = "View Donor\'s Location";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.ContributionPanel_ViewLocation_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(188, 333);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(155, 35);
+            this.button1.TabIndex = 15;
+            this.button1.Tag = "ngo";
+            this.button1.Text = "View NGO\'s Location";
+            this.button1.UseVisualStyleBackColor = true;
+            // 
+            // DeliveryDemandMatchPanel_InstructionsValue
+            // 
+            this.DeliveryDemandMatchPanel_InstructionsValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.DeliveryDemandMatchPanel_InstructionsValue.Location = new System.Drawing.Point(31, 224);
+            this.DeliveryDemandMatchPanel_InstructionsValue.Name = "DeliveryDemandMatchPanel_InstructionsValue";
+            this.DeliveryDemandMatchPanel_InstructionsValue.Size = new System.Drawing.Size(312, 85);
+            this.DeliveryDemandMatchPanel_InstructionsValue.TabIndex = 4;
+            this.DeliveryDemandMatchPanel_InstructionsValue.Text = "eta";
+            // 
+            // label36
+            // 
+            this.label36.AutoSize = true;
+            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label36.Location = new System.Drawing.Point(32, 191);
+            this.label36.Name = "label36";
+            this.label36.Size = new System.Drawing.Size(200, 24);
+            this.label36.TabIndex = 3;
+            this.label36.Text = "Donor\'s Instructions:";
+            // 
+            // DeliveryDemandMatchPanel_ETAValue
+            // 
+            this.DeliveryDemandMatchPanel_ETAValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DeliveryDemandMatchPanel_ETAValue.Location = new System.Drawing.Point(101, 150);
+            this.DeliveryDemandMatchPanel_ETAValue.Name = "DeliveryDemandMatchPanel_ETAValue";
+            this.DeliveryDemandMatchPanel_ETAValue.Size = new System.Drawing.Size(242, 32);
+            this.DeliveryDemandMatchPanel_ETAValue.TabIndex = 2;
+            this.DeliveryDemandMatchPanel_ETAValue.Text = "eta";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label24.Location = new System.Drawing.Point(32, 152);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(63, 24);
+            this.label24.TabIndex = 1;
+            this.label24.Text = "ETA: ";
+            // 
             // DeliveryDemandMatchPanel_CampaignNameLabel
             // 
             this.DeliveryDemandMatchPanel_CampaignNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -961,17 +1020,17 @@
             // 
             // VolunteeringCampaignMatchPanel_DescriptionLabel
             // 
-            this.VolunteeringCampaignMatchPanel_DescriptionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.VolunteeringCampaignMatchPanel_DescriptionLabel.Location = new System.Drawing.Point(32, 188);
+            this.VolunteeringCampaignMatchPanel_DescriptionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.VolunteeringCampaignMatchPanel_DescriptionLabel.Location = new System.Drawing.Point(23, 238);
             this.VolunteeringCampaignMatchPanel_DescriptionLabel.Name = "VolunteeringCampaignMatchPanel_DescriptionLabel";
-            this.VolunteeringCampaignMatchPanel_DescriptionLabel.Size = new System.Drawing.Size(311, 133);
+            this.VolunteeringCampaignMatchPanel_DescriptionLabel.Size = new System.Drawing.Size(311, 146);
             this.VolunteeringCampaignMatchPanel_DescriptionLabel.TabIndex = 5;
             this.VolunteeringCampaignMatchPanel_DescriptionLabel.Text = "label36";
             // 
             // VolunteeringCampaignMatchPanel_NgoLabel
             // 
             this.VolunteeringCampaignMatchPanel_NgoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.VolunteeringCampaignMatchPanel_NgoLabel.Location = new System.Drawing.Point(112, 106);
+            this.VolunteeringCampaignMatchPanel_NgoLabel.Location = new System.Drawing.Point(103, 156);
             this.VolunteeringCampaignMatchPanel_NgoLabel.Name = "VolunteeringCampaignMatchPanel_NgoLabel";
             this.VolunteeringCampaignMatchPanel_NgoLabel.Size = new System.Drawing.Size(231, 25);
             this.VolunteeringCampaignMatchPanel_NgoLabel.TabIndex = 4;
@@ -981,7 +1040,7 @@
             // 
             this.label23.AutoSize = true;
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label23.Location = new System.Drawing.Point(31, 154);
+            this.label23.Location = new System.Drawing.Point(22, 204);
             this.label23.Name = "label23";
             this.label23.Size = new System.Drawing.Size(121, 24);
             this.label23.TabIndex = 3;
@@ -991,7 +1050,7 @@
             // 
             this.label25.AutoSize = true;
             this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label25.Location = new System.Drawing.Point(31, 107);
+            this.label25.Location = new System.Drawing.Point(22, 157);
             this.label25.Name = "label25";
             this.label25.Size = new System.Drawing.Size(62, 24);
             this.label25.TabIndex = 1;
@@ -999,10 +1058,10 @@
             // 
             // VolunteeringCampaignMatchPanel_CampaignNameLabel
             // 
-            this.VolunteeringCampaignMatchPanel_CampaignNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.VolunteeringCampaignMatchPanel_CampaignNameLabel.Location = new System.Drawing.Point(14, 2);
+            this.VolunteeringCampaignMatchPanel_CampaignNameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.VolunteeringCampaignMatchPanel_CampaignNameLabel.Location = new System.Drawing.Point(-1, 2);
             this.VolunteeringCampaignMatchPanel_CampaignNameLabel.Name = "VolunteeringCampaignMatchPanel_CampaignNameLabel";
-            this.VolunteeringCampaignMatchPanel_CampaignNameLabel.Size = new System.Drawing.Size(329, 85);
+            this.VolunteeringCampaignMatchPanel_CampaignNameLabel.Size = new System.Drawing.Size(360, 138);
             this.VolunteeringCampaignMatchPanel_CampaignNameLabel.TabIndex = 0;
             this.VolunteeringCampaignMatchPanel_CampaignNameLabel.Text = "Campaign Name";
             this.VolunteeringCampaignMatchPanel_CampaignNameLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1326,6 +1385,48 @@
             this.ContributionPanel.TabIndex = 26;
             this.ContributionPanel.Enter += new System.EventHandler(this.ContributionPanel_Enter);
             // 
+            // ContributionPanel_InstructionsValue
+            // 
+            this.ContributionPanel_InstructionsValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
+            this.ContributionPanel_InstructionsValue.Location = new System.Drawing.Point(10, 486);
+            this.ContributionPanel_InstructionsValue.Name = "ContributionPanel_InstructionsValue";
+            this.ContributionPanel_InstructionsValue.Size = new System.Drawing.Size(379, 44);
+            this.ContributionPanel_InstructionsValue.TabIndex = 16;
+            this.ContributionPanel_InstructionsValue.Text = "time completed";
+            // 
+            // ContributionPanel_InstructionsLabel
+            // 
+            this.ContributionPanel_InstructionsLabel.AutoSize = true;
+            this.ContributionPanel_InstructionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ContributionPanel_InstructionsLabel.Location = new System.Drawing.Point(5, 459);
+            this.ContributionPanel_InstructionsLabel.Name = "ContributionPanel_InstructionsLabel";
+            this.ContributionPanel_InstructionsLabel.Size = new System.Drawing.Size(200, 24);
+            this.ContributionPanel_InstructionsLabel.TabIndex = 15;
+            this.ContributionPanel_InstructionsLabel.Text = "Donor\'s Instructions:";
+            this.ContributionPanel_InstructionsLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
+            // 
+            // ContributionPanel_ViewNgoLocation
+            // 
+            this.ContributionPanel_ViewNgoLocation.Location = new System.Drawing.Point(207, 533);
+            this.ContributionPanel_ViewNgoLocation.Name = "ContributionPanel_ViewNgoLocation";
+            this.ContributionPanel_ViewNgoLocation.Size = new System.Drawing.Size(182, 35);
+            this.ContributionPanel_ViewNgoLocation.TabIndex = 14;
+            this.ContributionPanel_ViewNgoLocation.Tag = "ngo";
+            this.ContributionPanel_ViewNgoLocation.Text = "View NGO\'s Location";
+            this.ContributionPanel_ViewNgoLocation.UseVisualStyleBackColor = true;
+            this.ContributionPanel_ViewNgoLocation.Click += new System.EventHandler(this.ContributionPanel_ViewLocation_Click);
+            // 
+            // ContributionPanel_ViewDonorLocation
+            // 
+            this.ContributionPanel_ViewDonorLocation.Location = new System.Drawing.Point(9, 533);
+            this.ContributionPanel_ViewDonorLocation.Name = "ContributionPanel_ViewDonorLocation";
+            this.ContributionPanel_ViewDonorLocation.Size = new System.Drawing.Size(187, 35);
+            this.ContributionPanel_ViewDonorLocation.TabIndex = 13;
+            this.ContributionPanel_ViewDonorLocation.Tag = "donor";
+            this.ContributionPanel_ViewDonorLocation.Text = "View Donor\'s Location";
+            this.ContributionPanel_ViewDonorLocation.UseVisualStyleBackColor = true;
+            this.ContributionPanel_ViewDonorLocation.Click += new System.EventHandler(this.ContributionPanel_ViewLocation_Click);
+            // 
             // ContributionPanel_Refresh
             // 
             this.ContributionPanel_Refresh.BackColor = System.Drawing.Color.Green;
@@ -1413,17 +1514,17 @@
             // 
             // ContributionPanel_DescriptionLabel
             // 
-            this.ContributionPanel_DescriptionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.ContributionPanel_DescriptionLabel.Location = new System.Drawing.Point(19, 191);
+            this.ContributionPanel_DescriptionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
+            this.ContributionPanel_DescriptionLabel.Location = new System.Drawing.Point(12, 172);
             this.ContributionPanel_DescriptionLabel.Name = "ContributionPanel_DescriptionLabel";
-            this.ContributionPanel_DescriptionLabel.Size = new System.Drawing.Size(361, 79);
+            this.ContributionPanel_DescriptionLabel.Size = new System.Drawing.Size(372, 98);
             this.ContributionPanel_DescriptionLabel.TabIndex = 4;
             this.ContributionPanel_DescriptionLabel.Text = "Description";
             // 
             // ContributionPanel_NgoLabel
             // 
             this.ContributionPanel_NgoLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.ContributionPanel_NgoLabel.Location = new System.Drawing.Point(92, 113);
+            this.ContributionPanel_NgoLabel.Location = new System.Drawing.Point(86, 102);
             this.ContributionPanel_NgoLabel.Name = "ContributionPanel_NgoLabel";
             this.ContributionPanel_NgoLabel.Size = new System.Drawing.Size(252, 24);
             this.ContributionPanel_NgoLabel.TabIndex = 3;
@@ -1433,7 +1534,7 @@
             // 
             this.label31.AutoSize = true;
             this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label31.Location = new System.Drawing.Point(18, 156);
+            this.label31.Location = new System.Drawing.Point(12, 145);
             this.label31.Name = "label31";
             this.label31.Size = new System.Drawing.Size(121, 24);
             this.label31.TabIndex = 2;
@@ -1443,7 +1544,7 @@
             // 
             this.label26.AutoSize = true;
             this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label26.Location = new System.Drawing.Point(18, 116);
+            this.label26.Location = new System.Drawing.Point(12, 105);
             this.label26.Name = "label26";
             this.label26.Size = new System.Drawing.Size(68, 24);
             this.label26.TabIndex = 1;
@@ -1451,10 +1552,10 @@
             // 
             // ContributionPanel_ContributionTitle
             // 
-            this.ContributionPanel_ContributionTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ContributionPanel_ContributionTitle.Location = new System.Drawing.Point(16, 13);
+            this.ContributionPanel_ContributionTitle.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F, System.Drawing.FontStyle.Bold);
+            this.ContributionPanel_ContributionTitle.Location = new System.Drawing.Point(12, 2);
             this.ContributionPanel_ContributionTitle.Name = "ContributionPanel_ContributionTitle";
-            this.ContributionPanel_ContributionTitle.Size = new System.Drawing.Size(355, 84);
+            this.ContributionPanel_ContributionTitle.Size = new System.Drawing.Size(355, 79);
             this.ContributionPanel_ContributionTitle.TabIndex = 0;
             this.ContributionPanel_ContributionTitle.Text = "Contribution Page";
             this.ContributionPanel_ContributionTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1510,112 +1611,11 @@
             this.ContributionPanel_DeliveryCodeLabel.TabIndex = 1;
             this.ContributionPanel_DeliveryCodeLabel.Text = "Delivery Code: ";
             // 
-            // ContributionPanel_ViewDonorLocation
-            // 
-            this.ContributionPanel_ViewDonorLocation.Location = new System.Drawing.Point(9, 533);
-            this.ContributionPanel_ViewDonorLocation.Name = "ContributionPanel_ViewDonorLocation";
-            this.ContributionPanel_ViewDonorLocation.Size = new System.Drawing.Size(187, 35);
-            this.ContributionPanel_ViewDonorLocation.TabIndex = 13;
-            this.ContributionPanel_ViewDonorLocation.Tag = "donor";
-            this.ContributionPanel_ViewDonorLocation.Text = "View Donor\'s Location";
-            this.ContributionPanel_ViewDonorLocation.UseVisualStyleBackColor = true;
-            this.ContributionPanel_ViewDonorLocation.Click += new System.EventHandler(this.ContributionPanel_ViewLocation_Click);
-            // 
-            // ContributionPanel_ViewNgoLocation
-            // 
-            this.ContributionPanel_ViewNgoLocation.Location = new System.Drawing.Point(207, 533);
-            this.ContributionPanel_ViewNgoLocation.Name = "ContributionPanel_ViewNgoLocation";
-            this.ContributionPanel_ViewNgoLocation.Size = new System.Drawing.Size(182, 35);
-            this.ContributionPanel_ViewNgoLocation.TabIndex = 14;
-            this.ContributionPanel_ViewNgoLocation.Tag = "ngo";
-            this.ContributionPanel_ViewNgoLocation.Text = "View NGO\'s Location";
-            this.ContributionPanel_ViewNgoLocation.UseVisualStyleBackColor = true;
-            this.ContributionPanel_ViewNgoLocation.Click += new System.EventHandler(this.ContributionPanel_ViewLocation_Click);
-            // 
-            // ContributionPanel_InstructionsLabel
-            // 
-            this.ContributionPanel_InstructionsLabel.AutoSize = true;
-            this.ContributionPanel_InstructionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.ContributionPanel_InstructionsLabel.Location = new System.Drawing.Point(5, 459);
-            this.ContributionPanel_InstructionsLabel.Name = "ContributionPanel_InstructionsLabel";
-            this.ContributionPanel_InstructionsLabel.Size = new System.Drawing.Size(200, 24);
-            this.ContributionPanel_InstructionsLabel.TabIndex = 15;
-            this.ContributionPanel_InstructionsLabel.Text = "Donor\'s Instructions:";
-            this.ContributionPanel_InstructionsLabel.TextAlign = System.Drawing.ContentAlignment.TopCenter;
-            // 
-            // ContributionPanel_InstructionsValue
-            // 
-            this.ContributionPanel_InstructionsValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F);
-            this.ContributionPanel_InstructionsValue.Location = new System.Drawing.Point(10, 486);
-            this.ContributionPanel_InstructionsValue.Name = "ContributionPanel_InstructionsValue";
-            this.ContributionPanel_InstructionsValue.Size = new System.Drawing.Size(379, 44);
-            this.ContributionPanel_InstructionsValue.TabIndex = 16;
-            this.ContributionPanel_InstructionsValue.Text = "time completed";
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label24.Location = new System.Drawing.Point(32, 152);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(63, 24);
-            this.label24.TabIndex = 1;
-            this.label24.Text = "ETA: ";
-            // 
-            // DeliveryDemandMatchPanel_ETAValue
-            // 
-            this.DeliveryDemandMatchPanel_ETAValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.DeliveryDemandMatchPanel_ETAValue.Location = new System.Drawing.Point(101, 150);
-            this.DeliveryDemandMatchPanel_ETAValue.Name = "DeliveryDemandMatchPanel_ETAValue";
-            this.DeliveryDemandMatchPanel_ETAValue.Size = new System.Drawing.Size(242, 32);
-            this.DeliveryDemandMatchPanel_ETAValue.TabIndex = 2;
-            this.DeliveryDemandMatchPanel_ETAValue.Text = "eta";
-            // 
-            // label36
-            // 
-            this.label36.AutoSize = true;
-            this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label36.Location = new System.Drawing.Point(32, 191);
-            this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(200, 24);
-            this.label36.TabIndex = 3;
-            this.label36.Text = "Donor\'s Instructions:";
-            // 
-            // DeliveryDemandMatchPanel_InstructionsValue
-            // 
-            this.DeliveryDemandMatchPanel_InstructionsValue.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
-            this.DeliveryDemandMatchPanel_InstructionsValue.Location = new System.Drawing.Point(31, 224);
-            this.DeliveryDemandMatchPanel_InstructionsValue.Name = "DeliveryDemandMatchPanel_InstructionsValue";
-            this.DeliveryDemandMatchPanel_InstructionsValue.Size = new System.Drawing.Size(312, 85);
-            this.DeliveryDemandMatchPanel_InstructionsValue.TabIndex = 4;
-            this.DeliveryDemandMatchPanel_InstructionsValue.Text = "eta";
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(188, 333);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(155, 35);
-            this.button1.TabIndex = 15;
-            this.button1.Tag = "ngo";
-            this.button1.Text = "View NGO\'s Location";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(17, 333);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(165, 35);
-            this.button2.TabIndex = 16;
-            this.button2.Tag = "donor";
-            this.button2.Text = "View Donor\'s Location";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.ContributionPanel_ViewLocation_Click);
-            // 
             // Menu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(400, 670);
+            this.ClientSize = new System.Drawing.Size(400, 651);
             this.Controls.Add(this.DeliveryDemandMatchPanel);
             this.Controls.Add(this.DonationInfoPanel);
             this.Controls.Add(this.ContributionPanel);

@@ -33,7 +33,6 @@ namespace HumanityService.Services
                     PasswordIsValid = false
                 };
             }
-        
         }
 
         public async Task<AuthenticationResult> LoginNgo(string username, string password)

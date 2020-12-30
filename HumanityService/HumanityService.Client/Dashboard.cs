@@ -1,18 +1,14 @@
 ﻿using HumanityService.DataContracts;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace HumanityService.Client
 {
     public partial class Dashboard : Form
     {
+        private static List<Panel> panels = new List<Panel>();
         private static Campaign selectedCampaign { get; set; }
         private static Contribution selectedContribution { get; set; }
 
@@ -21,22 +17,33 @@ namespace HumanityService.Client
         {
             InitializeComponent();
             client = new HumanityServiceClient();
-            treeView.Focus();
-            DeliveryCodeLabel.Hide();
-            DeliveryCodeTextBox.Hide();
-            ValidateDeliveryButton.Hide();
-            ValidateContributionButton.Hide();
-            ApproveVolunteerButton.Hide();
+            DashboardPanel_TreeView.Focus();
+            HideAll();
         }
+
+        private void Navigate(Panel destinationPanel)
+        {
+            foreach (var panel in panels)
+            {
+                if (panel == destinationPanel)
+                {
+                    panel.Show();
+                    panel.Focus();
+                }
+                else panel.Hide();
+            }
+        }
+
 
         private async void treeView_Enter(object sender, EventArgs e)
         {
-            treeView.Nodes.Clear();
+            HideAll();
+            DashboardPanel_TreeView.Nodes.Clear();
             var username = Properties.Settings.Default["Username"].ToString();
             var getCampaignsResult = await client.GetCampaigns(username);
             foreach (var campaign in getCampaignsResult.Campaigns)
             {
-                TreeNode nodeLevel1 = treeView.Nodes.Add(campaign.Name);
+                TreeNode nodeLevel1 = DashboardPanel_TreeView.Nodes.Add(campaign.Name + " (" + campaign.Status + ")");
                 nodeLevel1.Tag = campaign;
 
                 var getProcessesResult = await client.GetProcesses(campaign.Id);
@@ -44,7 +51,11 @@ namespace HumanityService.Client
                 {
                     TreeNode nodeLevel2 = nodeLevel1.Nodes.Add("Process (" + process.Status + ")");
                     nodeLevel2.Tag = process;
-
+                    if(process.Status == "Pending")
+                    {
+                        Color color = Color.FromArgb(0, 240, 240);
+                        nodeLevel2.BackColor = color;
+                    }
                     var getDeliveryDemandsResult = await client.GetDeliveryDemands(process.Id);
                     if (getDeliveryDemandsResult.DeliveryDemands.Count != 0)
                     {
@@ -68,47 +79,43 @@ namespace HumanityService.Client
                     }
                 }
             }
-            treeView.ExpandAll();
+            for(var i=0; i<DashboardPanel_TreeView.Nodes.Count; i++)
+            {
+                DashboardPanel_TreeView.Nodes[i].Expand();
+            }
         }
 
         private void treeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
-            HumanityService.DataContracts.IComponent component = (HumanityService.DataContracts.IComponent) treeView.SelectedNode.Tag;
-            if(component is Campaign)
+            HideAll();
+            if(DashboardPanel_TreeView.SelectedNode != null)
             {
-                selectedCampaign = ((Campaign)treeView.SelectedNode.Tag);
-                if(selectedCampaign.Type == "Donation")
+                IComponent component = (IComponent)DashboardPanel_TreeView.SelectedNode.Tag;
+                if (component is Campaign)
                 {
-                    DeliveryCodeLabel.Show();
-                    DeliveryCodeTextBox.Show();
-                    ValidateDeliveryButton.Show();
-                    ValidateContributionButton.Hide();
-                    ApproveVolunteerButton.Hide();
+                    selectedCampaign = ((Campaign)DashboardPanel_TreeView.SelectedNode.Tag);
+                    if (selectedCampaign.Type == "Donation" && selectedCampaign.Status == "PickedUp")
+                    {
+                        DashboardPanel_DeliveryCodeLabel.Show();
+                        DashboardPanel_DeliveryCodeTextBox.Show();
+                        DashboardPanel_ValidateDeliveryButton.Show();
+                    }
                 }
-            }
-            else if (component is Contribution)
-            {
-                DeliveryCodeLabel.Hide();
-                DeliveryCodeTextBox.Hide();
-                ValidateDeliveryButton.Hide();
-
-                selectedContribution = (Contribution)treeView.SelectedNode.Tag;
-                if(selectedContribution.Type == "Volunteering" && selectedContribution.Status == "Pending")
+                else if (component is Contribution)
                 {
-                    ApproveVolunteerButton.Show();
+                    selectedContribution = (Contribution)DashboardPanel_TreeView.SelectedNode.Tag;
+                    InfoPanel_Username.Text = selectedContribution.Username;
+                    InfoPanel_OtherInfo.Text = selectedContribution.OtherInfo;
+                    InfoPanel.Show();
+                    if (selectedContribution.Type == "Volunteering" && selectedContribution.Status == "Pending")
+                    {
+                        DashboardPanel_ApproveVolunteerButton.Show();
+                    }
+                    else if (selectedContribution.Type == "Volunteering" && selectedContribution.Status == "InProgress")
+                    {
+                        DashboardPanel_ValidateContributionButton.Show();
+                    }
                 }
-                else if(selectedContribution.Type == "Volunteering" && selectedContribution.Status == "InProgress")
-                {
-                    ValidateContributionButton.Show();
-                }
-            }
-            else
-            {
-                DeliveryCodeLabel.Hide();
-                DeliveryCodeTextBox.Hide();
-                ValidateDeliveryButton.Hide();
-                ValidateContributionButton.Hide();
-                ApproveVolunteerButton.Hide();
             }
         }
 
@@ -118,7 +125,7 @@ namespace HumanityService.Client
             {
                 ValidationType = "Destination",
                 CampaignId = selectedCampaign.Id,
-                DeliveryCode = DeliveryCodeTextBox.Text
+                DeliveryCode = DashboardPanel_DeliveryCodeTextBox.Text
             };
 
             var result = await client.ValidateDelivery(validateDeliveryRequest);
@@ -126,7 +133,7 @@ namespace HumanityService.Client
             if (result.IsValid)
             {
                 message = "Delivery Validated!";
-                treeView.Focus();
+                DashboardPanel_TreeView.Focus();
             }
             else
             {
@@ -137,7 +144,7 @@ namespace HumanityService.Client
 
         private void RefreshButton_Click(object sender, EventArgs e)
         {
-            treeView.Focus();
+            DashboardPanel_TreeView.Focus();
         }
 
         private void Signout_Click(object sender, EventArgs e)
@@ -152,13 +159,40 @@ namespace HumanityService.Client
         private async void ValidateContributionButton_Click(object sender, EventArgs e)
         {
             await client.ValidateContribution(selectedContribution.Id);
-            treeView.Focus();
+            DashboardPanel_TreeView.Focus();
         }
 
         private async void ApproveVolunteerButton_Click(object sender, EventArgs e)
         {
             await client.ApproveContribution(selectedContribution.Id);
-            treeView.Focus();
+            DashboardPanel_TreeView.Focus();
+        }
+
+        private void HideAll()
+        {
+            InfoPanel.Hide();
+            DashboardPanel_DeliveryCodeLabel.Hide();
+            DashboardPanel_DeliveryCodeTextBox.Hide();
+            DashboardPanel_ValidateDeliveryButton.Hide();
+            DashboardPanel_ValidateContributionButton.Hide();
+            DashboardPanel_ApproveVolunteerButton.Hide();
+        }
+
+        private void CreateCampaignPanel_BackButton_Click(object sender, EventArgs e)
+        {
+            Navigate(DashboardPanel);
+        }
+
+        private void DashboardPanel_CreateCampaignButton_Click(object sender, EventArgs e)
+        {
+            Navigate(CreateCampaignPanel);
+        }
+
+        private void Dashboard_Load(object sender, EventArgs e)
+        {
+            panels.Add(DashboardPanel);
+            panels.Add(CreateCampaignPanel);
+            Navigate(DashboardPanel);
         }
     }
 }
