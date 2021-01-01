@@ -9,10 +9,10 @@ namespace HumanityService.Client
     public partial class Dashboard : Form
     {
         private readonly List<Panel> panels = new List<Panel>();
-        private static Campaign SelectedCampaign { get; set; }
-        private static Contribution SelectedContribution { get; set; }
-
         private readonly HumanityServiceClient client;
+
+        private Campaign SelectedCampaign { get; set; }
+        private Contribution SelectedContribution { get; set; }
         public Dashboard()
         {
             InitializeComponent();

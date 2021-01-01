@@ -9,17 +9,18 @@ namespace HumanityService.Client
     
     public partial class Menu : Form
     {
+        private readonly HumanityServiceClient client;
         private readonly List<Panel> panels = new List<Panel>();
+        private readonly Dictionary<string, string> transportationType = new Dictionary<string, string>();
+
         private Campaign matchedCampaign;
         private DeliveryDemand matchedDeliveryDemand;
         private double ETA;
         private string volunteeringTag;
         private string contributionIdTag;
-        private readonly Dictionary<string,string> transportationType = new Dictionary<string, string>();
-        Location donorLocation = new Location();
-        Location ngoLocation = new Location();
+        private Location donorLocation = new Location();
+        private Location ngoLocation = new Location();
 
-        private readonly HumanityServiceClient client;
         public Menu()
         {
             client = new HumanityServiceClient();
