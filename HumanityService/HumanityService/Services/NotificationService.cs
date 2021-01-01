@@ -1,25 +1,35 @@
-﻿using HumanityService.Services.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
-using SendGrid;
-using SendGrid.Helpers.Mail;
-using System;
+﻿using System.Net.Mail;
+using System.Net;
 using System.Threading.Tasks;
+using HumanityService.Services.Interfaces;
 
 namespace HumanityService.Services
 {
     public class NotificationService : INotificationService
     {
-        public async Task NotifyUser(string recipient, string subject, string message)
+        public void NotifyUser(string recipient, string subject, string body)
         {
-            var apiKey = Environment.GetEnvironmentVariable("SENDGRID_API_KEY");
-            var client = new SendGridClient(apiKey);
-            var from = new EmailAddress("test@example.com", "Example User");
-            //var subject = "Sending with Twilio SendGrid is Fun";
-            var to = new EmailAddress(recipient);
-            var plainTextContent = "and easy to do anywhere, even with C#";
-            var htmlContent = "<strong>and easy to do anywhere, even with C#</strong>";
-            var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
-            var response = await client.SendEmailAsync(msg).ConfigureAwait(false);
+            var fromAddress = new MailAddress("humanityservice.ece437@gmail.com", "HumanityService");
+            var toAddress = new MailAddress(recipient);
+            const string fromPassword = "Abcdefg1234";
+
+            var smtp = new SmtpClient
+            {
+                Host = "smtp.gmail.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                Credentials = new NetworkCredential(fromAddress.Address, fromPassword),
+                Timeout = 20000
+            };
+            using (var message = new MailMessage(fromAddress, toAddress)
+            {
+                Subject = subject,
+                Body = body
+            })
+            {
+                smtp.Send(message);
+            }
         }
     }
 }

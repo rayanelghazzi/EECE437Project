@@ -15,11 +15,14 @@ namespace HumanityService.Services
         private readonly ITransactionStore _transactionStore;
         private readonly INotificationService _notificationService;
         private readonly IMatchingService _matchingService;
+        private readonly IUserService _userService;
 
-        public TransactionService(ITransactionStore transactionStore, IMatchingService matchingService)
+        public TransactionService(ITransactionStore transactionStore, IMatchingService matchingService, IUserService userService, INotificationService notificationService)
         {
             _transactionStore = transactionStore;
             _matchingService = matchingService;
+            _userService = userService;
+            _notificationService = notificationService;
         }
 
         public async Task<Campaign> MatchCampaign(MatchCampaignRequest request)
@@ -59,6 +62,8 @@ namespace HumanityService.Services
             var deliveryDemand = await _transactionStore.GetDeliveryDemand(deliveryDemandId);
             Process process = await BuildProcess(deliveryDemand.ProcessId);
             await process.AnswerDeliveryDemand(deliveryDemandId, request);
+            var user = await _userService.GetUser(deliveryDemand.PickupUsername);
+            _notificationService.NotifyUser(user.Email, "PickUp volunteer on his way!", request.Username + " Will be picking up your donation.");
         }
 
         public async Task<bool> ValidateDelivery(ValidateDeliveryRequest request) 
@@ -85,6 +90,15 @@ namespace HumanityService.Services
                     var campaign = await _transactionStore.GetCampaign(process.CampaignId);
                     campaign.CompletedCount++;
                     await _transactionStore.UpdateCampaign(campaign);
+                    var getContributionsRequest = new GetContributionsRequest
+                    {
+                        ProcessId = process.Id,
+                        Type = "Donation"
+                    };
+                    var getContributionsResult = await _transactionStore.GetContributions(getContributionsRequest);
+                    var username = getContributionsResult.Contributions[0].Username;
+                    var user = await _userService.GetUser(username);
+                    _notificationService.NotifyUser(user.Email, "Donation Delivered!", "Hey " + user.FirstName+ "! Your donation has been delivered. Thank you for your generosity!");
                     return true;
                 }
                 else return false;
@@ -96,6 +110,9 @@ namespace HumanityService.Services
             var contribution = await _transactionStore.GetContribution(contributionId);
             var process = await BuildProcess(contribution.ProcessId);
             await process.ApproveContribution();
+            var user = await _userService.GetUser(contribution.Username);
+            var campaign = await _transactionStore.GetCampaign(process.CampaignId);
+            _notificationService.NotifyUser(user.Email, "Volunteering Job Approved!", campaign.NgoName + " needs your help! They will contact you soon for more details.");
         }
 
         public async Task ValidateContribution(string contributionId)
@@ -103,6 +120,9 @@ namespace HumanityService.Services
             var contribution = await _transactionStore.GetContribution(contributionId);
             var process = await BuildProcess(contribution.ProcessId);
             await process.ValidateContribution();
+            var user = await _userService.GetUser(contribution.Username);
+            var campaign = await _transactionStore.GetCampaign(process.CampaignId);
+            _notificationService.NotifyUser(user.Email, "Volunteering Job Validated!", campaign.NgoName + " just validated your volunteering work. Good Job " + user.FirstName + "!");
         }
 
         public async Task CreateCampaign(CreateCampaignRequest request)

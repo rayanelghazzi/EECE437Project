@@ -94,7 +94,7 @@ namespace HumanityService.Client
                 if (component is Campaign)
                 {
                     selectedCampaign = ((Campaign)DashboardPanel_TreeView.SelectedNode.Tag);
-                    if (selectedCampaign.Type == "Donation" && selectedCampaign.Status == "PickedUp")
+                    if (selectedCampaign.Type == "Donation")
                     {
                         DashboardPanel_DeliveryCodeLabel.Show();
                         DashboardPanel_DeliveryCodeTextBox.Show();
@@ -188,11 +188,29 @@ namespace HumanityService.Client
             Navigate(CreateCampaignPanel);
         }
 
+        private void UserInfoPanel_BackButton_Click(object sender, EventArgs e)
+        {
+            Navigate(DashboardPanel);
+        }
+
         private void Dashboard_Load(object sender, EventArgs e)
         {
             panels.Add(DashboardPanel);
             panels.Add(CreateCampaignPanel);
+            panels.Add(UserInfoPanel);
             Navigate(DashboardPanel);
+        }
+
+        private async void InfoPanel_Username_Click(object sender, EventArgs e)
+        {
+            var username = InfoPanel_Username.Text.ToString();
+            var userInfo = await client.GetUserInfo(username);
+            UserInfoPanel_Username.Text = userInfo.Username;
+            UserInfoPanel_FirstName.Text = userInfo.FirstName;
+            UserInfoPanel_LastName.Text = userInfo.LastName;
+            UserInfoPanel_PhoneNumber.Text = userInfo.PhoneNumber;
+            UserInfoPanel_Email.Text = userInfo.Email;
+            Navigate(UserInfoPanel);
         }
     }
 }

@@ -7,6 +7,6 @@ namespace HumanityService.Services.Interfaces
 {
     public interface INotificationService
     {
-        Task NotifyUser(string recipient, string subject, string message);
+        void NotifyUser(string recipient, string subject, string message);
     }
 }

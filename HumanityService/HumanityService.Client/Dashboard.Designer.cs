@@ -38,6 +38,11 @@
             this.DashboardPanel_ValidateContributionButton = new System.Windows.Forms.Button();
             this.DashboardPanel_CreateCampaignButton = new System.Windows.Forms.Button();
             this.DashboardPanel = new System.Windows.Forms.Panel();
+            this.InfoPanel = new System.Windows.Forms.Panel();
+            this.InfoPanel_OtherInfo = new System.Windows.Forms.Label();
+            this.InfoPanel_Username = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             this.CreateCampaignPanel = new System.Windows.Forms.Panel();
             this.CreateCampaignPanel_CreateCampaignButton = new System.Windows.Forms.Button();
             this.CreateCampaignPanel_BackButton = new System.Windows.Forms.Button();
@@ -52,22 +57,31 @@
             this.label2 = new System.Windows.Forms.Label();
             this.CreateCampaignPanel_CampaignName = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.InfoPanel = new System.Windows.Forms.Panel();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.InfoPanel_Username = new System.Windows.Forms.Label();
-            this.InfoPanel_OtherInfo = new System.Windows.Forms.Label();
+            this.UserInfoPanel = new System.Windows.Forms.Panel();
+            this.UserInfoPanel_PhoneNumber = new System.Windows.Forms.Label();
+            this.UserInfoPanel_Email = new System.Windows.Forms.Label();
+            this.UserInfoPanel_LastName = new System.Windows.Forms.Label();
+            this.UserInfoPanel_FirstName = new System.Windows.Forms.Label();
+            this.UserInfoPanel_Username = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label13 = new System.Windows.Forms.Label();
+            this.UserInfoPanel_BackButton = new System.Windows.Forms.Button();
+            this.label14 = new System.Windows.Forms.Label();
             this.DashboardPanel.SuspendLayout();
-            this.CreateCampaignPanel.SuspendLayout();
             this.InfoPanel.SuspendLayout();
+            this.CreateCampaignPanel.SuspendLayout();
+            this.UserInfoPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // DashboardPanel_TreeView
             // 
             this.DashboardPanel_TreeView.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
-            this.DashboardPanel_TreeView.Location = new System.Drawing.Point(304, 11);
+            this.DashboardPanel_TreeView.Location = new System.Drawing.Point(313, 11);
             this.DashboardPanel_TreeView.Name = "DashboardPanel_TreeView";
-            this.DashboardPanel_TreeView.Size = new System.Drawing.Size(821, 589);
+            this.DashboardPanel_TreeView.Size = new System.Drawing.Size(812, 589);
             this.DashboardPanel_TreeView.TabIndex = 0;
             this.DashboardPanel_TreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView_NodeMouseDoubleClick);
             this.DashboardPanel_TreeView.Enter += new System.EventHandler(this.treeView_Enter);
@@ -127,7 +141,7 @@
             // 
             this.DashboardPanel_ApproveVolunteerButton.Location = new System.Drawing.Point(21, 441);
             this.DashboardPanel_ApproveVolunteerButton.Name = "DashboardPanel_ApproveVolunteerButton";
-            this.DashboardPanel_ApproveVolunteerButton.Size = new System.Drawing.Size(238, 48);
+            this.DashboardPanel_ApproveVolunteerButton.Size = new System.Drawing.Size(277, 48);
             this.DashboardPanel_ApproveVolunteerButton.TabIndex = 6;
             this.DashboardPanel_ApproveVolunteerButton.Text = "Approve Volunteer";
             this.DashboardPanel_ApproveVolunteerButton.UseVisualStyleBackColor = true;
@@ -169,6 +183,60 @@
             this.DashboardPanel.Name = "DashboardPanel";
             this.DashboardPanel.Size = new System.Drawing.Size(1125, 612);
             this.DashboardPanel.TabIndex = 9;
+            // 
+            // InfoPanel
+            // 
+            this.InfoPanel.BackColor = System.Drawing.Color.DarkGray;
+            this.InfoPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.InfoPanel.Controls.Add(this.InfoPanel_OtherInfo);
+            this.InfoPanel.Controls.Add(this.InfoPanel_Username);
+            this.InfoPanel.Controls.Add(this.label8);
+            this.InfoPanel.Controls.Add(this.label7);
+            this.InfoPanel.Location = new System.Drawing.Point(22, 142);
+            this.InfoPanel.Name = "InfoPanel";
+            this.InfoPanel.Size = new System.Drawing.Size(276, 285);
+            this.InfoPanel.TabIndex = 9;
+            // 
+            // InfoPanel_OtherInfo
+            // 
+            this.InfoPanel_OtherInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.InfoPanel_OtherInfo.Location = new System.Drawing.Point(11, 100);
+            this.InfoPanel_OtherInfo.Name = "InfoPanel_OtherInfo";
+            this.InfoPanel_OtherInfo.Size = new System.Drawing.Size(242, 172);
+            this.InfoPanel_OtherInfo.TabIndex = 3;
+            this.InfoPanel_OtherInfo.Text = "label10";
+            // 
+            // InfoPanel_Username
+            // 
+            this.InfoPanel_Username.AutoSize = true;
+            this.InfoPanel_Username.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
+            this.InfoPanel_Username.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.InfoPanel_Username.Location = new System.Drawing.Point(126, 16);
+            this.InfoPanel_Username.Name = "InfoPanel_Username";
+            this.InfoPanel_Username.Size = new System.Drawing.Size(60, 24);
+            this.InfoPanel_Username.TabIndex = 2;
+            this.InfoPanel_Username.Text = "label9";
+            this.InfoPanel_Username.Click += new System.EventHandler(this.InfoPanel_Username_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label8.Location = new System.Drawing.Point(16, 60);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(164, 24);
+            this.label8.TabIndex = 1;
+            this.label8.Text = "User\'s Message:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label7.Location = new System.Drawing.Point(16, 16);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(111, 24);
+            this.label7.TabIndex = 0;
+            this.label7.Text = "Username:";
             // 
             // CreateCampaignPanel
             // 
@@ -316,57 +384,144 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Campaign Name";
             // 
-            // InfoPanel
+            // UserInfoPanel
             // 
-            this.InfoPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            this.InfoPanel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.InfoPanel.Controls.Add(this.InfoPanel_OtherInfo);
-            this.InfoPanel.Controls.Add(this.InfoPanel_Username);
-            this.InfoPanel.Controls.Add(this.label8);
-            this.InfoPanel.Controls.Add(this.label7);
-            this.InfoPanel.Location = new System.Drawing.Point(22, 142);
-            this.InfoPanel.Name = "InfoPanel";
-            this.InfoPanel.Size = new System.Drawing.Size(276, 285);
-            this.InfoPanel.TabIndex = 9;
+            this.UserInfoPanel.Controls.Add(this.UserInfoPanel_PhoneNumber);
+            this.UserInfoPanel.Controls.Add(this.UserInfoPanel_Email);
+            this.UserInfoPanel.Controls.Add(this.UserInfoPanel_LastName);
+            this.UserInfoPanel.Controls.Add(this.UserInfoPanel_FirstName);
+            this.UserInfoPanel.Controls.Add(this.UserInfoPanel_Username);
+            this.UserInfoPanel.Controls.Add(this.label9);
+            this.UserInfoPanel.Controls.Add(this.label10);
+            this.UserInfoPanel.Controls.Add(this.label11);
+            this.UserInfoPanel.Controls.Add(this.label12);
+            this.UserInfoPanel.Controls.Add(this.label13);
+            this.UserInfoPanel.Controls.Add(this.UserInfoPanel_BackButton);
+            this.UserInfoPanel.Controls.Add(this.label14);
+            this.UserInfoPanel.Location = new System.Drawing.Point(6, 0);
+            this.UserInfoPanel.Name = "UserInfoPanel";
+            this.UserInfoPanel.Size = new System.Drawing.Size(1122, 616);
+            this.UserInfoPanel.TabIndex = 11;
             // 
-            // label7
+            // UserInfoPanel_PhoneNumber
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(16, 16);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(111, 24);
-            this.label7.TabIndex = 0;
-            this.label7.Text = "Username:";
+            this.UserInfoPanel_PhoneNumber.AutoSize = true;
+            this.UserInfoPanel_PhoneNumber.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.UserInfoPanel_PhoneNumber.Location = new System.Drawing.Point(227, 327);
+            this.UserInfoPanel_PhoneNumber.Name = "UserInfoPanel_PhoneNumber";
+            this.UserInfoPanel_PhoneNumber.Size = new System.Drawing.Size(75, 25);
+            this.UserInfoPanel_PhoneNumber.TabIndex = 21;
+            this.UserInfoPanel_PhoneNumber.Text = "label11";
             // 
-            // label8
+            // UserInfoPanel_Email
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(16, 60);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(164, 24);
-            this.label8.TabIndex = 1;
-            this.label8.Text = "User\'s Message:";
+            this.UserInfoPanel_Email.AutoSize = true;
+            this.UserInfoPanel_Email.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.UserInfoPanel_Email.Location = new System.Drawing.Point(227, 265);
+            this.UserInfoPanel_Email.Name = "UserInfoPanel_Email";
+            this.UserInfoPanel_Email.Size = new System.Drawing.Size(75, 25);
+            this.UserInfoPanel_Email.TabIndex = 20;
+            this.UserInfoPanel_Email.Text = "label10";
             // 
-            // InfoPanel_Username
+            // UserInfoPanel_LastName
             // 
-            this.InfoPanel_Username.AutoSize = true;
-            this.InfoPanel_Username.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.InfoPanel_Username.Location = new System.Drawing.Point(124, 16);
-            this.InfoPanel_Username.Name = "InfoPanel_Username";
-            this.InfoPanel_Username.Size = new System.Drawing.Size(60, 24);
-            this.InfoPanel_Username.TabIndex = 2;
-            this.InfoPanel_Username.Text = "label9";
+            this.UserInfoPanel_LastName.AutoSize = true;
+            this.UserInfoPanel_LastName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.UserInfoPanel_LastName.Location = new System.Drawing.Point(227, 203);
+            this.UserInfoPanel_LastName.Name = "UserInfoPanel_LastName";
+            this.UserInfoPanel_LastName.Size = new System.Drawing.Size(64, 25);
+            this.UserInfoPanel_LastName.TabIndex = 19;
+            this.UserInfoPanel_LastName.Text = "label9";
             // 
-            // InfoPanel_OtherInfo
+            // UserInfoPanel_FirstName
             // 
-            this.InfoPanel_OtherInfo.Font = new System.Drawing.Font("Microsoft Sans Serif", 11F);
-            this.InfoPanel_OtherInfo.Location = new System.Drawing.Point(11, 100);
-            this.InfoPanel_OtherInfo.Name = "InfoPanel_OtherInfo";
-            this.InfoPanel_OtherInfo.Size = new System.Drawing.Size(242, 172);
-            this.InfoPanel_OtherInfo.TabIndex = 3;
-            this.InfoPanel_OtherInfo.Text = "label10";
+            this.UserInfoPanel_FirstName.AutoSize = true;
+            this.UserInfoPanel_FirstName.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.UserInfoPanel_FirstName.Location = new System.Drawing.Point(227, 143);
+            this.UserInfoPanel_FirstName.Name = "UserInfoPanel_FirstName";
+            this.UserInfoPanel_FirstName.Size = new System.Drawing.Size(64, 25);
+            this.UserInfoPanel_FirstName.TabIndex = 18;
+            this.UserInfoPanel_FirstName.Text = "label8";
+            // 
+            // UserInfoPanel_Username
+            // 
+            this.UserInfoPanel_Username.AutoSize = true;
+            this.UserInfoPanel_Username.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.UserInfoPanel_Username.Location = new System.Drawing.Point(227, 85);
+            this.UserInfoPanel_Username.Name = "UserInfoPanel_Username";
+            this.UserInfoPanel_Username.Size = new System.Drawing.Size(64, 25);
+            this.UserInfoPanel_Username.TabIndex = 17;
+            this.UserInfoPanel_Username.Text = "label7";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label9.Location = new System.Drawing.Point(43, 327);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(162, 25);
+            this.label9.TabIndex = 16;
+            this.label9.Text = "Phone Number:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(43, 265);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(72, 25);
+            this.label10.TabIndex = 15;
+            this.label10.Text = "Email:";
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label11.Location = new System.Drawing.Point(43, 203);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(122, 25);
+            this.label11.TabIndex = 14;
+            this.label11.Text = "Last Name:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label12.Location = new System.Drawing.Point(43, 143);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(123, 25);
+            this.label12.TabIndex = 13;
+            this.label12.Text = "First Name:";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label13.Location = new System.Drawing.Point(43, 85);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(117, 25);
+            this.label13.TabIndex = 12;
+            this.label13.Text = "Username:";
+            // 
+            // UserInfoPanel_BackButton
+            // 
+            this.UserInfoPanel_BackButton.Location = new System.Drawing.Point(19, 18);
+            this.UserInfoPanel_BackButton.Name = "UserInfoPanel_BackButton";
+            this.UserInfoPanel_BackButton.Size = new System.Drawing.Size(71, 27);
+            this.UserInfoPanel_BackButton.TabIndex = 11;
+            this.UserInfoPanel_BackButton.Text = "Back";
+            this.UserInfoPanel_BackButton.UseVisualStyleBackColor = true;
+            this.UserInfoPanel_BackButton.Click += new System.EventHandler(this.UserInfoPanel_BackButton_Click);
+            // 
+            // label14
+            // 
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 13.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label14.Location = new System.Drawing.Point(429, 18);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(205, 29);
+            this.label14.TabIndex = 10;
+            this.label14.Text = "User Information";
             // 
             // Dashboard
             // 
@@ -375,15 +530,18 @@
             this.ClientSize = new System.Drawing.Size(1143, 621);
             this.Controls.Add(this.DashboardPanel);
             this.Controls.Add(this.CreateCampaignPanel);
+            this.Controls.Add(this.UserInfoPanel);
             this.Name = "Dashboard";
             this.Text = "Dashboard";
             this.Load += new System.EventHandler(this.Dashboard_Load);
             this.DashboardPanel.ResumeLayout(false);
             this.DashboardPanel.PerformLayout();
-            this.CreateCampaignPanel.ResumeLayout(false);
-            this.CreateCampaignPanel.PerformLayout();
             this.InfoPanel.ResumeLayout(false);
             this.InfoPanel.PerformLayout();
+            this.CreateCampaignPanel.ResumeLayout(false);
+            this.CreateCampaignPanel.PerformLayout();
+            this.UserInfoPanel.ResumeLayout(false);
+            this.UserInfoPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -419,5 +577,18 @@
         private System.Windows.Forms.Label InfoPanel_Username;
         private System.Windows.Forms.Label label8;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Panel UserInfoPanel;
+        private System.Windows.Forms.Label UserInfoPanel_PhoneNumber;
+        private System.Windows.Forms.Label UserInfoPanel_Email;
+        private System.Windows.Forms.Label UserInfoPanel_LastName;
+        private System.Windows.Forms.Label UserInfoPanel_FirstName;
+        private System.Windows.Forms.Label UserInfoPanel_Username;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Button UserInfoPanel_BackButton;
+        private System.Windows.Forms.Label label14;
     }
 }

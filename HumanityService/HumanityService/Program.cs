@@ -4,6 +4,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using HumanityService.Services;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,9 @@ namespace HumanityService
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
+
+            NotificationService notificationService = new NotificationService();
+            notificationService.NotifyUser("rayanelghazzi@hotmail.com", "test", "hi");
 
         }
 
