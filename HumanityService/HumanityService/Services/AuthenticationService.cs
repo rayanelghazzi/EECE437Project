@@ -23,14 +23,14 @@ namespace HumanityService.Services
                 var user = await _userService.GetUser(username);
                 return new AuthenticationResult
                 {
-                    PasswordIsValid = user.Password == password
+                    LoginValidated = user.Password == password
                 };
             }
             catch
             {
                 return new AuthenticationResult
                 {
-                    PasswordIsValid = false
+                    LoginValidated = false
                 };
             }
         }
@@ -43,14 +43,14 @@ namespace HumanityService.Services
                 var ngo = await _userService.GetNgo(username);
                 return new AuthenticationResult
                 {
-                    PasswordIsValid = ngo.Password == password
+                    LoginValidated = ngo.Password == password
                 };
             }
             catch
             {
                 return new AuthenticationResult
                 {
-                    PasswordIsValid = false
+                    LoginValidated = false
                 };
             }
         }

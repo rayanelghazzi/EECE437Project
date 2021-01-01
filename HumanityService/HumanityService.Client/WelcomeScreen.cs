@@ -40,7 +40,7 @@ namespace HumanityService.Client
             if (UserType == "Contributor")
             {
                 var authenticationResult = await client.LoginUser(loginRequest);
-                if (authenticationResult.PasswordIsValid)
+                if (authenticationResult.LoginValidated)
                 {
                     Properties.Settings.Default["Username"] = UsernameTextBox.Text;
                     Properties.Settings.Default.Save();
@@ -57,7 +57,7 @@ namespace HumanityService.Client
             else
             {
                 var authenticationResult = await client.LoginNgo(loginRequest);
-                if (authenticationResult.PasswordIsValid)
+                if (authenticationResult.LoginValidated)
                 {
                     Properties.Settings.Default["Username"] = UsernameTextBox.Text;
                     Properties.Settings.Default.Save();

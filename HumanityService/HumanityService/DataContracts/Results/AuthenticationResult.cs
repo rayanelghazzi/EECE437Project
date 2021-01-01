@@ -2,6 +2,6 @@
 {
     public class AuthenticationResult
     {
-        public bool PasswordIsValid { get; set; }
+        public bool LoginValidated { get; set; }
     }
 }
