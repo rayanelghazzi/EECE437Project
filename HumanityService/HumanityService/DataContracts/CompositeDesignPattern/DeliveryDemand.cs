@@ -44,7 +44,6 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             OtherInfo = request.OtherInfo;
             TimeCreated = Utils.UnixTimeSeconds();
             TimeCompleted = 0;
-            //maybe add time picked up
         }
 
         public void AddComponent(IComponent component)

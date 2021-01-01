@@ -21,11 +21,6 @@ namespace HumanityService.Client
             _httpClient = httpClient;
         }
 
-        public async Task SignUp(User user)
-        {
-
-        }
-
         public async Task<UserInfo> GetUserInfo(string username)
         {
             var responseMessage = await _httpClient.GetAsync($"api/users/users/{username}");
@@ -33,12 +28,6 @@ namespace HumanityService.Client
             string json = await responseMessage.Content.ReadAsStringAsync();
             var fetchedUser = JsonConvert.DeserializeObject<UserInfo>(json);
             return fetchedUser;
-        }
-
-
-        public async Task SignUp(Ngo ngo)
-        {
-
         }
 
         public async Task<NgoInfo> GetNgoInfo(string username)

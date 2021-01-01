@@ -71,32 +71,17 @@
     <Compile Include="DataContracts\Requests\AnswerCampaignRequest.cs" />
     <Compile Include="DataContracts\Requests\AnswerDeliveryDemandRequest.cs" />
     <Compile Include="DataContracts\Requests\CreateCampaignRequest.cs" />
-    <Compile Include="DataContracts\Requests\CreateDeliveryDemandRequest.cs" />
     <Compile Include="DataContracts\Requests\EditCampaignRequest.cs" />
-    <Compile Include="DataContracts\Requests\EditContributionRequest.cs" />
-    <Compile Include="DataContracts\Requests\GetCampaignsRequest.cs" />
-    <Compile Include="DataContracts\Requests\GetContributionsRequest.cs" />
-    <Compile Include="DataContracts\Requests\GetDeliveryDemandsRequest.cs" />
-    <Compile Include="DataContracts\Requests\GetProcessesRequest.cs" />
     <Compile Include="DataContracts\Requests\LoginRequest.cs" />
-    <Compile Include="DataContracts\Requests\LogoutRequest.cs" />
     <Compile Include="DataContracts\Requests\MatchCampaignRequest.cs" />
     <Compile Include="DataContracts\Requests\MatchDeliveryDemandRequest.cs" />
-    <Compile Include="DataContracts\Requests\OpenrouteserviceMatrixRequest.cs" />
     <Compile Include="DataContracts\Requests\ValidateDeliveryRequest.cs" />
     <Compile Include="DataContracts\Results\AuthenticationResult.cs" />
     <Compile Include="DataContracts\Results\GetCampaignsResult.cs" />
     <Compile Include="DataContracts\Results\GetContributionsResult.cs" />
     <Compile Include="DataContracts\Results\GetDeliveryDemandsResult.cs" />
     <Compile Include="DataContracts\Results\GetProcessesResult.cs" />
-    <Compile Include="DataContracts\Results\OpenrouteserviceMatrixResponse.cs" />
     <Compile Include="HumanityServiceException.cs" />
-    <Compile Include="MatchCampaign.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="MatchCampaign.Designer.cs">
-      <DependentUpon>MatchCampaign.cs</DependentUpon>
-    </Compile>
     <Compile Include="Menu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,9 +98,6 @@
     </Compile>
     <EmbeddedResource Include="Dashboard.resx">
       <DependentUpon>Dashboard.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="MatchCampaign.resx">
-      <DependentUpon>MatchCampaign.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Menu.resx">
       <DependentUpon>Menu.cs</DependentUpon>
@@ -146,9 +128,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\arrow-refresh-reload-icon-29.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -15,6 +15,7 @@ namespace HumanityService.Controllers
         {
             _userService = userService;
         }
+
         //List of Http Methods (API)
         [HttpPost("users/signup")]
         public async Task<IActionResult> SignUp([FromBody] User user)

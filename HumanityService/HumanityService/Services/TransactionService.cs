@@ -161,6 +161,7 @@ namespace HumanityService.Services
             campaign.Category = request.Category;
             campaign.Target = request.Target;
             campaign.Description = request.Description;
+            campaign.Status = request.Status;
             await _transactionStore.UpdateCampaign(campaign);
         }
 

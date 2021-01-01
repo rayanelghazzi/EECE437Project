@@ -1,5 +1,4 @@
 ﻿using HumanityService.DataContracts.Requests;
-using HumanityService.Stores;
 using HumanityService.Stores.Interfaces;
 using System.Collections.Generic;
 using System.Threading.Tasks;

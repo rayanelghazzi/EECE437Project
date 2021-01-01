@@ -18,10 +18,6 @@ namespace HumanityService
         public static void Main(string[] args)
         {
             CreateWebHostBuilder(args).Build().Run();
-
-            NotificationService notificationService = new NotificationService();
-            notificationService.NotifyUser("rayanelghazzi@hotmail.com", "test", "hi");
-
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
@@ -30,7 +26,6 @@ namespace HumanityService
                 {
                     config.Sources.Clear();
                     config.AddJsonFile("appsettings.json", optional: false);
-                    //config.AddJsonFile($"appsettings.{hostingContext.HostingEnvironment.EnvironmentName}.json", optional: false);
                     config.AddEnvironmentVariables("HumanityService_");
                     config.AddCommandLine(args);
                 })
