@@ -1,7 +1,9 @@
 ﻿using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.DataContracts.Requests;
 using HumanityService.DataContracts.Results;
+using HumanityService.Exceptions;
 using HumanityService.Services.Interfaces;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
@@ -15,7 +17,20 @@ namespace HumanityService.Services
 {
     public class RoutingService : IRoutingService
     {
-        private Uri baseAddress = new Uri("https://api.openrouteservice.org/v2/matrix/");
+        private readonly Uri baseAddress = new Uri("https://api.openrouteservice.org/v2/matrix/");
+        private readonly string Key = Environment.GetEnvironmentVariable("HumanityService_OpenRouteServiceSettings__Key");
+        private readonly List<string> Transportation = new List<string>
+        {
+            "driving-car",
+            "driving-hgv",
+            "cycling-regular",
+            "cycling-road",
+            "cycling-mountain",
+            "cycling-electric",
+            "foot-walking",
+            "foot-hiking",
+            "wheelchair"
+        };
 
         public async Task<double> GetETA(Location delivererCoordinates, Location donorCoordinates, Location ngoCoordinates, string transportationType)
         {
@@ -47,7 +62,6 @@ namespace HumanityService.Services
             var matrix = await GetTimeDistanceMatrix(coord, transportationType);
             var durationMatrix = matrix.durations;
             var eta = durationMatrix[0][1] + durationMatrix[1][2]; //deliverer-donor + donor-ngo duration time by given transportation type
-
 
             return eta;
         }
@@ -82,36 +96,33 @@ namespace HumanityService.Services
 
         private async Task<OpenrouteserviceMatrixResponse> GetTimeDistanceMatrix(List<List<double>> coordinatesMatrix, string transportationType)
         {
-            using (var httpClient = new HttpClient { BaseAddress = baseAddress })
-            {
-                httpClient.DefaultRequestHeaders.Clear();
-                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8");
-                httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", "5b3ce3597851110001cf6248c8f842cc78114de5ac5491e15d186abf");
+            using var httpClient = new HttpClient { BaseAddress = baseAddress };
+            httpClient.DefaultRequestHeaders.Clear();
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8");
+            httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
+            httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", Key);
 
-                var loc = new OpenrouteserviceMatrixRequest
-                {
-                    locations = coordinatesMatrix
-                };
-                var json = JsonConvert.SerializeObject(loc);
-                using (var content = new StringContent(json, Encoding.UTF8, "application/json"))
-                {
-                    var url = BuildUrl(transportationType);
-                    using (var response = await httpClient.PostAsync(url, content))
-                    {
-                        string responseData = await response.Content.ReadAsStringAsync();
-                        var data = JsonConvert.DeserializeObject<OpenrouteserviceMatrixResponse>(responseData);
-                        return data;
-                    }
-                }
-            }
+            var loc = new OpenrouteserviceMatrixRequest
+            {
+                Locations = coordinatesMatrix
+            };
+            var json = JsonConvert.SerializeObject(loc);
+            using var content = new StringContent(json, Encoding.UTF8, "application/json");
+            var url = BuildUrl(transportationType);
+            using var response = await httpClient.PostAsync(url, content);
+            string responseData = await response.Content.ReadAsStringAsync();
+            var data = JsonConvert.DeserializeObject<OpenrouteserviceMatrixResponse>(responseData);
+            return data;
         }
 
 
         private string BuildUrl(string transportation)
         {
-            //validate transportation type before
-            return "/v2/matrix/" + transportation;
+            if (Transportation.Contains(transportation))
+            {
+                return "/v2/matrix/" + transportation;
+            }
+            else throw new BadRequestException("Invalid TransportationType");
         }
     }
 }
