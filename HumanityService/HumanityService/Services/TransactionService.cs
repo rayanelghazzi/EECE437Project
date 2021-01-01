@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using HumanityService.DataContracts.CompositeDesignPattern;
 using HumanityService.DataContracts.Requests;
 using HumanityService.DataContracts.Results;
+using HumanityService.Exceptions;
 using HumanityService.Services.Interfaces;
 using HumanityService.Stores.Interfaces;
 
@@ -61,48 +62,40 @@ namespace HumanityService.Services
         {
             var deliveryDemand = await _transactionStore.GetDeliveryDemand(deliveryDemandId);
             Process process = await BuildProcess(deliveryDemand.ProcessId);
-            await process.AnswerDeliveryDemand(deliveryDemandId, request);
+            await process.AnswerDeliveryDemand(request);
             var user = await _userService.GetUser(deliveryDemand.PickupUsername);
             _notificationService.NotifyUser(user.Email, "PickUp volunteer on his way!", request.Username + " Will be picking up your donation.");
         }
 
         public async Task<bool> ValidateDelivery(ValidateDeliveryRequest request) 
         {
-            if(request.ValidationType == "Pickup")
+            if (request.ValidationType == "Pickup")
             {
                 var contribution = await _transactionStore.GetContribution(request.ContributionId);
                 Process process = await BuildProcess(contribution.ProcessId);
                 if (process.DeliveryCode == request.DeliveryCode)
                 {
-                    await process.ValidateDelivery("Pickup");
+                    await process.ValidatePickup();
                     return true;
                 }
                 else return false;
             }
-            else
+            else if (request.ValidationType == "Destination")
             {
                 var getProcessesResult = await _transactionStore.GetProcesses(request.CampaignId);
                 Process process = getProcessesResult.Processes.Find(x => x.DeliveryCode == request.DeliveryCode);
                 if (process != null)
                 {
                     process = await BuildProcess(process.Id);
-                    await process.ValidateDelivery("Destination");
-                    var campaign = await _transactionStore.GetCampaign(process.CampaignId);
-                    campaign.CompletedCount++;
-                    await _transactionStore.UpdateCampaign(campaign);
-                    var getContributionsRequest = new GetContributionsRequest
-                    {
-                        ProcessId = process.Id,
-                        Type = "Donation"
-                    };
-                    var getContributionsResult = await _transactionStore.GetContributions(getContributionsRequest);
-                    var username = getContributionsResult.Contributions[0].Username;
-                    var user = await _userService.GetUser(username);
-                    _notificationService.NotifyUser(user.Email, "Donation Delivered!", "Hey " + user.FirstName+ "! Your donation has been delivered. Thank you for your generosity!");
+                    await process.ValidateDestination();
+                    var deliveryDemand = process.GetDeliveryDemand();
+                    var user = await _userService.GetUser(deliveryDemand.PickupUsername);
+                    _notificationService.NotifyUser(user.Email, "Donation Delivered!", "Hey " + user.FirstName + "! Your donation has been delivered. Thank you for your generosity!");
                     return true;
                 }
                 else return false;
             }
+            else throw new BadRequestException("Invalid ValidationType");
         }
 
         public async Task ApproveContribution(string contributionId)

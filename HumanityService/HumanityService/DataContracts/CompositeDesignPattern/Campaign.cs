@@ -19,7 +19,7 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
         public long TimeCreated { get; set; }
         public long TimeCompleted { get; set; }
         public string Description { get; set; }
-        public Location Location { get; set;}
+        public Location Location { get; set; }
         
 
         private readonly List<IComponent> components = new List<IComponent>();
@@ -52,10 +52,7 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
 
             foreach(var component in components)
             {
-                if(component is Process)
-                {
-                    await component.Cancel();
-                }
+                await component.Cancel();
             }
         }
 

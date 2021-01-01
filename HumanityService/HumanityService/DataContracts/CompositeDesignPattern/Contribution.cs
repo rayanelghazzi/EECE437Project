@@ -1,7 +1,5 @@
 ﻿using HumanityService.DataContracts.Requests;
 using HumanityService.Stores.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace HumanityService.DataContracts.CompositeDesignPattern
@@ -56,6 +54,17 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             OtherInfo = request.OtherInfo;
             TimeCreated = Utils.UnixTimeSeconds();
             TimeCompleted = 0;
+        }
+
+        public async Task ValidatePickup()
+        {
+            await SetStatusPickedUp();
+        }
+
+        public async Task ValidateDestination()
+        {
+            await SetStatusCompleted();
+            await SetTimeCompleted();
         }
 
         public async Task SetStatusInProgress()

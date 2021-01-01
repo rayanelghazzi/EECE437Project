@@ -51,69 +51,65 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             Status = "InProgress";
             await Update();
 
-            Contribution contribution = (Contribution)components.Find(x => x is Contribution);
+            var contribution = GetContribution();
             await contribution.SetStatusInProgress();
         }
 
         public async Task ValidateContribution() //For volunteer. Once a contribution is completed, its status is updated to: Completed.
         {
             Status = "Completed";
+            TimeCompleted = Utils.UnixTimeSeconds();
             await Update();
 
-            Contribution contribution = (Contribution)components.Find(x => x is Contribution);
+            var contribution = GetContribution();
             await contribution.SetStatusCompleted();
         }
 
 
-        public async Task AnswerDeliveryDemand(string deliveryDemandId, AnswerDeliveryDemandRequest request)
+        public async Task AnswerDeliveryDemand(AnswerDeliveryDemandRequest request)
         //For delivery courier. Once a delivery demand is answered, its status is updated to: InProgress.
         {
             Status = "InProgress";
             // Delivery Code is auto-generated for later valdation
-            var deliveryCode = CreateDeliveryCode();
-            DeliveryCode = deliveryCode;
+            DeliveryCode = CreateDeliveryCode();
             await Update();
 
-            DeliveryDemand deliveryDemand = (DeliveryDemand)components.Find(x => x.Id == deliveryDemandId);
-            await deliveryDemand.AnswerDeliveryDemand(deliveryCode, request);
+            var deliveryDemand = GetDeliveryDemand();
+            await deliveryDemand.AnswerDeliveryDemand(DeliveryCode, request);
 
-            Contribution contribution = (Contribution)components.Find(x => x is Contribution);
+            var contribution = GetContribution();
             await contribution.SetStatusInProgress();
         }
 
-        public async Task ValidateDelivery(string pickupOrDestination)
-        // Function to update delivery status and validate with delivery courier at once.
+        public async Task ValidatePickup()
         {
-            if(pickupOrDestination == "Pickup")
-            {
-                Status = "PickedUp";
-                TimePickedUp = Utils.UnixTimeSeconds();
-                await Update();
+            Status = "PickedUp";
+            TimePickedUp = Utils.UnixTimeSeconds();
+            await Update();
 
-                DeliveryDemand deliveryDemand = (DeliveryDemand)components.Find(x => x is DeliveryDemand && x.Status != "Cancelled");
-                await deliveryDemand.ValidatePickup();
+            var deliveryDemand = GetDeliveryDemand();
+            await deliveryDemand.ValidatePickup();
 
-                Contribution contribution = (Contribution)components.Find(x => x is Contribution);
-                await contribution.SetStatusPickedUp();
-                await contribution.SetTimeCompleted();
-            }
-            else
-            {
-                Status = "Completed";
-                TimeCompleted= Utils.UnixTimeSeconds();
-                await Update();
+            var contribution = GetContribution();
+            await contribution.ValidatePickup();
+        }
 
-                DeliveryDemand deliveryDemand = (DeliveryDemand)components.Find(x => x is DeliveryDemand && x.Status != "Cancelled");
-                await deliveryDemand.ValidateDestination();
+        public async Task ValidateDestination()
+        {
+            Status = "Completed";
+            TimeCompleted = Utils.UnixTimeSeconds();
+            await Update();
 
-                Contribution contribution = (Contribution)components.Find(x => x is Contribution);
-                await contribution.SetStatusCompleted();
-            }
+            var deliveryDemand = GetDeliveryDemand();
+            await deliveryDemand.ValidateDestination();
+
+            var contribution = GetContribution();
+            await contribution.ValidateDestination();
         }
 
         public async Task Cancel()
         {
-            // Only cancel processes that aren't ongoing (e.g delivery demand not accepted yet)
+            // Only cancel processes that aren't ongoing (i.e delivery demand/volunteering not accepted yet)
             if(Status == "Pending")
             {
                 Status = "Cancelled";
@@ -132,12 +128,24 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
             Status = "Pending";
             await Update();
 
-            DeliveryDemand deliveryDemand = (DeliveryDemand)components.Find(x => x is DeliveryDemand);
+            var deliveryDemand = GetDeliveryDemand();
             await deliveryDemand.Cancel();
             await deliveryDemand.Reset();
 
-            Contribution contribution = (Contribution)components.Find(x => x is Contribution);
+            var contribution = GetContribution();
             await contribution.Reset();
+        }
+
+        public DeliveryDemand GetDeliveryDemand()
+        {
+            var deliveryDemand = (DeliveryDemand)components.Find(x => x is DeliveryDemand);
+            return deliveryDemand;
+        }
+
+        public Contribution GetContribution()
+        {
+            var contribution = (Contribution)components.Find(x => x is Contribution);
+            return contribution;
         }
 
         public async Task Save()

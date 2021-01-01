@@ -1,9 +1,6 @@
 ﻿using HumanityService.DataContracts.Requests;
 using HumanityService.Stores.Interfaces;
-using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace HumanityService.DataContracts.CompositeDesignPattern
@@ -79,7 +76,6 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
 
             Contribution contribution = (Contribution)components.Find(x => x is Contribution && x.Status != "Cancelled");
             await contribution.SetStatusCompleted();
-            await contribution.SetTimeCompleted();
         }
 
         public async Task Cancel()
