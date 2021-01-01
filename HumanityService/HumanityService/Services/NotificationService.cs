@@ -22,14 +22,12 @@ namespace HumanityService.Services
                 Credentials = new NetworkCredential(fromAddress.Address, fromPassword),
                 Timeout = 20000
             };
-            using (var message = new MailMessage(fromAddress, toAddress)
+            using var message = new MailMessage(fromAddress, toAddress)
             {
                 Subject = subject,
                 Body = body
-            })
-            {
-                smtp.Send(message);
-            }
+            };
+            smtp.Send(message);
         }
     }
 }

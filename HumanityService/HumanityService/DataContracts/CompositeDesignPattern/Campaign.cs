@@ -22,7 +22,7 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
         public Location Location { get; set;}
         
 
-        List<IComponent> components = new List<IComponent>();
+        private readonly List<IComponent> components = new List<IComponent>();
         ITransactionStore _transactionStore;
 
         public Campaign()

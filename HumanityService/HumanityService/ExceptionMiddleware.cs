@@ -39,9 +39,8 @@ namespace HumanityService
                     statusCode = (int)HttpStatusCode.ServiceUnavailable;
                     _logger.LogError(e, e.Message);
                 }
-                else if (e is StorageErrorException)
+                else if (e is StorageErrorException storageErrorException)
                 {
-                    var storageErrorException = (StorageErrorException)e;
                     if (storageErrorException.StatusCode < 500)
                     {
                         _logger.LogWarning(e, e.Message);

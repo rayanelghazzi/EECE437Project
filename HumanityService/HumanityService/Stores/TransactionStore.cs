@@ -465,7 +465,7 @@ namespace HumanityService.Stores
                 .Where("Id = @Id")
                 .Build();
 
-            int count = await connection.QuerySingleAsync<int>(sql, new { Id = Id });
+            int count = await connection.QuerySingleAsync<int>(sql, new { Id });
             return count > 0;
         }
 

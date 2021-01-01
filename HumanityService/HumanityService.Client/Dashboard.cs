@@ -8,11 +8,11 @@ namespace HumanityService.Client
 {
     public partial class Dashboard : Form
     {
-        private static List<Panel> panels = new List<Panel>();
-        private static Campaign selectedCampaign { get; set; }
-        private static Contribution selectedContribution { get; set; }
+        private readonly List<Panel> panels = new List<Panel>();
+        private static Campaign SelectedCampaign { get; set; }
+        private static Contribution SelectedContribution { get; set; }
 
-        private HumanityServiceClient client;
+        private readonly HumanityServiceClient client;
         public Dashboard()
         {
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace HumanityService.Client
         }
 
 
-        private async void treeView_Enter(object sender, EventArgs e)
+        private async void TreeView_Enter(object sender, EventArgs e)
         {
             HideAll();
             DashboardPanel_TreeView.Nodes.Clear();
@@ -85,7 +85,7 @@ namespace HumanityService.Client
             }
         }
 
-        private void treeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
+        private void TreeView_NodeMouseDoubleClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             HideAll();
             if(DashboardPanel_TreeView.SelectedNode != null)
@@ -93,8 +93,8 @@ namespace HumanityService.Client
                 IComponent component = (IComponent)DashboardPanel_TreeView.SelectedNode.Tag;
                 if (component is Campaign)
                 {
-                    selectedCampaign = ((Campaign)DashboardPanel_TreeView.SelectedNode.Tag);
-                    if (selectedCampaign.Type == "Donation")
+                    SelectedCampaign = ((Campaign)DashboardPanel_TreeView.SelectedNode.Tag);
+                    if (SelectedCampaign.Type == "Donation")
                     {
                         DashboardPanel_DeliveryCodeLabel.Show();
                         DashboardPanel_DeliveryCodeTextBox.Show();
@@ -103,15 +103,15 @@ namespace HumanityService.Client
                 }
                 else if (component is Contribution)
                 {
-                    selectedContribution = (Contribution)DashboardPanel_TreeView.SelectedNode.Tag;
-                    InfoPanel_Username.Text = selectedContribution.Username;
-                    InfoPanel_OtherInfo.Text = selectedContribution.OtherInfo;
+                    SelectedContribution = (Contribution)DashboardPanel_TreeView.SelectedNode.Tag;
+                    InfoPanel_Username.Text = SelectedContribution.Username;
+                    InfoPanel_OtherInfo.Text = SelectedContribution.OtherInfo;
                     InfoPanel.Show();
-                    if (selectedContribution.Type == "Volunteering" && selectedContribution.Status == "Pending")
+                    if (SelectedContribution.Type == "Volunteering" && SelectedContribution.Status == "Pending")
                     {
                         DashboardPanel_ApproveVolunteerButton.Show();
                     }
-                    else if (selectedContribution.Type == "Volunteering" && selectedContribution.Status == "InProgress")
+                    else if (SelectedContribution.Type == "Volunteering" && SelectedContribution.Status == "InProgress")
                     {
                         DashboardPanel_ValidateContributionButton.Show();
                     }
@@ -124,7 +124,7 @@ namespace HumanityService.Client
             var validateDeliveryRequest = new ValidateDeliveryRequest
             {
                 ValidationType = "Destination",
-                CampaignId = selectedCampaign.Id,
+                CampaignId = SelectedCampaign.Id,
                 DeliveryCode = DashboardPanel_DeliveryCodeTextBox.Text
             };
 
@@ -158,13 +158,13 @@ namespace HumanityService.Client
 
         private async void ValidateContributionButton_Click(object sender, EventArgs e)
         {
-            await client.ValidateContribution(selectedContribution.Id);
+            await client.ValidateContribution(SelectedContribution.Id);
             DashboardPanel_TreeView.Focus();
         }
 
         private async void ApproveVolunteerButton_Click(object sender, EventArgs e)
         {
-            await client.ApproveContribution(selectedContribution.Id);
+            await client.ApproveContribution(SelectedContribution.Id);
             DashboardPanel_TreeView.Focus();
         }
 

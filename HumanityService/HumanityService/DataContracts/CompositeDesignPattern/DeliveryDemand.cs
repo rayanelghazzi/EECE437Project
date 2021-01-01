@@ -25,7 +25,7 @@ namespace HumanityService.DataContracts.CompositeDesignPattern
         public long TimeCompleted { get; set; }
         
         ITransactionStore _transactionStore;
-        List<IComponent> components = new List<IComponent>();
+        private readonly List<IComponent> components = new List<IComponent>();
 
         public DeliveryDemand()
         {

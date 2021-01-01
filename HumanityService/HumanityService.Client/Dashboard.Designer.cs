@@ -83,8 +83,8 @@
             this.DashboardPanel_TreeView.Name = "DashboardPanel_TreeView";
             this.DashboardPanel_TreeView.Size = new System.Drawing.Size(812, 589);
             this.DashboardPanel_TreeView.TabIndex = 0;
-            this.DashboardPanel_TreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView_NodeMouseDoubleClick);
-            this.DashboardPanel_TreeView.Enter += new System.EventHandler(this.treeView_Enter);
+            this.DashboardPanel_TreeView.NodeMouseDoubleClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.TreeView_NodeMouseDoubleClick);
+            this.DashboardPanel_TreeView.Enter += new System.EventHandler(this.TreeView_Enter);
             // 
             // DashboardPanel_DeliveryCodeLabel
             // 

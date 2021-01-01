@@ -9,17 +9,17 @@ namespace HumanityService.Client
     
     public partial class Menu : Form
     {
-        private static List<Panel> panels = new List<Panel>();
-        private static Campaign matchedCampaign;
-        private static DeliveryDemand matchedDeliveryDemand;
-        private static double ETA;
-        private static string volunteeringTag;
-        private static string contributionIdTag;
-        private static Dictionary<string,string> transportationType = new Dictionary<string, string>();
+        private readonly List<Panel> panels = new List<Panel>();
+        private Campaign matchedCampaign;
+        private DeliveryDemand matchedDeliveryDemand;
+        private double ETA;
+        private string volunteeringTag;
+        private string contributionIdTag;
+        private readonly Dictionary<string,string> transportationType = new Dictionary<string, string>();
         Location donorLocation = new Location();
         Location ngoLocation = new Location();
 
-        private HumanityServiceClient client;
+        private readonly HumanityServiceClient client;
         public Menu()
         {
             client = new HumanityServiceClient();
@@ -196,8 +196,10 @@ namespace HumanityService.Client
             var getContributionsResult = await client.GetContributions(Properties.Settings.Default["Username"].ToString());
             foreach (var contribution in getContributionsResult.Contributions)
             {
-                var item = new ListViewItem(new[] { contribution.Type, contribution.Status });
-                item.Tag = contribution.Id;
+                var item = new ListViewItem(new[] { contribution.Type, contribution.Status })
+                {
+                    Tag = contribution.Id
+                };
                 MyContributionsPanel_ListView.Items.Add(item);
             }
             MyContributionsPanel.Refresh();
