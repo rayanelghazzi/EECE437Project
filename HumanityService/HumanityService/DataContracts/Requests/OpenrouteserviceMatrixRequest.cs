@@ -7,6 +7,6 @@ namespace HumanityService.DataContracts.Requests
 {
     public class OpenrouteserviceMatrixRequest
     {
-        public List<List<double>> Locations { get; set; }
+        public List<List<double>> locations { get; set; }
     }
 }

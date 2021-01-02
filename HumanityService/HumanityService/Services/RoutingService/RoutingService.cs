@@ -102,7 +102,7 @@ namespace HumanityService.Services
 
         private async Task<OpenrouteserviceMatrixResponse> GetTimeDistanceMatrix(List<List<double>> coordinatesMatrix, string transportationType)
         {
-            using var httpClient = new HttpClient { BaseAddress = baseAddress };
+            using var httpClient = new HttpClient { BaseAddress = BaseAddress };
             httpClient.DefaultRequestHeaders.Clear();
             httpClient.DefaultRequestHeaders.TryAddWithoutValidation("accept", "application/json, application/geo+json, application/gpx+xml, img/png; charset=utf-8");
             httpClient.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/json; charset=utf-8");
@@ -110,11 +110,12 @@ namespace HumanityService.Services
 
             var loc = new OpenrouteserviceMatrixRequest
             {
-                Locations = coordinatesMatrix
+                locations = coordinatesMatrix
             };
             var json = JsonConvert.SerializeObject(loc);
             using var content = new StringContent(json, Encoding.UTF8, "application/json");
             var url = BuildUrl(transportationType);
+
             using var response = await httpClient.PostAsync(url, content);
             string responseData = await response.Content.ReadAsStringAsync();
             var data = JsonConvert.DeserializeObject<OpenrouteserviceMatrixResponse>(responseData);

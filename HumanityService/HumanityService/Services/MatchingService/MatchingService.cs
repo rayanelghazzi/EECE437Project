@@ -69,7 +69,7 @@ namespace HumanityService.Services
                 }
             }
 
-            if (deliveryDemands.Count == 0) return null;
+            if (deliveryDemandsETA.Count == 0) return null;
 
 
             //Sort the delivery demands from least to most time consuming to deliverer
