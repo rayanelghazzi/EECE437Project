@@ -50,6 +50,9 @@ namespace HumanityService
 
             services.Configure<SqlDatabaseSettings>(Configuration.GetSection("SqlDatabaseSettings"));
 
+            services.Configure<RoutingServiceSettings>(Configuration.GetSection("OpenRouteServiceSettings"));
+
+            services.Configure<NotificationServiceSettings>(Configuration.GetSection("NotificationServiceSettings"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

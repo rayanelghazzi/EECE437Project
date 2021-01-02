@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HumanityService", "Humanity
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HumanityService.Client", "HumanityService.Client\HumanityService.Client.csproj", "{3C24E03C-7991-4BC0-AE2C-FC6CFC78A874}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Codify.LawIndex", "..\..\..\..\..\..\Codify\LawIndexService\LawIndexService\Codify.LawIndex\Codify.LawIndex.csproj", "{8B244CE0-7389-4CCC-917D-98E4A5F3E8D6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{3C24E03C-7991-4BC0-AE2C-FC6CFC78A874}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3C24E03C-7991-4BC0-AE2C-FC6CFC78A874}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3C24E03C-7991-4BC0-AE2C-FC6CFC78A874}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B244CE0-7389-4CCC-917D-98E4A5F3E8D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B244CE0-7389-4CCC-917D-98E4A5F3E8D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B244CE0-7389-4CCC-917D-98E4A5F3E8D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B244CE0-7389-4CCC-917D-98E4A5F3E8D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

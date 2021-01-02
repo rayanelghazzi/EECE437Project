@@ -17,8 +17,8 @@ namespace HumanityService.Services
 {
     public class RoutingService : IRoutingService
     {
-        private readonly Uri baseAddress = new Uri("https://api.openrouteservice.org/v2/matrix/");
-        private readonly string Key = Environment.GetEnvironmentVariable("HumanityService_OpenRouteServiceSettings__Key");
+        private readonly Uri BaseAddress;
+        private readonly string Key;
         private readonly List<string> Transportation = new List<string>
         {
             "driving-car",
@@ -31,6 +31,12 @@ namespace HumanityService.Services
             "foot-hiking",
             "wheelchair"
         };
+
+        public RoutingService(IOptions<RoutingServiceSettings> options)
+        {
+            Key = options.Value.Key;
+            BaseAddress = new Uri(options.Value.BaseAddress);
+        }
 
         public async Task<double> GetETA(Location delivererCoordinates, Location donorCoordinates, Location ngoCoordinates, string transportationType)
         {
