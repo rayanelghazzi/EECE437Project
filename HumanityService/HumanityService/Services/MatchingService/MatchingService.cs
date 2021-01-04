@@ -73,7 +73,7 @@ namespace HumanityService.Services
 
 
             //Sort the delivery demands from least to most time consuming to deliverer
-            deliveryDemandsETA.Sort();
+            deliveryDemandsETA.Sort((x, y) => y.Item1.CompareTo(x.Item1));
             return new MatchDeliveryDemandResult
             {
                 DeliveryDemand = deliveryDemandsETA[0].Item2,

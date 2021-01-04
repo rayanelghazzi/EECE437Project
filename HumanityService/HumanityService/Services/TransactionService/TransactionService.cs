@@ -110,11 +110,14 @@ namespace HumanityService.Services
 
         public async Task ValidateContribution(string contributionId)
         {
+
             var contribution = await _transactionStore.GetContribution(contributionId);
             var process = await BuildProcess(contribution.ProcessId);
             await process.ValidateContribution();
             var user = await _userService.GetUser(contribution.Username);
             var campaign = await _transactionStore.GetCampaign(process.CampaignId);
+            campaign.CompletedCount++;
+            await _transactionStore.UpdateCampaign(campaign);
             _notificationService.NotifyUser(user.Email, "Volunteering Job Validated!", campaign.NgoName + " just validated your volunteering work. Good Job " + user.FirstName + "!");
         }
 

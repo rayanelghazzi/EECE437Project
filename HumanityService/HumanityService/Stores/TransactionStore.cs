@@ -230,7 +230,6 @@ namespace HumanityService.Stores
             var sql = new QueryBuilder().Update(DeliveryDemandEntity.TableName, DeliveryDemandsTableColumns)
                 .Where($"Id = @Id").Build();
 
-
             int rowsAffected = await connection.ExecuteAsync(sql, deliveryDemand);
             if (rowsAffected == 0)
             {

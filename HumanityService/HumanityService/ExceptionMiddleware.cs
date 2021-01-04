@@ -16,8 +16,7 @@ namespace HumanityService
         private readonly IWebHostEnvironment _hostingEnvironment;
         private readonly ILogger<ExceptionMiddleware> _logger;
 
-        public ExceptionMiddleware(RequestDelegate next, ILoggerFactory loggerFactory,
-            IWebHostEnvironment hostingEnvironment)
+        public ExceptionMiddleware(RequestDelegate next, ILoggerFactory loggerFactory, IWebHostEnvironment hostingEnvironment)
         {
             _next = next;
             _hostingEnvironment = hostingEnvironment;
